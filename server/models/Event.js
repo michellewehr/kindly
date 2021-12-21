@@ -4,13 +4,13 @@ const commentSchema = require('./Comment');
 const eventSchema = new Schema(
     {
         host: {
-            type: String, 
+            type: String,
             required: true,
             trim: true
         },
         title: {
-            type: String, 
-            required: true, 
+            type: String,
+            required: true,
             trim: true,
             maxlength: 280
         },
@@ -26,9 +26,9 @@ const eventSchema = new Schema(
             trim: true
           },
         description: {
-            type: String, 
+            type: String,
             required: true,
-            maxlength: 280
+            maxlength: 560
         },
         date: {
             type: Date,
@@ -39,15 +39,15 @@ const eventSchema = new Schema(
             required: true
         },
         endTime: {
-            type: String, 
+            type: String,
             required: true
         },
         url: {
-            type: String, 
+            type: String,
             required: false
         },
         image: {
-            type: String, 
+            type: String,
             required: false
         },
         comments: [commentSchema]
