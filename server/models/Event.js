@@ -2,62 +2,65 @@ const { Schema, model } = require('mongoose');
 const commentSchema = require('./Comment');
 
 const eventSchema = new Schema(
-    {
-        host: {
-            type: String,
-            required: true,
-            trim: true
-        },
-        title: {
-            type: String,
-            required: true,
-            trim: true,
-            maxlength: 280
-        },
-        attendees: [
-            {
-               type: Schema.Types.User,
-               ref: 'User'
-            }
-         ],
-        location: {
-            type: String,
-            required: true,
-            trim: true
-          },
-        description: {
-            type: String,
-            required: true,
-            maxlength: 560
-        },
-        date: {
-            type: Date,
-            required: true
-        },
-        startTime: {
-            type: String,
-            required: true
-        },
-        endTime: {
-            type: String,
-            required: true
-        },
-        url: {
-            type: String,
-            required: false
-        },
-        image: {
-            type: String,
-            required: false
-        },
-        comments: [commentSchema]
+  {
+    host: {
+      type: String,
+      required: true,
+      trim: true
     },
-    {
-        toJSON: {
-            getters: true,
-            virtuals: true
-        }
+    title: {
+      type: String,
+      required: true,
+      trim: true,
+      maxlength: 280
+    },
+    attendees: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+      }
+    ],
+    location: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    description: {
+      type: String,
+      required: true,
+      maxlength: 560
+    },
+    date: {
+      type: Date,
+      required: true
+    },
+    startTime: {
+      type: String,
+      required: true
+    },
+    endTime: {
+      type: String,
+      required: true
+    },
+    url: {
+      type: String,
+      required: false
+    },
+    image: {
+      type: String,
+      required: false
+    },
+    comments: {
+      type: Schema.Types.ObjectId,
+      ref: 'Comment'
     }
+  },
+  {
+    toJSON: {
+      getters: true,
+      virtuals: true
+    }
+  }
 )
 
 const Event = model('Event', eventSchema);

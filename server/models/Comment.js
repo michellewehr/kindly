@@ -1,39 +1,44 @@
 const { Schema, model } = require("mongoose");
-const replySchema = require ("./Reply");
+const replySchema = require("./Reply");
 const dateFormat = require("../utils/dateFormat");
 
 const commentSchema = new Schema(
 
   {
-      id: ID,
-      commentText: {
-        type: String,
-        required: 'You need to leave a comment!',
-        trim: true,
-        maxlength: [280, 'Comment is too long!']
+    //changed from ID to Schema.types.ObjectId
+    id: Schema.Types.ObjectId,
+    commentText: {
+      type: String,
+      required: 'You need to leave a comment!',
+      trim: true,
+      maxlength: [280, 'Comment is too long!']
     },
-      createdAt: {
-        type: Date,
-        default: Date.now,
-        get: timestamp => dateFormat(timestamp)
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: timestamp => dateFormat(timestamp)
     },
-      username: {
-        type: String,
-        required: true,
+    username: {
+      type: String,
+      required: true,
     },
-      likes: {
-        type: Int,
-        default: 0
+    likes: {
+      type: Number,
+      default: 0
     },
-      replies: [replySchema]
+    replies: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }
   },
-    { toJSON: {
-        getters: true
+  {
+    toJSON: {
+      getters: true
+    }
   }
-}
 )
 
-commentSchema.virtual('replyCount').get(function() {
+commentSchema.virtual('replyCount').get(function () {
   return this.replies.length;
 });
 
