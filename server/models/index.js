@@ -4,4 +4,4 @@ const Comment = require('./Comment');
 const Event = require('./Event');
 const GoodDeed = require('./GoodDeed');
 
-module.exports = { User };
+module.exports = { User, Reply, Comment, Event, GoodDeed };
