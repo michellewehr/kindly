@@ -6,7 +6,7 @@ const commentSchema = new Schema(
 
   {
     //changed from ID to Schema.types.ObjectId
-    id: Schema.Types.ObjectId,
+    // id: Schema.Types.ObjectId,
     commentText: {
       type: String,
       required: 'You need to leave a comment!',
@@ -26,10 +26,7 @@ const commentSchema = new Schema(
       type: Number,
       default: 0
     },
-    replies: {
-      type: Schema.Types.ObjectId,
-      ref: 'User'
-    }
+    replies: [replySchema]
   },
   {
     toJSON: {

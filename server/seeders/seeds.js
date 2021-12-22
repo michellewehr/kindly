@@ -1,12 +1,13 @@
 const faker = require('faker');
 
 const db = require('../config/connection');
-const { User, Event, GoodDeed } = require('../models');
+const { User, Event, GoodDeed, Comment } = require('../models');
 
 db.once('open', async () => {
   // await Event.deleteMany({});
   await User.deleteMany({});
   await Event.deleteMany({});
+  await Comment.deleteMany({});
   // create user data
   const userData = [];
 
@@ -65,12 +66,10 @@ db.once('open', async () => {
     const date = faker.date.soon();
     const startTime = '12:00';
     const endTime = '2:00';
-    const likes = 8;
+    const likes = faker.datatype.number(20);
 
     eventData.push({ hostId, title, attendees, location, description, date, startTime, endTime, likes });
 
-    // console.log(eventData);
-    // await User.updateOne({ _id: hostId.valueOf() }, { $addToSet: { events: _id } });
   }
 
   await Event.collection.insertMany(eventData);
@@ -113,7 +112,7 @@ let goodDeedData = [];
     // console.log(hostId, 'host id')
     const location = faker.address.city();
     const deedText = faker.lorem.words(Math.round(Math.random() * 30) + 1);
-    const likes = 8;
+    const likes = faker.datatype.number(20);
 
 
 
@@ -138,35 +137,65 @@ for(let i = 0; i < eventData.length; i++) {
   }
 }
 
+//seed comments for events
+let commentData = [];
 
-
-
-
-
+for(let i = 0; i < 10; i++) {
+  const commentText = faker.lorem.words(Math.round(Math.random() * 20) + 1);
+  const randomIndex = Math.floor(Math.random() * userData.length);
+  const username = userData[randomIndex].username;
   
+  const likes = faker.datatype.number(20);
+  //get event Id to add comments to event
+  const randomIndexEvents = Math.floor(Math.random() * eventData.length);
+  const eventId = eventData[randomIndexEvents]._id;
 
+  const createdComment = await Comment.create({ commentText, username, likes });
 
-  
+  //add to event model
+  await Event.updateOne(
+    {_id: eventId},
+    {$push: {comments: createdComment._id}}
+  )
+  commentData.push(createdComment);
+}
+// TODO: seed comments for good deeds
+//seed comment for good deeds
+// for(let i = 0; i < 10; i++) {
+//   const commentText = faker.lorem.words(Math.round(Math.random() * 20) + 2);
 
+//   const randomIndex = Math.floor(Math.random() * userData.length);
+//   const username = userData[randomIndex].username;
+//   const likes = faker.datatype.number(20);
+//   const randomIndexDeeds = Math.floor(Math.random() * goodDeedData.length);
 
-    
+//   const goodDeedId = goodDeedData[randomIndexDeeds]._id; 
+//    const createDeedComments = await Comment.create({ commentText, username, likes });
 
-  // // create reactions
-  // for (let i = 0; i < 100; i += 1) {
-  //   const reactionBody = faker.lorem.words(Math.round(Math.random() * 20) + 1);
+//  await GoodDeed.updateOne(
+//      {_id: goodDeedId},
+//      {$push: {comments: createDeedComments._id}}
+//    )
 
-  //   const randomUserIndex = Math.floor(Math.random() * createdUsers.ops.length);
-  //   const { username } = createdUsers.ops[randomUserIndex];
+//   commentData.push(createDeedComments);
+// }
 
-  //   const randomThoughtIndex = Math.floor(Math.random() * createdThoughts.length);
-  //   const { _id: thoughtId } = createdThoughts[randomThoughtIndex];
+//create replies
+  for (let i = 0; i < 100; i += 1) {
+    const replyBody = faker.lorem.words(Math.round(Math.random() * 20) + 1);
 
-  //   await Thought.updateOne(
-  //     { _id: thoughtId },
-  //     { $push: { reactions: { reactionBody, username } } },
-  //     { runValidators: true }
-  //   );
-  // }
+    const randomUserIndex = Math.floor(Math.random() * userData.length);
+    const { username } = userData[randomUserIndex];
+
+    const randomThoughtIndex = Math.floor(Math.random() * commentData.length);
+    const { _id: commentId } = commentData[randomThoughtIndex];
+
+    await Comment.updateOne(
+      { _id: commentId },
+      { $push: { replies: { replyBody, username } } },
+      { runValidators: true }
+    );
+  }
 
   console.log('all done!');
   process.exit(0);
