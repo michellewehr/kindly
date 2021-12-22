@@ -4,9 +4,8 @@ const commentSchema = require('./Comment');
 const eventSchema = new Schema(
   {
     host: {
-      type: String,
-      required: true,
-      trim: true
+      type: Schema.Types.ObjectId,
+      ref: 'User'
     },
     title: {
       type: String,
