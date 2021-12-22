@@ -1,13 +1,11 @@
-export default function index() {
-
-  const EventList = ({ events }) => {
-    if (!events.length) {
-      return (
-        <div>
-          <h3>No events yet!</h3>
-        </div>
-      )
-    }
+export default function EventCard(events) {
+    // if (!events.length) {
+    //   return (
+    //     <div>
+    //       <h3>No events yet!</h3>
+    //     </div>
+    //   )
+    // }
 
 
 
@@ -71,4 +69,4 @@ export default function index() {
       </div>
     );
   }
-}
+

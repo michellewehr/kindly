@@ -1,8 +1,20 @@
 import './App.css';
+import GoodDeed from './components/GoodDeed';
+import FriendsList from './components/FriendsList';
+import EventCard from './components/EventCard';
+import Comment from './components/Comment';
+import Sidebar from './components/Sidebar';
 
 function App() {
   return (
+    <div className="App">
     <h1>Something</h1>
+    <GoodDeed />
+    {/* <FriendsList /> */}
+    <EventCard />
+    <Comment />
+    <Sidebar />
+    </div>
     //! pages
     // landing page
         //*components

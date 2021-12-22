@@ -39,7 +39,7 @@ export default function Sidebar() {
         {/* end of location */}
         {/* friends */}
         <div class="bg-sky-100 mx-auto text-center rounded w-9/12 mb-2 h-32 overflow-scroll	">
-          <FriendsList />
+          {/* <FriendsList /> */}
         </div>
         {/* end of friends */}
         {/* Upcoming Events */}

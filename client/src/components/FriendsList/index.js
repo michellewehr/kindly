@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 
 export default function FriendsList({ friends, name }) {
 
-  if (!friends || friends.length) {
-    return (
-      <p className="noFriends">
-        {name} has no friends yet.
-      </p>
-    )
-  }
+  // if (!friends || friends.length) {
+  //   return (
+  //     <p className="noFriends">
+  //       {name} has no friends yet.
+  //     </p>
+  //   )
+  // }
 
   return (
     <div>
