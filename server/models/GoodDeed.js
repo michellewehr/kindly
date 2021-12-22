@@ -13,7 +13,7 @@ const goodDeedSchema = new Schema(
       required: true,
       trim: true
     },
-    attendees: {
+    helpers: {
       type: Schema.Types.ObjectId,
       ref: 'User'
     },
