@@ -4,11 +4,13 @@ import FriendsList from './components/FriendsList';
 import EventCard from './components/EventCard';
 import Comment from './components/Comment';
 import Sidebar from './components/Sidebar';
+import Header from './components/Header';
 
 function App() {
   return (
     <div className="App">
     <h1>Something</h1>
+    <Header />
     <GoodDeed />
     {/* <FriendsList /> */}
     <EventCard />
