@@ -1,3 +1,5 @@
+import FriendsList from "../FriendsList";
+
 export default function Sidebar() {
   return (
     <div className="sidebar">
@@ -37,44 +39,7 @@ export default function Sidebar() {
         {/* end of location */}
         {/* friends */}
         <div class="bg-sky-100 mx-auto text-center rounded w-9/12 mb-2 h-32 overflow-scroll	">
-          <h2 class="underline">My Friends</h2>
-          <ul>
-            <li>
-              <a class="hover:text-cyan-600" href="">
-                Brent Gaines
-              </a>
-            </li>
-            <li>
-              <a class="hover:text-cyan-600" href="">
-                Maki Maki
-              </a>
-            </li>
-            <li>
-              <a class="hover:text-cyan-600" href="">
-                David Toth
-              </a>
-            </li>
-            <li>
-              <a class="hover:text-cyan-600" href="">
-                Dan Seskey
-              </a>
-            </li>
-            <li>
-              <a class="hover:text-cyan-600" href="">
-                Matt
-              </a>
-            </li>
-            <li>
-              <a class="hover:text-cyan-600" href="">
-                Maura
-              </a>
-            </li>
-            <li>
-              <a class="hover:text-cyan-600" href="">
-                Symone
-              </a>
-            </li>
-          </ul>
+          <FriendsList />
         </div>
         {/* end of friends */}
         {/* Upcoming Events */}
