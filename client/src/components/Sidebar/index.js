@@ -2,7 +2,7 @@ import FriendsList from "../FriendsList";
 
 export default function Sidebar() {
   return (
-    <div classNameName="sidebar">
+    <div className="sidebar">
       <div className="flex flex-col bg-cyan-700 w-1/4">
         {/* div for the profile picture and name */}
         <div className="flex content-center	">
@@ -21,7 +21,7 @@ export default function Sidebar() {
         <div className="flex flex-row mx-auto ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            classNameName="h-5 w-5"
+            className="h-5 w-5"
             viewBox="0 0 20 20"
             fill="orange"
           >

@@ -9,7 +9,7 @@ import Reply from "./components/Reply";
 
 function App() {
   return (
-    <div classNameName="App">
+    <div className="App">
       <h1>Something</h1>
       <Header />
       <GoodDeed />

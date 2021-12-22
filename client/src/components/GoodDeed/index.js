@@ -9,7 +9,7 @@ export default function GoodDeed(goodDeeds) {
   // }
 
   return (
-    <div classNameName="goodDeed">
+    <div className="goodDeed">
       <div className="rounded-lg mt-2 shadow-lg bg-white	 w-full flex flex-row flex-wrap p-3 antialiased">
         <div className="md:w-2/3 w-full px-3 flex flex-row flex-wrap">
           <div className="w-full text-gray-700 font-semibold relative pt-3 md:pt-0">

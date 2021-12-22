@@ -8,7 +8,7 @@ export default function EventCard(events) {
   // }
 
   return (
-    <div classNameName="eventCard">
+    <div className="eventCard">
       <div className="rounded-lg mt-2 shadow-lg bg-white	 w-full flex flex-row flex-wrap p-3 antialiased">
         <div className="md:w-1/3 w-full">
           <img

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function FriendsList({ friends, name }) {
   // if (!friends || friends.length) {
   //   return (
-  //     <p classNameName="noFriends">
+  //     <p className="noFriends">
   //       {name} has no friends yet.
   //     </p>
   //   )
@@ -16,7 +16,7 @@ export default function FriendsList({ friends, name }) {
         {name}'s {friendCount} {friendCount === 1 ? "friend" : "friends"}
       </h5> */}
       {friends.map((friend) => (
-        <button classNameName="btn w-100 display-block mb-2" key={friend._id}>
+        <button className="btn w-100 display-block mb-2" key={friend._id}>
           <Link to={`/profile/${friend.name}`}>{friend.name}</Link>
         </button>
       ))}
