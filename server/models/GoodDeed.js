@@ -3,42 +3,50 @@ const dateFormat = require('../utils/dateFormat');
 const commentSchema = require('./Comment');
 
 const goodDeedSchema = new Schema(
-    {
-        host: {
-            type: String, 
-            required: true,
-            trim: true
-        },
-        title: {
-            type: String, 
-            required: true, 
-            trim: true
-        },
-        deedText: {
-            type: String,
-            required: true,
-            trim: true
-        },
-        createdAt: {
-            type: Date,
-            default: Date.now,
-            get: timestamp => dateFormat(timestamp)
-          },
-        comments: [commentSchema],
-        likes: {
-            type: Int,
-            default: 0
-        }
+  {
+    host: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
     },
-    {
-        toJSON: {
-            getters: true,
-            virtuals: true
-        }
+    title: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    helpers: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    deedText: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: timestamp => dateFormat(timestamp)
+    },
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Comment'
+      }
+    ],
+    likes: {
+      type: Number,
+      default: 0
     }
+  },
+  {
+    toJSON: {
+      getters: true,
+      virtuals: true
+    }
+  }
 )
 
-const GoodDeed = model('GoodDeed',goodDeedSchema);
+const GoodDeed = model('GoodDeed', goodDeedSchema);
 
 //TODO: view count/ comment count?
 
