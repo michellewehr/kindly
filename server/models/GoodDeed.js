@@ -13,6 +13,10 @@ const goodDeedSchema = new Schema(
       required: true,
       trim: true
     },
+    attendees: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    },
     deedText: {
       type: String,
       required: true,
