@@ -5,6 +5,7 @@ import EventCard from "./components/EventCard";
 import Comment from "./components/Comment";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
+import Reply from "./components/Reply";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       {/* <FriendsList /> */}
       <EventCard />
       <Comment />
+      <Reply />
       <Sidebar />
     </div>
     //! pages
