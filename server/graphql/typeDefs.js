@@ -60,6 +60,10 @@ const typeDefs = gql`
 
   type Query {
     me: User
+    users: [User]
+    user(_id: ID!): User
+    events: [Event]
+    event(_id: ID, hostId: ID, attendeeId: ID): Event
   }
 
   type Mutation {
