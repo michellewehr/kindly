@@ -18,7 +18,7 @@ const handleFormSubmit = async (event) => {
   event.preventDefault();
 
   try {
-    // add reply to database
+    //! add reply to database
     await addReply({
       variables: { replyBody, commentId },
     });

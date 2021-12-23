@@ -7,6 +7,7 @@ export default function Reply({ replies }) {
       <div className="">
         <span className="">Replies</span>
       </div>
+      //! get reply data
       <div className="card-body">
         {replies &&
           replies.map((reply) => (
