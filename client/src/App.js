@@ -12,11 +12,14 @@ function App() {
     <div className="App">
       <h1>Something</h1>
       <Header />
-      <GoodDeed />
+      <div>
+         <GoodDeed />
       {/* <FriendsList /> */}
       <EventCard />
       <Comment />
       <Reply />
+      </div>
+
       <Sidebar />
     </div>
     //! pages

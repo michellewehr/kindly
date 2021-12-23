@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Reply({ replies }) {
   return (
-    //! needs Tailwind style
+    //todo needs Tailwind style
     <div className="">
       <div className="">
         <span className="">Replies</span>
