@@ -25,6 +25,7 @@
   "homepage": "https://github.com/brentocracy/kindly#readme",
   "dependencies": {
     "concurrently": "^6.5.1",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "react-router-dom": "^6.2.1"
   }
 }
