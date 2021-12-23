@@ -18,14 +18,15 @@ function App() {
   return (
       <div className="App">
         <h1>Something</h1>
-        <Header />
+        {/* <Header /> */}
         <div>
+          <LandingPage />
           {/* <GoodDeed /> */}
           {/* <FriendsList /> */}
           {/* <EventCard /> */}
           {/* <Comment /> */}
           {/* <Reply /> */}
-          <Profile />
+          {/* <Profile /> */}
         </div>
 
         {/* <Sidebar /> */}

@@ -1,9 +1,15 @@
-import EventList from "../components/EventCard";
+import EventCard from "../components/EventCard";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
+import Sidebar from "../components/Sidebar";
 
-const LandingPage = () => {
+export default function LandingPage() {
   return (
   <div>
-
+<Header />
+<Sidebar />
+<EventCard />
+<Footer />
   </div>
 )
 };
