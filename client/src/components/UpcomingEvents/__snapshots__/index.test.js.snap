@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UpcomingEvents component renders Matches snapshot DOM node structure 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="bg-sky-100 mx-auto text-center rounded w-9/12 mb-2"
+    >
+      <h2
+        class="mb-1 underline"
+      >
+        Upcoming Registered Events
+      </h2>
+      <a
+        class="bg-sky-100"
+        href=""
+      >
+        <div
+          class="text-left px-1"
+        >
+          //! get upcoming event data
+          <h3
+            class="bg-cyan-600 hover:bg-orange-300"
+          >
+            Event Name
+          </h3>
+          <p>
+            Location
+          </p>
+          <p>
+            Date at Start Time- End Time
+          </p>
+        </div>
+      </a>
+    </div>
+  </div>
+</DocumentFragment>
+`;
