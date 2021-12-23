@@ -17,13 +17,15 @@ module.exports = {
       token = token.split(' ').pop().trim();
     }
     // if no token, return request object as is
-    if (!token) {
-      return req;
-    }
+    if (!token) return req;
+
     try {
+      // console.log(token, 'inside verification function');
       // decode and attach user data to request object
       const { data } = jwt.verify(token, secret, { maxAge: expiration });
+      // console.log(data, 'data after verification')
       req.user = data;
+      // console.log(req.user, 'req.user')
     } catch {
       console.log('Invalid token');
     }

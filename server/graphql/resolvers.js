@@ -1,6 +1,7 @@
 const { User, Event, Comment, GoodDeed } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
-const { signToken } = require('../utils/auth');
+const { signToken, authMiddleware } = require('../utils/auth');
+
 
 const resolvers = {
    Query: {
@@ -47,6 +48,7 @@ const resolvers = {
    },
 
    Mutation: {
+
       createUser: async (parent, args) => {
 
          // * functionality to check if email is duplicate
@@ -82,17 +84,26 @@ const resolvers = {
          return { token, user };
       },
 
-      // TODO: On submit handler function make sure the user first and last name are passed to the resolvers as args.
+      // TODO: Call in name concat util function in submitFormHandler in the EventForm and GoodDeed components
       createEvent: async (parent, args, context) => {
-
-         console.log(context, "LINE 45")
-
+         console.log(context.user)
+         console.log(context, 'line 88, event creation');
+         console.log(context.headers.authorization, 'token');
+         // ! BUG: Token comes back as invalid and user is not defined
          if (context.user) {
-            const event = await Event.create(...args)
+            const event = await Event.create(args)
             await User.findByIdAndUpdate({ _id: context.user._id }, { $push: { events: event._id } }, { new: true });
          }
          throw new AuthenticationError('You need to be logged in!');
-      }
+      },
+
+      createGoodDeed: async (parent, args, context) => {
+         if (context.user) {
+            const goodDeed = await GoodDeed.create(...args)
+            await User.findByIdAndUpdate({ _id: context.user._id }, { $push: { goodDeeds: goodDeed._id } }, { new: true });
+         }
+         throw new AuthenticationError('You need to be logged in!');
+      },
    }
 }
 

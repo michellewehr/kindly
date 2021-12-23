@@ -10,7 +10,7 @@ const typeDefs = gql`
     profilePicture: String
     connections: [User]
     events: [Event]
-    goodDeeds: [goodDeed]
+    goodDeeds: [GoodDeed]
     kindlyScore: Int
   }
 
@@ -34,7 +34,7 @@ const typeDefs = gql`
     comments: [Comment]
   }
 
-  type goodDeed {
+  type GoodDeed {
     _id: ID
     host: ID
     helpers: [User]
@@ -69,7 +69,9 @@ const typeDefs = gql`
   type Mutation {
     createUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    createEvent(host: String, title: String!, location: String!, description: String!, date: String!, startTime: String!, endTime: String!, url: String!, image: String!): Event
+    createEvent(host: ID!, title: String!, location: String!, description: String!, date: String!, startTime: String!, endTime: String!, url: String!, image: String!): Event
+    createGoodDeed(host: ID!, title: String!, deedText: String!, location: String): GoodDeed
+
   }
 `
 module.exports = typeDefs
