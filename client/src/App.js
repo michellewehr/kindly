@@ -6,50 +6,30 @@ import Comment from "./components/Comment";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import Reply from "./components/Reply";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Profile from "./pages/Profile";
+import GoodDeeds from "./pages/GoodDeeds";
 
+//* we can clean this up, just used it for testing so had to import everything
 function App() {
   return (
     <div className="App">
       <h1>Something</h1>
-      <Header />
+      {/* <Header /> */}
       <div>
-         <GoodDeed />
-      {/* <FriendsList /> */}
-      <EventCard />
-      <Comment />
-      <Reply />
+        <Home />
+        {/* <GoodDeed /> */}
+        {/* <FriendsList /> */}
+        {/* <EventCard /> */}
+        {/* <Comment /> */}
+        {/* <Reply /> */}
+        {/* <Profile /> */}
       </div>
 
-      <Sidebar />
+      {/* <Sidebar /> */}
     </div>
-    //! pages
-    // landing page
-    //*components
-    //Event Cards
-    //nav bar
-    //footer
-    //side bar(if logged in)
-    //friends list
-    //upcoming events
-    //good deeds
-    // login page
-    //* components
-    //login card
-    //nav bar
-    // footer
-    // signup page
-    //* components
-    //signup card
-    //nav bar
-    // footer
-    //profile page
-    //* components
-    //Event cards
-    //connections
-    //good deeds
-    //* components
-    //good deed Cards
-    //
   );
 }
 
