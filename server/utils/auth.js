@@ -7,7 +7,9 @@ module.exports = {
   signToken: function ({ email, _id }) {
     const payload = { email, _id };
 
-    return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
+    const tokenBeingSigned = jwt.sign({ data: payload }, secret, { expiresIn: expiration });
+    console.log(tokenBeingSigned, 'I am getting signed!!!');
+    return tokenBeingSigned;
   },
   authMiddleware: function ({ req }) {
     // allows token to be sent via req.body, req.query, or headers
@@ -20,12 +22,12 @@ module.exports = {
     if (!token) return req;
 
     try {
-      // console.log(token, 'inside verification function');
+      console.log(token, 'inside verification function');
       // decode and attach user data to request object
       const { data } = jwt.verify(token, secret, { maxAge: expiration });
-      // console.log(data, 'data after verification')
+      console.log(data, 'data after verification')
       req.user = data;
-      // console.log(req.user, 'req.user')
+      console.log(req.user, 'req.user')
     } catch {
       console.log('Invalid token');
     }

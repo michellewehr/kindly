@@ -19,7 +19,7 @@ const resolvers = {
 
       // get all users
       users: async () => {
-         return await User.find().select('-__v -password');
+         return await User.find().select('-__v -password').populate('connections').populate('events');
       },
 
       // find user by id
@@ -31,7 +31,7 @@ const resolvers = {
 
       // get all events
       events: async () => {
-         return await Event.find();
+         return await Event.find().populate('host').populate('attendees').populate('comments');
       },
 
       // find event by optional parameters which are id specific
@@ -44,7 +44,7 @@ const resolvers = {
 
          // get all events with params sorted by most recently created first
          return await Event.find(params).sort({ createdAt: -1 });
-      }
+      },
    },
 
    Mutation: {
@@ -86,23 +86,26 @@ const resolvers = {
 
       // TODO: Call in name concat util function in submitFormHandler in the EventForm and GoodDeed components
       createEvent: async (parent, args, context) => {
-         console.log(context.user)
-         console.log(context, 'line 88, event creation');
-         console.log(context.headers.authorization, 'token');
-         // ! BUG: Token comes back as invalid and user is not defined
+
+         // * create event with args body
+         const event = await Event.create(args);
          if (context.user) {
             const event = await Event.create(args)
-            await User.findByIdAndUpdate({ _id: context.user._id }, { $push: { events: event._id } }, { new: true });
+            await User.findByIdAndUpdate({ _id: context.user._id }, { $push: { events: event._id } }, { new: true, runValidators: true });
+            return event;
+         } else {
+            throw new AuthenticationError('You need to be logged in!');
          }
-         throw new AuthenticationError('You need to be logged in!');
       },
 
       createGoodDeed: async (parent, args, context) => {
          if (context.user) {
-            const goodDeed = await GoodDeed.create(...args)
-            await User.findByIdAndUpdate({ _id: context.user._id }, { $push: { goodDeeds: goodDeed._id } }, { new: true });
+            const goodDeed = await GoodDeed.create(args)
+            await User.findByIdAndUpdate({ _id: context.user._id }, { $push: { goodDeeds: goodDeed._id } }, { new: true, runValidators: true });
+            return goodDeed;
+         } else {
+            throw new AuthenticationError('You need to be logged in!');
          }
-         throw new AuthenticationError('You need to be logged in!');
       },
    }
 }

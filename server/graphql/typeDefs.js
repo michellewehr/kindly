@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server-express')
+const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
   type User {
@@ -21,7 +21,7 @@ const typeDefs = gql`
 
   type Event {
     _id: ID
-    host: [User]
+    host: User
     title: String
     attendees: [User]
     location: String
@@ -38,7 +38,9 @@ const typeDefs = gql`
     _id: ID
     host: ID
     helpers: [User]
+    date: String
     deedText: String
+    location: String
     createdAt: String
     comments: [Comment]
     likes: Int
@@ -64,13 +66,15 @@ const typeDefs = gql`
     user(_id: ID!): User
     events: [Event]
     event(_id: ID, hostId: ID, attendeeId: ID): Event
+    goodDeeds: [GoodDeed]
+    goodDeed(_id: ID, hostId: ID, attendeeId: ID): GoodDeed
   }
 
   type Mutation {
     createUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     createEvent(host: ID!, title: String!, location: String!, description: String!, date: String!, startTime: String!, endTime: String!, url: String!, image: String!): Event
-    createGoodDeed(host: ID!, title: String!, deedText: String!, location: String): GoodDeed
+    createGoodDeed(host: ID!, title: String!, deedText: String!, date: String!, location: String): GoodDeed
 
   }
 `
