@@ -11,7 +11,7 @@ const resolvers = {
       // find current logged in user
       me: async (parent, args, context) => {
          if (context.user) {
-            const userData = await User.findOne({ _id: context.user._id }).select('-__v -password')
+            const userData = await User.findOne({ _id: context.user._id }).select('-__v -password').populate('connections').populate('events');
             return userData;
          }
          throw new AuthenticationError('Not logged in');
@@ -107,6 +107,20 @@ const resolvers = {
             throw new AuthenticationError('You need to be logged in!');
          }
       },
+
+      //add connection
+      addConnection: async(parent, {connectionId}, context) => {
+         if(context.user) {
+            const updatedUser = await User.findOneAndUpdate(
+               { _id: context.user._id},
+               { $addToSet: { connections: connectionId }},
+               { new: true }
+            ).populate('connections');
+
+            return updatedUser;
+         }
+         throw new AuthenticationError('You need to be logged in!');
+      }
    }
 }
 
