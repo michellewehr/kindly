@@ -76,6 +76,7 @@ const typeDefs = gql`
     createEvent(host: ID!, title: String!, location: String!, description: String!, date: String!, startTime: String!, endTime: String!, url: String!, image: String!): Event
     createGoodDeed(host: ID!, title: String!, deedText: String!, date: String!, location: String): GoodDeed
     addConnection(connectionId: ID!): User
+    addComment(eventId: ID!, commentText: String!): Event
   }
 `
 module.exports = typeDefs

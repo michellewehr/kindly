@@ -120,6 +120,23 @@ const resolvers = {
             return updatedUser;
          }
          throw new AuthenticationError('You need to be logged in!');
+      }, 
+
+      // add comment to event 
+      addComment: async(parent, {eventId, commentText }, context) => {
+         if(context.user) {
+            console.log(parent);
+            const comment = await Comment.create({commentText});
+            console.log(comment);
+            
+            const updatedEvent = await Event.findByIdAndUpdate(
+               { _id: eventId },
+               { $push: {comments: comment}},
+               {new: true}
+            ).populate('comments').populate('host').populate('attendees');
+
+            return updatedEvent; 
+         }
       }
    }
 }
