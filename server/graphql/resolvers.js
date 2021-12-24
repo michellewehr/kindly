@@ -137,6 +137,23 @@ const resolvers = {
 
             return updatedEvent; 
          }
+         throw new AuthenticationError('You need to be logged in!');
+      }, 
+
+      // TODO: figure out if we need a separate mutation for adding comment to goodDeed or if we could use the one above
+
+      //add reply to comment
+      addReply: async(parent, {commentId, replyBody}, context) => {
+         if(context.user) {
+            const updatedComment = await Comment.findOneAndUpdate(
+               { _id: commentId}, 
+               { $push: {replies: { replyBody }}}, 
+               {new: true}
+            ).populate('replies');
+
+            return updatedComment;
+         }
+         throw new AuthenticationError('You need to be logged in!');
       }
    }
 }
