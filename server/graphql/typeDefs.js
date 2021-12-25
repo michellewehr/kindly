@@ -74,10 +74,11 @@ const typeDefs = gql`
     createUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     createEvent(host: ID!, title: String!, location: String!, description: String!, date: String!, startTime: String!, endTime: String!, url: String!, image: String!): Event
-    createGoodDeed(host: ID!, title: String!, deedText: String!, date: String!, location: String): GoodDeed
+    createGoodDeed(host: ID!, title: String!, deedText: String!, date: String!, location: String!): GoodDeed
     addConnection(connectionId: ID!): User
     addComment(eventId: ID!, commentText: String!): Event
     addReply(commentId: ID!, replyBody: String!): Comment
+    joinEvent(eventId: ID!, attendee: ID!): Event
   }
 `
 module.exports = typeDefs
