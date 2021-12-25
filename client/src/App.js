@@ -16,7 +16,6 @@ import GoodDeeds from "./pages/GoodDeeds";
 function App() {
   return (
     <div className="App">
-      <h1>Something</h1>
       {/* <Header /> */}
       <div>
         <Home />
