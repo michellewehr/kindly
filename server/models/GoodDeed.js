@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
-const commentSchema = require('./Comment');
+// const commentSchema = require('./Comment');
 
 const goodDeedSchema = new Schema(
   {
@@ -13,7 +13,7 @@ const goodDeedSchema = new Schema(
       required: true,
       trim: true
     },
-    helpers: {
+    helper: {
       type: Schema.Types.ObjectId,
       ref: 'User'
     },

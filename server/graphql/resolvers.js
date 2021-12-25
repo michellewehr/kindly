@@ -48,6 +48,10 @@ const resolvers = {
 
     goodDeeds: async () => {
       return await GoodDeed.find().populate('host').populate('helpers').populate('comments')
+    },
+
+    goodDeed: async () => {
+      return await GoodDeed.findOne({ _id }).populate('host').populate('helpers').populate('comments')
     }
   },
 
@@ -161,6 +165,45 @@ const resolvers = {
           { new: true }
         )
         return updatedEvent
+      }
+
+      throw new AuthenticationError('Something went wrong!')
+    },
+
+    leaveEvent: async (parent, { eventId, attendee }, context) => {
+      if (context.user) {
+        const updatedEvent = await Event.findOneAndUpdate(
+          { _id: eventId },
+          { $pull: { attendees: attendee } },
+          { new: true }
+        )
+        return updatedEvent
+      }
+
+      throw new AuthenticationError('Something went wrong!')
+    },
+
+    joinGoodDeed: async (parent, { goodDeedId, helperId }, context) => {
+      if (context.user) {
+        const updatedGoodDeed = await GoodDeed.findOneAndUpdate(
+          { _id: goodDeedId },
+          { helper: helperId },
+          { new: true }
+        ).populate('helper')
+        return updatedGoodDeed
+      }
+
+      throw new AuthenticationError('Something went wrong!')
+    },
+
+    leaveGoodDeed: async (parent, { goodDeedId, helperId }, context) => {
+      if (context.user) {
+        const updatedGoodDeed = await GoodDeed.findOneAndUpdate(
+          { _id: goodDeedId },
+          { helper: null },
+          { new: true }
+        ).populate('helper')
+        return updatedGoodDeed
       }
 
       throw new AuthenticationError('Something went wrong!')

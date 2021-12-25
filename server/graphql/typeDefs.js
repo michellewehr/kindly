@@ -37,7 +37,7 @@ const typeDefs = gql`
   type GoodDeed {
     _id: ID
     host: ID
-    helpers: [User]
+    helper: User
     date: String
     deedText: String
     location: String
@@ -79,6 +79,9 @@ const typeDefs = gql`
     addComment(eventId: ID!, commentText: String!): Event
     addReply(commentId: ID!, replyBody: String!): Comment
     joinEvent(eventId: ID!, attendee: ID!): Event
+    leaveEvent(eventId: ID!, attendee: ID!): Event
+    joinGoodDeed(goodDeedId: ID!, helperId: ID!): GoodDeed
+    leaveGoodDeed(goodDeedId: ID!, helperId: ID!): GoodDeed
   }
 `
 module.exports = typeDefs
