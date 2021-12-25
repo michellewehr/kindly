@@ -31,7 +31,7 @@ const resolvers = {
 
     // get all events
     events: async () => {
-      return await Event.find().populate('host').populate('attendees').populate('comments');
+      return await Event.find().populate('host').populate('attendees').populate('comments').select('-__v');
     },
 
     // find event by optional parameters which are id specific
@@ -43,15 +43,15 @@ const resolvers = {
             : {}; // set params to empty if none passed
 
       // get all events with params sorted by most recently created first
-      return await Event.find(params).sort({ createdAt: -1 });
+      return await Event.find(params).sort({ createdAt: -1 }).select('-__v');
     },
 
     goodDeeds: async () => {
-      return await GoodDeed.find().populate('host').populate('helpers').populate('comments')
+      return await GoodDeed.find().populate('host').populate('helpers').populate('comments').select('-__v')
     },
 
     goodDeed: async () => {
-      return await GoodDeed.findOne({ _id }).populate('host').populate('helpers').populate('comments')
+      return await GoodDeed.findOne({ _id }).populate('host').populate('helpers').populate('comments').select('-__v')
     }
   },
 
@@ -200,7 +200,7 @@ const resolvers = {
       if (context.user) {
         const updatedGoodDeed = await GoodDeed.findOneAndUpdate(
           { _id: goodDeedId },
-          { helper: null },
+          { $unset: { helper: "" } },
           { new: true }
         ).populate('helper')
         return updatedGoodDeed
