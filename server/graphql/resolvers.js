@@ -60,18 +60,18 @@ const resolvers = {
       createUser: async (parent, args) => {
          const user = await User.create(args)
 
-         if (user) {
-            const token = signToken(user)
-            return { user, token }
+         if (!user) {
+            throw new Error('Something went wrong when signing up. Please try again.');
          }
-         // TODO: I think we need an error catch somewhere here. I could be wrong!
+         const token = signToken(user)
+         return { user, token }
       },
 
       login: async (parent, { email, password }) => {
-         const user = await User.findOne({ email })
+         const user = await User.findOne({ email });
 
          if (!user) {
-            throw new AuthenticationError('Incorrect login information')
+            throw new AuthenticationError('Incorrect login information');
          }
 
          const correctPassword = await user.isCorrectPassword(password);
@@ -84,30 +84,33 @@ const resolvers = {
          return { token, user };
       },
 
-      // TODO: Call in name concat util function in submitFormHandler in the EventForm and GoodDeed components
       createEvent: async (parent, args, context) => {
 
          if (context.user) {
             const event = await Event.create(args)
 
             if (event) {
-               await User.findByIdAndUpdate({ _id: context.user._id }, { $push: { events: event._id } }, { new: true, runValidators: true });
-               return event;
+               throw new Error('Something went wrong when signing up. Please try again.');
             }
-            // TODO: Also need an error handler here because this is not authentication-based
+            await User.findByIdAndUpdate({ _id: context.user._id }, { $push: { events: event._id } }, { new: true });
+            return event;
          } else {
-            throw new AuthenticationError('You need to be logged in!');
+            throw new AuthenticationError('You need to be logged in to create an event!');
          }
       },
 
       createGoodDeed: async (parent, args, context) => {
          if (context.user) {
-            const goodDeed = await GoodDeed.create(args)
-            // TODO: Make this consistent with event creation function (ie an if statement)
-            await User.findByIdAndUpdate({ _id: context.user._id }, { $push: { goodDeeds: goodDeed._id } }, { new: true, runValidators: true });
+            const goodDeed = await GoodDeed.create(args);
+
+            if (goodDeed) {
+               throw new Error('Something went wrong when signing up. Please try again.');
+            }
+
+            await User.findByIdAndUpdate({ _id: context.user._id }, { $push: { goodDeeds: goodDeed._id } }, { new: true });
             return goodDeed;
          } else {
-            throw new AuthenticationError('You need to be logged in!');
+            throw new AuthenticationError('You need to be logged in to create a good deed!');
          }
       },
 
@@ -122,28 +125,49 @@ const resolvers = {
 
             return updatedUser;
          }
-         throw new AuthenticationError('You need to be logged in!');
+         throw new AuthenticationError('You need to be logged in to add connections.');
       },
 
-      // TODO: Add mutation for removing connection
+      // remove connection
+      removeConnection: async (parent, { connectionId }, context) => {
+         if (context.user) {
+            const updatedUser = await User.findOneAndUpdate(
+               { _id: context.user._id },
+               { $pull: { connections: connectionId } },
+               { new: true }
+            ).populate('connections');
 
-      // add comment to event 
-      addComment: async (parent, { eventId, commentText }, context) => {
+            return updatedUser;
+         }
+         throw new AuthenticationError('You need to be logged in to add or remove connections.');
+      },
+
+      // add comment to event or a good deed
+      addComment: async (parent, { eventId, goodDeedId, commentText }, context) => {
          if (context.user) {
             const comment = await Comment.create({ commentText });
-            const updatedEvent = await Event.findByIdAndUpdate(
-               { _id: eventId },
-               { $push: { comments: comment } },
-               { new: true }
-            ).populate('comments').populate('host').populate('attendees');
 
-            return updatedEvent;
-         }
-         throw new AuthenticationError('You need to be logged in!');
+            // check and set params for either event or good deed
+            const params = eventId ? { eventId, commentText } : { goodDeedId, commentText };
+
+            // if params are event-oriented, update the event, otherwise update the good deed
+            if (params === { eventId, commentText }) {
+               const updatedEvent = await Event.findByIdAndUpdate(
+                  { _id: eventId },
+                  { $push: { comments: comment } },
+                  { new: true }
+               ).populate('comments').populate('host').populate('attendees');
+               return updatedEvent;
+            } else {
+               const updatedGoodDeed = await GoodDeed.findByIdAndUpdate(
+                  { _id: goodDeedId },
+                  { $push: { comments: comment } },
+                  { new: true }
+               ).populate('helper');
+               return updatedGoodDeed;
+            }
+         } else throw new AuthenticationError('You need to be logged in!');
       },
-
-      // TODO: figure out if we need a separate mutation for adding comment to goodDeed or if we could use the one above
-      // TODO: My two cents: have optional parameters and add comment to either event id or good deed id
 
       //add reply to comment
       addReply: async (parent, { commentId, replyBody }, context) => {
@@ -185,6 +209,39 @@ const resolvers = {
          throw new AuthenticationError('You need to be logged in!')
       },
 
+      cancelEvent: async (parent, { eventId }, context) => {
+         if (context.user) {
+            // remove all associated users from event before deleting it
+            const updatedEvent = await Event.findOneAndUpdate(
+               { _id: eventId },
+               { $pull: { attendees: context.user._id, host: context.user._id } },
+               { new: true }
+            )
+            // delete the event fully
+            const removeEvent = await Event.findByIdAndRemove(
+               { _id: eventId },
+               { new: true }
+            )
+            // return the new list of all events to verify the deleted event is no longer listed
+            return await Event.find({})
+         }
+         throw new AuthenticationError('You need to be logged in!')
+      },
+
+      // cancel good deed
+      cancelGoodDeed: async (parent, { goodDeedId }, context) => {
+         if (context.user) {
+            const updatedGoodDeed = await GoodDeed.findOneAndUpdate(
+               { _id: goodDeedId },
+               { $unset: { helper: "" } },
+               { $pull: { goodDeed: context.goodDeed._id } },
+               { new: true }
+            )
+            return await GoodDeed.find({});
+         }
+         throw new AuthenticationError('You need to be logged in!');
+      },
+
       joinGoodDeed: async (parent, { goodDeedId, helperId }, context) => {
          if (context.user) {
             const updatedGoodDeed = await GoodDeed.findOneAndUpdate(
@@ -192,7 +249,7 @@ const resolvers = {
                { helper: helperId },
                { new: true }
             ).populate('helper')
-            return updatedGoodDeed
+            return updatedGoodDeed;
          }
 
          throw new AuthenticationError('You need to be logged in!')
@@ -205,14 +262,12 @@ const resolvers = {
                { $unset: { helper: "" } },
                { new: true }
             ).populate('helper')
-            return updatedGoodDeed
+            return updatedGoodDeed;
          }
 
          throw new AuthenticationError('You need to be logged in!')
       }
-      // TODO: Create mutations for canceling events and good deeds -- we would need to delete the event from all associated users
-      // TODO: ...and the Event itself from the array of Events
    }
-}
+};
 
 module.exports = resolvers
