@@ -87,13 +87,16 @@ const resolvers = {
       createEvent: async (parent, args, context) => {
 
          if (context.user) {
-            const event = await Event.create(args)
+            const event = await Event.create({...args, host: context.user._id})
 
-            if (event) {
+            if (!event) {
                throw new Error('Something went wrong when signing up. Please try again.');
             }
-            await User.findByIdAndUpdate({ _id: context.user._id }, { $push: { events: event._id } }, { new: true });
-            return event;
+            await User.findByIdAndUpdate(
+               { _id: context.user._id },
+                { $push: { events: event._id } }, 
+                { new: true });
+            return event.populate('host');
          } else {
             throw new AuthenticationError('You need to be logged in to create an event!');
          }
@@ -143,38 +146,30 @@ const resolvers = {
       },
 
       // add comment to event or a good deed
-      addComment: async (parent, { eventId, goodDeedId, commentText }, context) => {
+      addComment: async (parent, { obligationId, goodDeedId, commentText }, context) => {
          if (context.user) {
-            const comment = await Comment.create({ commentText });
-
-            // check and set params for either event or good deed
-            const params = eventId ? { eventId, commentText } : { goodDeedId, commentText };
-
-            // if params are event-oriented, update the event, otherwise update the good deed
-            if (params === { eventId, commentText }) {
-               const updatedEvent = await Event.findByIdAndUpdate(
-                  { _id: eventId },
+            const comment = await Comment.create({ commentText, author: context.user.firstName });
+            
+            try{
+               return await Event.findByIdAndUpdate(
+                  { _id: obligationId },
                   { $push: { comments: comment } },
                   { new: true }
-               ).populate('comments').populate('host').populate('attendees');
-               return updatedEvent;
-            } else {
-               const updatedGoodDeed = await GoodDeed.findByIdAndUpdate(
-                  { _id: goodDeedId },
-                  { $push: { comments: comment } },
-                  { new: true }
-               ).populate('helper');
-               return updatedGoodDeed;
+               ).populate('comments');
+               }
+         catch{
+             throw new AuthenticationError('You need to be logged in!');
             }
-         } else throw new AuthenticationError('You need to be logged in!');
-      },
+      }
+   },
+
 
       //add reply to comment
-      addReply: async (parent, { commentId, replyBody }, context) => {
+      addReply: async (parent, { commentId, replyBody, author }, context) => {
          if (context.user) {
             const updatedComment = await Comment.findOneAndUpdate(
                { _id: commentId },
-               { $push: { replies: { replyBody } } },
+               { $push: { replies: { replyBody, author: context.user._id } } },
                { new: true }
             ).populate('replies');
 
