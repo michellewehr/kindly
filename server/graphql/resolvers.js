@@ -96,7 +96,7 @@ const resolvers = {
                { _id: context.user._id },
                 { $push: { events: event._id } }, 
                 { new: true });
-            return event.populate('host');
+            return event.populate('host').populate('attendees');
          } else {
             throw new AuthenticationError('You need to be logged in to create an event!');
          }
@@ -115,7 +115,7 @@ const resolvers = {
                { $push: { goodDeeds: goodDeed._id } },
                 { new: true });
 
-            return goodDeed.populate('host');
+            return goodDeed.populate('host').populate('attendees');
          } else {
             throw new AuthenticationError('You need to be logged in to create a good deed!');
          }
@@ -244,7 +244,7 @@ const resolvers = {
             // remove all associated users from event before deleting it
             const updatedEvent = await Event.findOneAndUpdate(
                { _id: eventId },
-               { $pull: { attendees: context.user._id } },
+               { $unset: { attendees: [] } },
                { $unset: { host: "" } },
                { new: true }
             )
