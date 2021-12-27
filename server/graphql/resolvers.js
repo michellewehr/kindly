@@ -168,15 +168,17 @@ const resolvers = {
                { new: true }
             ).populate('comments').populate({path: 'comments', populate: 'author'});
             return updatedEvent;
-         } else {
+         } else if(args.goodDeedId) {
             const updatedGoodDeed = await GoodDeed.findByIdAndUpdate(
-               { _id: goodDeedId },
+               { _id: args.goodDeedId },
                { $push: { comments: comment } },
                { new: true }
             ).populate('helper');
-            return updatedGoodDeed;
+            return updatedGoodDeed.populate({path: 'comments', populate: 'author'});
+         } else {
+            throw new Error('Something went wrong!');
          }
-      } else throw new AuthenticationError('You need to be logged in!');
+      } throw new AuthenticationError('You need to be logged in!');
 },
 
 
