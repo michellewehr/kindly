@@ -207,9 +207,9 @@ const resolvers = {
             )
 
             //add to users events array
-            updatedUser = await User.findOneAndUpdate(
+            const updatedUser = await User.findOneAndUpdate(
                { _id: context.user._id},
-               { $push: {events: updatedEvent}},
+               { $push: {events: eventId}},
                {new: true}
             )
             return updatedEvent.populate('attendees')
@@ -218,14 +218,21 @@ const resolvers = {
          throw new AuthenticationError('You need to be logged in!')
       },
 
-      leaveEvent: async (parent, { eventId, attendee }, context) => {
+      leaveEvent: async (parent, { eventId }, context) => {
          if (context.user) {
             const updatedEvent = await Event.findOneAndUpdate(
                { _id: eventId },
-               { $pull: { attendees: attendee } },
+               { $pull: { attendees: context.user._id } },
                { new: true }
             )
-            return updatedEvent
+
+            //take from users events array 
+            const updatedUser = await User.findOneAndUpdate(
+               { _id: context.user._id},
+               { $pull: {events: eventId}},
+               {new: true}
+            )
+            return updatedEvent.populate('attendees');
          }
 
          throw new AuthenticationError('You need to be logged in!')
