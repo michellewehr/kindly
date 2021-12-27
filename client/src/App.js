@@ -1,35 +1,54 @@
-import "./App.css";
-import GoodDeed from "./components/GoodDeed";
-import FriendsList from "./components/FriendsList";
-import EventCard from "./components/EventCard";
-import Comment from "./components/Comment";
-import Sidebar from "./components/Sidebar";
-import Header from "./components/Header";
-import Reply from "./components/Reply";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Profile from "./pages/Profile";
-import GoodDeeds from "./pages/GoodDeeds";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
-//* we can clean this up, just used it for testing so had to import everything
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+// import Nav from './components/Nav';
+import store from './utils/store';
+import { Provider } from 'react-redux'
+
+const httpLink = createHttpLink({
+  uri: '/graphql',
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('id_token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
+
 function App() {
   return (
-    <div className="App">
-      <h1>Something</h1>
-      {/* <Header /> */}
-      <div>
-        <Home />
-        {/* <GoodDeed /> */}
-        {/* <FriendsList /> */}
-        {/* <EventCard /> */}
-        {/* <Comment /> */}
-        {/* <Reply /> */}
-        {/* <Profile /> */}
-      </div>
-
-      {/* <Sidebar /> */}
-    </div>
+    <ApolloProvider client={client}>
+      <Router>
+        <div>
+          <Provider store={store}>
+            {/* <Nav /> */}
+            <Routes>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/signup" component={Signup} />
+            </Routes>
+          </Provider>
+        </div>
+      </Router>
+    </ApolloProvider>
   );
 }
 
