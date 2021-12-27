@@ -229,7 +229,8 @@ const resolvers = {
             // remove all associated users from event before deleting it
             const updatedEvent = await Event.findOneAndUpdate(
                { _id: eventId },
-               { $pull: { attendees: context.user._id, host: context.user._id } },
+               { $pull: { attendees: context.user._id } },
+               { $unset: { host: "" } },
                { new: true }
             )
             // delete the event fully
