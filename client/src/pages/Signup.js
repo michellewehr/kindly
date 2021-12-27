@@ -1,7 +1,7 @@
 import { useState } from "react";
 import logo from "../assets/images/logo.png";
 import { useMutation } from "@apollo/client";
-import { ADD_USER } from "../utils/mutations";
+// import { ADD_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
 //todo implement redux for state management
 
@@ -14,7 +14,7 @@ export default function Signup() {
     password: "",
   });
 
-  const [addUser, { error }] = useMutation(ADD_USER);
+  // const [addUser, { error }] = useMutation(ADD_USER);
 
 
   const handleChange = (event) => {
@@ -27,20 +27,20 @@ export default function Signup() {
   };
 
   // submit form
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
+  // const handleFormSubmit = async (event) => {
+  //   event.preventDefault();
 
-    // error handling
-    try {
-      const { data } = await addUser({
-        variables: { ...formState },
-      });
-      // authorization
-      Auth.login(data.addUser.token);
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  //   // error handling
+  //   try {
+  //     const { data } = await addUser({
+  //       variables: { ...formState },
+  //     });
+  //     // authorization
+  //     Auth.login(data.addUser.token);
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // };
 
   return (
     <div class="w-screen h-screen bg-cover bg-no-repeat bg-[url('https://www.charities.org/sites/default/files/styles/large/public/volunteers18-5b2fe1c9a474be0036f6a7b2.jpg?itok=HeETal1T')]">
