@@ -280,7 +280,7 @@ const resolvers = {
                { _id: goodDeedId },
                { helper: context.user._id },
                { new: true }
-            ).populate('helper');
+            ).populate('helper').populate('host');
 
             //add to users goodDeeds array
             const updatedUser = await User.findOneAndUpdate(
@@ -301,7 +301,15 @@ const resolvers = {
                { _id: goodDeedId },
                { $unset: { helper: "" } },
                { new: true }
-            ).populate('helper')
+            ).populate('helper').populate('host')
+
+              //add to users goodDeeds array
+              const updatedUser = await User.findOneAndUpdate(
+               { _id: context.user._id},
+               { $pull: {goodDeeds: goodDeedId}},
+               {new: true}
+            )
+
             return updatedGoodDeed;
          }
 
