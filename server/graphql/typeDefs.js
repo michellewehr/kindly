@@ -48,7 +48,7 @@ const typeDefs = gql`
 
   type Comment {
     _id: ID
-    author: String
+    author: User
     commentText: String
     createdAt: String
     likes: Int
@@ -79,7 +79,7 @@ const typeDefs = gql`
     createGoodDeed(title: String!, deedText: String!, date: String!, location: String!): GoodDeed
     addConnection(connectionId: ID!): User
     removeConnection(connectionId: ID!): User
-    addComment(obligationId: ID!, commentText: String!): Event
+    addComment(eventId: ID, goodDeedId: ID, commentText: String!): Event
     addReply(commentId: ID!, replyBody: String!): Comment
     joinEvent(eventId: ID!, attendee: ID!): Event
     leaveEvent(eventId: ID!, attendee: ID!): Event
