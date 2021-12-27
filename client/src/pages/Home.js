@@ -5,11 +5,13 @@ import Sidebar from "../components/Sidebar";
 
 export default function Home() {
   return (
-  <div>
-<Header />
-<Sidebar />
-<EventCard />
-<Footer />
-  </div>
-)
+    <div>
+      <Header />
+      <div className="flex w-full justify-between">
+        <Sidebar />
+        <EventCard />
+      </div>
+      <Footer />
+    </div>
+  )
 };

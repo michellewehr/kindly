@@ -15,9 +15,9 @@ export default function FriendsList({ friends, name }) {
       {/* <h5>
         {name}'s {friendCount} {friendCount === 1 ? "friend" : "friends"}
       </h5> */}
-      //! get friends
+      {/* get friends */}
       {friends.map((friend) => (
-        <button className="btn w-100 display-block mb-2" key={friend._id}>
+        <button className="mb-2 btn w-100 display-block" key={friend._id}>
           <Link to={`/profile/${friend.name}`}>{friend.name}</Link>
         </button>
       ))}

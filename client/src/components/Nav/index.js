@@ -19,7 +19,9 @@ export default function Nav() {
             src={logo}
           />
           <span className="font-semibold text-4xl tracking-tight text-cyan-900	">
-            Kindly
+            <h1>
+              Kindly
+            </h1>
           </span>
         </div>
         <div className="block lg:hidden">
@@ -40,14 +42,12 @@ export default function Nav() {
               href="#responsive-header"
               className="block mt-4 lg:inline-block lg:mt-0 hover:text-slate-400 mr-4 text-sky-900 text-xl"
             >
-              //! link to login page
               Log In
             </a>
             <a
               href="#responsive-header"
               className="block mt-4 lg:inline-block lg:mt-0 hover:text-slate-400 mr-4 text-sky-900 text-xl"
             >
-              //! link to signup page
               Sign Up
             </a>
           </div>
