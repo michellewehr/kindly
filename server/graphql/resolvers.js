@@ -262,13 +262,20 @@ const resolvers = {
       // cancel good deed
       cancelGoodDeed: async (parent, { goodDeedId }, context) => {
          if (context.user) {
-            const updatedGoodDeed = await GoodDeed.findOneAndUpdate(
+            // const updatedGoodDeed = await GoodDeed.findOneAndUpdate(
+            //    { _id: goodDeedId },
+            //    { $unset: { helper: "" } },
+            //    { $unset: { host: "" } },
+            //    { new: true }
+            // )
+
+            //delete entirely 
+            const removeGoodDeed = await GoodDeed.findByIdAndRemove(
                { _id: goodDeedId },
-               { $unset: { helper: "" } },
-               { $pull: { goodDeed: context.goodDeed._id } },
                { new: true }
             )
-            return await GoodDeed.find({});
+
+            return await GoodDeed.find({}).populate('helper').populate('host');
          }
          throw new AuthenticationError('You need to be logged in!');
       },
