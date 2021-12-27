@@ -184,13 +184,14 @@ const resolvers = {
 
 
       //add reply to comment
-      addReply: async (parent, { commentId, replyBody, author }, context) => {
+      addReply: async (parent, { commentId, replyBody }, context) => {
+         console.log(context.user);
          if (context.user) {
             const updatedComment = await Comment.findOneAndUpdate(
                { _id: commentId },
                { $push: { replies: { replyBody, author: context.user._id } } },
-               { new: true }
-            ).populate('replies');
+               { new: true, runValidators: true }
+            ).populate('replies').populate({path: 'replies', populate: 'author'});
 
             return updatedComment;
          }

@@ -57,7 +57,7 @@ const typeDefs = gql`
 
   type Reply {
     _id: ID
-    author: String
+    author: User
     replyBody: String
     createdAt: String
   }

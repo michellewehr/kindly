@@ -9,7 +9,8 @@ const replySchema = new Schema(
       maxlength: 280,
     },
     author: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: 'User'
     },
     createdAt: {
       type: Date,
