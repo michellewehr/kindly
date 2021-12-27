@@ -81,11 +81,11 @@ const typeDefs = gql`
     removeConnection(connectionId: ID!): User
     addComment(eventId: ID, goodDeedId: ID, commentText: String!): Event
     addReply(commentId: ID!, replyBody: String!): Comment
-    joinEvent(eventId: ID!, attendee: ID!): Event
-    leaveEvent(eventId: ID!, attendee: ID!): Event
+    joinEvent(eventId: ID!): Event
+    leaveEvent(eventId: ID!): Event
     cancelEvent(eventId: ID!): [Event]
-    joinGoodDeed(goodDeedId: ID!, helperId: ID!): GoodDeed
-    leaveGoodDeed(goodDeedId: ID!, helperId: ID!): GoodDeed
+    joinGoodDeed(goodDeedId: ID!): GoodDeed
+    leaveGoodDeed(goodDeedId: ID!): GoodDeed
     cancelGoodDeed(goodDeedId: ID!): [GoodDeed]
   }
 `

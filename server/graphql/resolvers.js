@@ -198,14 +198,21 @@ const resolvers = {
          throw new AuthenticationError('You need to be logged in!');
       },
 
-      joinEvent: async (parent, { eventId, attendee }, context) => {
+      joinEvent: async (parent, { eventId }, context) => {
          if (context.user) {
             const updatedEvent = await Event.findOneAndUpdate(
                { _id: eventId },
-               { $addToSet: { attendees: attendee } },
+               { $addToSet: { attendees: context.user._id } },
                { new: true }
             )
-            return updatedEvent
+
+            //add to users events array
+            updatedUser = await User.findOneAndUpdate(
+               { _id: context.user._id},
+               { $push: {events: updatedEvent}},
+               {new: true}
+            )
+            return updatedEvent.populate('attendees')
          }
 
          throw new AuthenticationError('You need to be logged in!')
