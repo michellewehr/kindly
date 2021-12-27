@@ -36,7 +36,7 @@ const typeDefs = gql`
 
   type GoodDeed {
     _id: ID
-    host: ID
+    host: User
     helper: User
     date: String
     deedText: String
@@ -76,7 +76,7 @@ const typeDefs = gql`
     createUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     createEvent( title: String!, location: String!, description: String!, date: String!, startTime: String!, endTime: String!, url: String!, image: String!): Event
-    createGoodDeed(host: ID!, title: String!, deedText: String!, date: String!, location: String!): GoodDeed
+    createGoodDeed(title: String!, deedText: String!, date: String!, location: String!): GoodDeed
     addConnection(connectionId: ID!): User
     removeConnection(connectionId: ID!): User
     addComment(obligationId: ID!, commentText: String!): Event

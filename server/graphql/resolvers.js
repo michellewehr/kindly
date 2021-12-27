@@ -104,14 +104,18 @@ const resolvers = {
 
       createGoodDeed: async (parent, args, context) => {
          if (context.user) {
-            const goodDeed = await GoodDeed.create(args);
+            const goodDeed = await GoodDeed.create({...args, host: context.user._id});
 
-            if (goodDeed) {
+            if (!goodDeed) {
                throw new Error('Something went wrong when signing up. Please try again.');
             }
 
-            await User.findByIdAndUpdate({ _id: context.user._id }, { $push: { goodDeeds: goodDeed._id } }, { new: true });
-            return goodDeed;
+            await User.findByIdAndUpdate(
+               { _id: context.user._id }, 
+               { $push: { goodDeeds: goodDeed._id } },
+                { new: true });
+
+            return goodDeed.populate('host');
          } else {
             throw new AuthenticationError('You need to be logged in to create a good deed!');
          }
