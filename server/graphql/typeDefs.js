@@ -37,6 +37,7 @@ const typeDefs = gql`
   type GoodDeed {
     _id: ID
     host: User
+    title: String
     helper: User
     date: String
     deedText: String

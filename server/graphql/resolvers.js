@@ -19,7 +19,7 @@ const resolvers = {
 
       // get all users
       users: async () => {
-         return await User.find().select('-__v -password').populate('connections').populate('events');
+         return await User.find().select('-__v -password').populate('connections').populate('events').populate('goodDeeds');
       },
 
       // find user by id
@@ -238,6 +238,7 @@ const resolvers = {
          throw new AuthenticationError('You need to be logged in!')
       },
 
+      // TODO: look into this one
       cancelEvent: async (parent, { eventId }, context) => {
          if (context.user) {
             // remove all associated users from event before deleting it
@@ -272,13 +273,22 @@ const resolvers = {
          throw new AuthenticationError('You need to be logged in!');
       },
 
-      joinGoodDeed: async (parent, { goodDeedId, helperId }, context) => {
+      
+      joinGoodDeed: async (parent, { goodDeedId }, context) => {
          if (context.user) {
             const updatedGoodDeed = await GoodDeed.findOneAndUpdate(
                { _id: goodDeedId },
-               { helper: helperId },
+               { helper: context.user._id },
                { new: true }
-            ).populate('helper')
+            ).populate('helper');
+
+            //add to users goodDeeds array
+            const updatedUser = await User.findOneAndUpdate(
+               { _id: context.user._id},
+               { $push: {goodDeeds: goodDeedId}},
+               {new: true}
+            )
+
             return updatedGoodDeed;
          }
 
