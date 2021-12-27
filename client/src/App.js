@@ -11,15 +11,17 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import GoodDeeds from "./pages/GoodDeeds";
+import CommentForm from './components/CommentForm'
 
 //* we can clean this up, just used it for testing so had to import everything
 function App() {
   return (
     <div className="App">
-      <h1>Something</h1>
       {/* <Header /> */}
       <div>
-        <Home />
+        {/* <Home /> */}
+        <CommentForm/>
+
         {/* <GoodDeed /> */}
         {/* <FriendsList /> */}
         {/* <EventCard /> */}

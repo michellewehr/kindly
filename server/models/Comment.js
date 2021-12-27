@@ -18,9 +18,9 @@ const commentSchema = new Schema(
       default: Date.now,
       get: timestamp => dateFormat(timestamp)
     },
-    username: {
-      type: String,
-      required: true,
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
     },
     likes: {
       type: Number,

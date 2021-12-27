@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const commentSchema = require('./Comment');
+// const commentSchema = require('./Comment');
 
 const eventSchema = new Schema(
   {
@@ -49,17 +49,20 @@ const eventSchema = new Schema(
       type: String,
       required: false
     },
-    comments: {
-      type: Schema.Types.ObjectId,
-      ref: 'Comment'
-    }
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Comment'
+      }
+    ]
   },
   {
     toJSON: {
       getters: true,
       virtuals: true
-    }
+    },
   }
+
 )
 
 const Event = model('Event', eventSchema);
