@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
-// import Auth from "../../utils/auth";
+import Auth from "../../utils/auth";
 import logo from "../../assets/images/logo.png";
 
-export default function Header() {
-  // const logout = (event) => {
-  //   event.preventDefault();
-  //   Auth.logout();
-  // };
+export default function Nav() {
+
+  // function showNavigation() {
+  //   if (Auth.loggedIn()) {
 
   return (
     <div>
@@ -52,9 +51,10 @@ export default function Header() {
               Sign Up
             </a>
           </div>
-          <div></div>
         </div>
       </nav>
     </div>
   );
 }
+
+

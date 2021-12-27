@@ -1,9 +1,9 @@
 import {
   ADD_EVENT,
-  REMOVE_EVENT,
-  JOIN_EVENT,
-  LEAVE_EVENT,
-  VERIFY_EVENT,
+  // REMOVE_EVENT,
+  // JOIN_EVENT,
+  // LEAVE_EVENT,
+  // VERIFY_EVENT,
 
 } from "../actions";
 

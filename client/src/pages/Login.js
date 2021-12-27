@@ -1,43 +1,41 @@
-// import { useMutation } from "@apollo/client";
-// import { LOGIN_USER } from "../utils/mutations";
-// import Auth from "../utils/auth";
+import { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { Link } from "react-router-dom";
+import { LOGIN } from "../utils/mutations";
+import Auth from "../utils/auth";
 
 import logo from "../assets/images/logo.png";
 
-
-
 export default function Login() {
-  //todo update state management to redux
-    // const [formState, setFormState] = useState({ email: "", password: "" });
-    // const [login, { error }] = useMutation(LOGIN_USER);
+  const [formState, setFormState] = useState({ email: "", password: "" });
+  const [login, { error }] = useMutation(LOGIN);
 
-    // // update state based on form input changes
-    // const handleChange = (event) => {
-    //   const { name, value } = event.target;
+  // update state based on form input changes
+  const handleChange = (event) => {
+    const { name, value } = event.target;
 
-    //   setFormState({
-    //     ...formState,
-    //     [name]: value,
-    //   });
-    // };
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
 
-    // // submit form
-    // const handleFormSubmit = async (event) => {
-    //   event.preventDefault();
+  // submit form
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
 
-    //   try {
-    //     const { data } = await login({
-    //       variables: { ...formState },
-    //     });
+    try {
+      const { data } = await login({
+        variables: { ...formState },
+      });
 
-    //     Auth.login(data.login.token);
-    //   } catch (e) {
-    //     console.error(e);
-    //   }
-    // };
+      Auth.login(data.login.token);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
-
     <div>
       <div class="w-screen h-screen bg-cover bg-no-repeat bg-[url('https://images.unsplash.com/photo-1593113616828-6f22bca04804?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80')]">
         <div class="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700 mx-auto">
