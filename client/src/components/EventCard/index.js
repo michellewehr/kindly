@@ -10,7 +10,7 @@ export default function EventCard(event) {
   // }
 
   return (
-    <div className="eventCard"> {event.title}
+    <div className="eventCard"> 
       <div className="flex flex-row flex-wrap w-full p-3 mt-2 antialiased bg-white rounded-lg shadow-lg">
         <div className="w-full md:w-1/3">
           <img
@@ -22,7 +22,7 @@ export default function EventCard(event) {
         <div className="flex flex-row flex-wrap w-full px-3 md:w-2/3">
           <div className="relative w-full pt-3 font-semibold text-left text-gray-700 md:pt-0">
             <div className="flex flex-row pb-1 text-2xl leading-tight text-amber-500">
-              {" "}
+              {event.title}
             </div>
             <div className="top-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
               Kindly Points: <b>+10</b>
