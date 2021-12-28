@@ -253,49 +253,40 @@ export const QUERY_EVENT = gql`
 }`;
 
 export const QUERY_GOOD_DEEDS = gql`
-{
+query goodDeeds {
   goodDeeds {
+    title
+    deedText
+    location
+    _id
+    host {
       _id
-       host {
-         _id
-         firstName
-         lastName
-         kindlyScore
-      }
-      title
-      helper {
-         _id
-         firstName
-         lastName
-         kindlyScore
-      }
-      date
-      deedText
-      location
-      createdAt
-      likes
-      comments {
-         _id
+      firstName
+      lastName
+    }
+    helper {
+      _id
+      firstName
+    }
+    comments {
+      _id
       author {
-            _id
-            firstName
-            lastName
-         }
-         commentText
-         createdAt
-         likes
-      replies {
-            _id
-            author {
-               _id
-               firstName
-               lastName
-            }
-            replyBody
-            createdAt
-         }
+        _id
+        firstName
+        lastName
       }
-   }
+      commentText
+      replies {
+        _id
+        author {
+          _id
+          firstName
+          lastName
+        }
+        replyBody
+      }
+    }
+  }
 }`;
 
 export const QUERY_GOOD_DEED = gql`
