@@ -13,18 +13,22 @@ export default function Nav() {
   return (
     <div>
       <nav className="flex items-center justify-between flex-wrap bg-sky-100	 p-6">
-        <div className="flex items-center flex-shrink-0 text-white mr-6">
-          <img
-            className="fill-current h-18 w-10 mr-2"
-            width="54"
-            height="54"
-            viewBox="0 0 54 54"
-            src={logo}
-          />
-          <span className="font-semibold text-4xl tracking-tight text-cyan-900	">
-            <h1>Kindly</h1>
-          </span>
-        </div>
+            <div className="flex items-center flex-shrink-0 text-white mr-6">
+          <NavLink to="/">
+              <img
+                className="fill-current h-18 w-10 mr-2"
+                width="54"
+                height="54"
+                viewBox="0 0 54 54"
+                src={logo}
+              />
+              </NavLink>
+              <span className="font-semibold text-4xl tracking-tight text-cyan-900	">
+                <NavLink to="/">
+                  <h1>Kindly</h1>
+                </NavLink>
+              </span>
+            </div>
         {Auth.loggedIn() && (
           <>
            <div className="block lg:hidden">

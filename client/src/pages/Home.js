@@ -14,7 +14,6 @@ export default function Home() {
         )}
         <EventCard />
       </div>
-      <Footer />
     </div>
   );
 }

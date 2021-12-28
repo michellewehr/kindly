@@ -12,6 +12,8 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Nav from './components/Nav';
 import store from './utils/store';
+import Profile from './pages/Profile';
+import Footer from './components/Footer';
 import { Provider } from 'react-redux'
 
 const httpLink = createHttpLink({
@@ -46,8 +48,10 @@ function App() {
               <Route path="/" element={<Home/>} />
               <Route exact path="/login" element={<Login/>} />
               <Route exact path="/signup" element={<Signup/>} />
+              <Route exact path="/myprofile" element={<Profile/>} />
               </Routes>
             </div>
+            <Footer/>
           </Provider>
         </div>
       </Router>
