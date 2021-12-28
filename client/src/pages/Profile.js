@@ -82,8 +82,7 @@ export default function Profile() {
                           <div>
                             <div className="flex items-center">
                               <h3 className="font-bold text-xl text-gray-900 sm:text-2xl">
-                                //! add name
-                                Ashley Porter
+                                //! add name Ashley Porter
                               </h3>
                               <span className="ml-2.5 bg-green-400 flex-shrink-0 inline-block h-2 w-2 rounded-full">
                                 <span className="sr-only">Online</span>
@@ -92,9 +91,10 @@ export default function Profile() {
                             //! add location
                             <p className="text-sm text-gray-500">Location:</p>
                             //! add kindly points
-                            <p className="text-sm text-gray-500">Kindly Points:</p>
+                            <p className="text-sm text-gray-500">
+                              Kindly Points:
+                            </p>
                           </div>
-
                         </div>
                       </div>
                     </div>

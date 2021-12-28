@@ -31,7 +31,6 @@ export default function ReplyForm(commentId) {
   //   }
   // };
 
-
   return (
     <div>
       <p
@@ -42,7 +41,7 @@ export default function ReplyForm(commentId) {
       </p>
       <form
         className=""
-      // onSubmit={handleFormSubmit}
+        // onSubmit={handleFormSubmit}
       >
         <textarea
           placeholder="reply to this comment..."

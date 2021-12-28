@@ -1,4 +1,28 @@
-export default function CommentList() {
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { ADD_COMMENT } from "../../utils/actions";
+
+
+export default function CommentList(comment) {
+  const state = useSelector((state) => {
+    return state;
+  });
+
+  const dispatch = useDispatch();
+
+  const {
+    author,
+    commentText,
+    createdAt,
+    likes,
+    replies,
+    replyCount,
+  } = comment;
+
+  const {comment } = state;
+
+  
+
   return (
     <section className="overflow-hidden text-gray-600 body-font">
       <div className="container px-5 py-24 mx-auto">
@@ -9,8 +33,7 @@ export default function CommentList() {
                 {/* get users name */}
                 {/* this is where we would call the imported user name concat function */}
               </span>
-              <span
-                className="mt-1 text-sm text-gray-500">
+              <span className="mt-1 text-sm text-gray-500">
                 {/* get comment dateTime */}
                 {/* {comment.createdAt} */}
               </span>
@@ -18,9 +41,9 @@ export default function CommentList() {
             <div className="md:flex-grow">
               <p className="leading-relaxed">
                 {/* get commentText */}
-                Glossier echo park pug, church-key sartorial
-                biodiesel vexillologist pop-up snackwave ramps cornhole. Marfa 3
-                wolf moon party messenger bag selfies, poke vaporware kombucha
+                Glossier echo park pug, church-key sartorial biodiesel
+                vexillologist pop-up snackwave ramps cornhole. Marfa 3 wolf moon
+                party messenger bag selfies, poke vaporware kombucha
                 lumbersexual pork belly polaroid hoodie portland craft beer.
               </p>
               <a className="inline-flex items-center mt-4 text-indigo-500">

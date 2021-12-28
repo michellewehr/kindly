@@ -3,7 +3,6 @@ import Auth from "../../utils/auth";
 import logo from "../../assets/images/logo.png";
 
 export default function Nav() {
-
   // function showNavigation() {
   //   if (Auth.loggedIn()) {
 
@@ -19,9 +18,7 @@ export default function Nav() {
             src={logo}
           />
           <span className="font-semibold text-4xl tracking-tight text-cyan-900	">
-            <h1>
-              Kindly
-            </h1>
+            <h1>Kindly</h1>
           </span>
         </div>
         <div className="block lg:hidden">
@@ -56,5 +53,3 @@ export default function Nav() {
     </div>
   );
 }
-
-

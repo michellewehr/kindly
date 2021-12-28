@@ -7,10 +7,10 @@ exports[`CommentForm component renders Matches snapshot DOM node structure 1`] =
       Character Count: 0/280
     </p>
     <textarea
-      class=""
+      className=""
     />
     <button
-      class=""
+      className=""
       type="submit"
     >
       Submit

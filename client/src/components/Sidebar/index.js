@@ -15,8 +15,12 @@ export default function Sidebar() {
         </div>
         {/* end of profile pic */}
         {/* div for name */}
-        <h1 className="text-sky-100 text-2xl text-center
-        p-1">Michelle Wehr</h1>
+        <h1
+          className="text-sky-100 text-2xl text-center
+        p-1"
+        >
+          Michelle Wehr
+        </h1>
         {/* div for name end */}
         {/* points */}
         <div className="flex flex-row mx-auto ">

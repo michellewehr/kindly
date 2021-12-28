@@ -1,8 +1,26 @@
-import { useState } from "react";
-import { useMutation } from "@apollo/client";
-// import { ADD_REPLY } from "../../utils/mutations";
+import { ADD_EVENT } from "../../utils/actions";
+import { useSelector, useDispatch } from 'react-redux'
 
-export default function newEventForm() {
+export default function NewEvent() {
+
+const state = useSelector((state) => {
+  return state;
+});
+
+  const dispatch = useDispatch();
+
+  const {
+    _id,
+    title,
+    description,
+    location,
+    date,
+    startTime,
+    image,
+    url
+    } = event
+
+    const { event } = state;
 
   return (
     <div>

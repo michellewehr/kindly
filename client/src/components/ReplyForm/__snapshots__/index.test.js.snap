@@ -7,14 +7,14 @@ exports[`ReplyForm component renders Matches snapshot DOM node structure 1`] = `
       Character Count: 0/280
     </p>
     <form
-      class=""
+      className=""
     >
       <textarea
-        class="form-input col-12 col-md-9"
+        className="form-input col-12 col-md-9"
         placeholder="reply to this comment..."
       />
       <button
-        class="btn col-12 col-md-3"
+        className="btn col-12 col-md-3"
         type="submit"
       >
         Submit
