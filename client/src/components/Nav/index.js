@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Auth from "../../utils/auth";
 import logo from "../../assets/images/logo.png";
 
@@ -41,19 +41,18 @@ export default function Nav() {
         </div>
         <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
           <div className="text-sm lg:flex-grow">
-            <a
-              href="#responsive-header"
+            <NavLink
+              to="/myprofile"
               className="block mt-4 lg:inline-block lg:mt-0 hover:text-slate-400 mr-4 text-sky-900 text-xl"
               >          
               My Profile
-            </a>
-            <a
-              href="#responsive-header"
+            </NavLink>
+            <button
               className="block mt-4 lg:inline-block lg:mt-0 hover:text-slate-400 mr-4 text-sky-900 text-xl"
               onClick={logout}
             >
               Log Out
-            </a>
+            </button>
           </div>
         </div>
           </>
@@ -74,19 +73,18 @@ export default function Nav() {
         </div>
         <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
           <div className="text-sm lg:flex-grow">
-            <a
-              href="#responsive-header"
+            <NavLink to = "/login"
               className="block mt-4 lg:inline-block lg:mt-0 hover:text-slate-400 mr-4 text-sky-900 text-xl"
             >
               Log In
-            </a>
-            <a
-              href="#responsive-header"
+              </NavLink>
+            <NavLink
+              to="/signup"
               className="block mt-4 lg:inline-block lg:mt-0 hover:text-slate-400 mr-4 text-sky-900 text-xl"
             >
               Sign Up
-            </a>
-          </div>
+              </NavLink>
+            </div>
         </div>
         </>
           )}
