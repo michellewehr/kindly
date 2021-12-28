@@ -10,7 +10,7 @@ const db = require('./config/connection');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-// Use Helmet 
+// Use Helmet
 // app.use(helmet());
 
 const { authMiddleware } = require('./utils/auth');
