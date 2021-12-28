@@ -319,51 +319,29 @@ export const QUERY_USER = gql`
 }`;
 
 export const QUERY_EVENTS = gql`
-{
+query events {
   events {
+    _id
+    host {
       _id
-      host {
-         _id
-         firstName
-         lastName
-         kindlyScore
+    }
+    title
+    attendees {
+      _id
+    }
+    location
+    description
+    url
+    image
+    comments {
+      _id
+      commentText
+      replies {
+        _id
+        replyBody
       }
-      title
-      attendees {
-         _id
-         firstName
-         lastName
-         kindlyScore
-      }
-      location
-      description
-      date
-      startTime
-      endTime
-      url
-      image
-       comments {
-         _id
-         author {
-            _id
-            firstName
-            lastName
-         }
-         commentText
-         createdAt
-         likes
-         replies {
-            _id
-            replyBody
-            createdAt
-            author {
-               _id
-               firstName
-               lastName
-            }
-         }
-      }
-   }
+    }
+  }
 }`;
 
 export const QUERY_EVENT = gql`
