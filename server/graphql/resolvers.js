@@ -11,7 +11,12 @@ const resolvers = {
       // find current logged in user
       me: async (parent, args, context) => {
          if (context.user) {
-            const userData = await User.findOne({ _id: context.user._id }).select('-__v -password').populate('connections').populate('events');
+            const userData = await User.findOne({ _id: context.user._id })
+            .select('-__v -password')
+            .populate('connections')
+            .populate('events').populate({path: 'events', populate: 'host'})
+            .populate('goodDeeds').populate({path: 'goodDeeds', populate: 'host'})
+            
             return userData;
          }
          throw new AuthenticationError('Not logged in');
