@@ -23,11 +23,23 @@ export default function EventList() {
         <div>Loading...</div>
       ) : (
         <div>
-          {eventData}
+          {eventData.map((event) => (
+              <EventCard 
+              key={event._id}
+              _id={event._id}
+              host={event.host}
+              host={event.host}
+              title={event.title}
+              image={event.image}
+              location={event.location}
+              url={event.url}
+              comments={event.comments}
+              description={event.description}
+              attendees={event.attendees}
+              />
+          ))}
         </div>
       )}
     </div>
   )
-
-
 }

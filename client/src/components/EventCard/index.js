@@ -1,14 +1,16 @@
-export default function EventCard(events) {
-  if (!events.length) {
-    return (
-      <div>
-        <h3>No events yet!</h3>
-      </div>
-    )
-  }
+
+export default function EventCard(event) {
+  
+  // if (!events.length) {
+  //   return (
+  //     <div>
+  //       <h3>No events yet!</h3>
+  //     </div>
+  //   )
+  // }
 
   return (
-    <div className="eventCard">
+    <div className="eventCard"> {event.title}
       <div className="flex flex-row flex-wrap w-full p-3 mt-2 antialiased bg-white rounded-lg shadow-lg">
         <div className="w-full md:w-1/3">
           <img
@@ -21,37 +23,35 @@ export default function EventCard(events) {
           <div className="relative w-full pt-3 font-semibold text-left text-gray-700 md:pt-0">
             <div className="flex flex-row pb-1 text-2xl leading-tight text-amber-500">
               {" "}
-              Event Name
             </div>
             <div className="top-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
               Kindly Points: <b>+10</b>
             </div>
             <div className="pb-4 cursor-pointer text-normal hover:text-cyan-700 text-cyan-900">
-              <span className="pb-1">User Host</span>
+              <span className="pb-1">{event.host}</span>
             </div>
             <div className="pb-1 text-normal text-cyan-900">
               <span className="">
-                <b>Description:</b> lorem fdjasfkldsjafkldsjafl fdjsalfkjdsalf
-                dasfjdklsafjdklsaf{" "}
+                <b>Description:</b> {event.description}
               </span>
             </div>
             <div className="pb-1 text-normal text-cyan-900">
               <span className="">
-                <b>Location:</b>Tolland, CT
+                <b>Location:</b>{event.location}
               </span>
             </div>
             <div className="pb-1 text-normal text-cyan-900">
               <span className="">
-                <b>Date:</b> 04/22/2122
+                <b>Date:</b> {event.date}
               </span>
             </div>
             <div className="pb-1 text-normal text-cyan-900">
               <span className="">
-                <b>Time:</b> 1pm-3pm
+                <b>Time:</b> {event.startTime + ' - ' + event.endtime}
               </span>
             </div>
             <div className="pb-1 text-normal text-cyan-900 hover:text-orange-300">
-              <a href="">
+              <a href={event.url}>
                 <span className="">
                   <i>More Information</i>
                 </span>
