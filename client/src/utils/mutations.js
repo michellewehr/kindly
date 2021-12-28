@@ -120,6 +120,7 @@ export const JOIN_EVENT = gql`
 export const LEAVE_EVENT = gql`
   mutation leaveEvent($eventId: ID!) {
     leaveEvent(eventId: $eventId) {
+    host{
         _id
         firstName
         lastName
