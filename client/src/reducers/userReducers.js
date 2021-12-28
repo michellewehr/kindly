@@ -2,7 +2,7 @@ import {
   USER_SIGNUP,
   USER_LOGIN,
   USER_LOGOUT,
-} from "../constants/userConstants";
+} from "../utils/actions";
 
 export const userLoginReducer = (state = {}, action) => {
   switch (action.type) {

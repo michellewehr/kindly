@@ -24,11 +24,9 @@ export default function EventList() {
       ) : (
         <div>
           {eventData.map((event) => (
-              <EventCard 
+            <EventCard
               key={event._id}
               _id={event._id}
-              host={event.host}
-              host={event.host}
               title={event.title}
               image={event.image}
               location={event.location}
@@ -36,7 +34,7 @@ export default function EventList() {
               comments={event.comments}
               description={event.description}
               attendees={event.attendees}
-              />
+            />
           ))}
         </div>
       )}
