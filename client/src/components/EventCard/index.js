@@ -1,6 +1,6 @@
 
 export default function EventCard(event) {
-  
+
   // if (!events.length) {
   //   return (
   //     <div>
@@ -10,7 +10,7 @@ export default function EventCard(event) {
   // }
 
   return (
-    <div className="eventCard"> 
+    <div className="eventCard">
       <div className="flex flex-row flex-wrap w-full p-3 mt-2 antialiased bg-white rounded-lg shadow-lg">
         <div className="w-full md:w-1/3">
           <img
