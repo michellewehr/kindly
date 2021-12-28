@@ -44,7 +44,7 @@ function App() {
         <div className='relative h-100'>
           <Provider store={store}>
             <Nav />
-            <NewEventForm />
+            {/* <NewEventForm /> */}
             <div className='min-h-full'>
               <Routes>
                 <Route path="/" element={<Home />} />

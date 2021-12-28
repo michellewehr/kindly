@@ -2,6 +2,7 @@ import EventCard from "../EventCard";
 import { useEffect } from "react";
 import { QUERY_EVENTS } from '../../utils/queries'
 import { useQuery } from "@apollo/client";
+import Loading from "../loading";
 
 export default function EventList() {
   const { loading, data } = useQuery(QUERY_EVENTS)
@@ -20,7 +21,7 @@ export default function EventList() {
   return (
     <div>
       {loading ? (
-        <div>Loading...</div>
+        <Loading />
       ) : (
         <div>
           {eventData.map((event) => (
