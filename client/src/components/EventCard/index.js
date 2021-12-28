@@ -28,7 +28,7 @@ export default function EventCard(event) {
               Kindly Points: <b>+10</b>
             </div>
             <div className="pb-4 cursor-pointer text-normal hover:text-cyan-700 text-cyan-900">
-              <span className="pb-1">{event.host}</span>
+              <span className="pb-1">Host</span>
             </div>
             <div className="pb-1 text-normal text-cyan-900">
               <span className="">
