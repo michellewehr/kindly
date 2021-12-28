@@ -1,11 +1,11 @@
 export default function EventCard(events) {
-  // if (!events.length) {
-  //   return (
-  //     <div>
-  //       <h3>No events yet!</h3>
-  //     </div>
-  //   )
-  // }
+  if (!events.length) {
+    return (
+      <div>
+        <h3>No events yet!</h3>
+      </div>
+    )
+  }
 
   return (
     <div className="eventCard">

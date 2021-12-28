@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from 'react-redux'
 
 export default function NewEvent() {
 
-const state = useSelector((state) => {
-  return state;
-});
+  const state = useSelector((state) => {
+    return state;
+  });
 
   const dispatch = useDispatch();
 
@@ -18,17 +18,17 @@ const state = useSelector((state) => {
     startTime,
     image,
     url
-    } = event
+  } = event
 
-    const { event } = state;
+  const { event } = state;
 
   return (
     <div>
       <form>
-          <label>Title:</label>
-          <input placeholder='Title' />
-          <label>Location</label>
-          <input placeholder='location' />
+        <label>Title:</label>
+        <input placeholder='Title' />
+        <label>Location</label>
+        <input placeholder='location' />
         <button type='submit'>Submit</button>
       </form>
     </div>

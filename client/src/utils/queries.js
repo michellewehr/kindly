@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_ME = `
+export const QUERY_ME = gql`
 {
   me {
       _id
@@ -106,7 +106,7 @@ export const QUERY_ME = `
    }
 }`;
 
-export const QUERY_USERS = `
+export const QUERY_USERS = gql`
 {
   me {
       _id
@@ -212,7 +212,7 @@ export const QUERY_USERS = `
    }
 }`;
 
-export const QUERY_USER = `
+export const QUERY_USER = gql`
 {
   me {
       _id
@@ -318,7 +318,7 @@ export const QUERY_USER = `
    }
 }`;
 
-export const QUERY_EVENTS = `
+export const QUERY_EVENTS = gql`
 {
   events {
       _id
@@ -366,7 +366,7 @@ export const QUERY_EVENTS = `
    }
 }`;
 
-export const QUERY_EVENT = `
+export const QUERY_EVENT = gql`
 {
   events {
       _id
@@ -414,7 +414,7 @@ export const QUERY_EVENT = `
    }
 }`;
 
-export const QUERY_GOOD_DEEDS = `
+export const QUERY_GOOD_DEEDS = gql`
 {
   goodDeeds {
       _id
@@ -460,7 +460,7 @@ export const QUERY_GOOD_DEEDS = `
    }
 }`;
 
-export const QUERY_GOOD_DEED = `
+export const QUERY_GOOD_DEED = gql`
 {
   goodDeeds {
       _id

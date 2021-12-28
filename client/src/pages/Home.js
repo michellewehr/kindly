@@ -6,11 +6,11 @@ import Auth from '../utils/auth';
 
 export default function Home() {
   return (
-    <div>
+    <div className="min-h-screen">
       {/* <Header /> */}
       <div className="flex w-full justify-between">
         {Auth.loggedIn() && (
-        <Sidebar />
+          <Sidebar />
         )}
         <EventCard />
       </div>

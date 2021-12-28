@@ -5,9 +5,9 @@ import UpcomingEvents from "../components/UpcomingEvents";
 
 export default function Profile() {
   return (
-    <div>
+    <div className="min-h-screen">
       <div
-        className=" overflow-hidden"
+        className="overflow-hidden"
         aria-labelledby="slide-over-title"
         role="dialog"
         aria-modal="true"
@@ -27,7 +27,7 @@ export default function Profile() {
             To: "translate-x-full"
         --> */}
               <div className="w-screen max-w-2xl mx-auto">
-                <div className="flex flex-col bg-white shadow-xl overflow-y-scroll">
+                <div className="flex flex-col bg-white shadow-xl">
                   <div className="px-4 py-6 sm:px-6">
                     <div className="flex items-start justify-between">
                       <h2

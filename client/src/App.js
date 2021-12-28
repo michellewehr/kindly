@@ -15,6 +15,7 @@ import store from './utils/store';
 import Profile from './pages/Profile';
 import Footer from './components/Footer';
 import { Provider } from 'react-redux'
+import EventList from './components/EventList';
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:3001/graphql'
@@ -40,18 +41,19 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div>
+        <div className='relative h-100'>
           <Provider store={store}>
             <Nav />
-            <div>
+            <EventList />
+            <div className='min-h-full'>
               <Routes>
-              <Route path="/" element={<Home/>} />
-              <Route exact path="/login" element={<Login/>} />
-              <Route exact path="/signup" element={<Signup/>} />
-              <Route exact path="/myprofile" element={<Profile/>} />
+                <Route path="/" element={<Home />} />
+                <Route exact path="/login" element={<Login />} />
+                <Route exact path="/signup" element={<Signup />} />
+                <Route exact path="/myprofile" element={<Profile />} />
               </Routes>
             </div>
-            <Footer/>
+            <Footer />
           </Provider>
         </div>
       </Router>
