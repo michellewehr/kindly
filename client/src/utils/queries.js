@@ -179,36 +179,40 @@ export const QUERY_USER = gql`
 }`;
 
 export const QUERY_EVENTS = gql`
-query events {
-  events {
-    _id
-    host {
+  query events {
+    events {
       _id
-    }
-    title
-    attendees {
-      _id
-    }
-    location
-    description
-    url
-    image
-    comments {
-      _id
-      commentText
-      replies {
+      host {
         _id
-        replyBody
       }
-      author {
+      title
+      attendees {
         _id
-        firstName
-        lastName
       }
-      likes
+      location
+      description
+      date
+      startTime
+      endTime
+      url
+      image
+      comments {
+        _id
+        commentText
+        replies {
+          _id
+          replyBody
+        }
+        author {
+          _id
+          firstName
+          lastName
+        }
+        likes
+      }
     }
   }
-}`;
+`;
 
 export const QUERY_EVENT = gql`
 {
