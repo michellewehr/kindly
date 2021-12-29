@@ -1,33 +1,29 @@
 import GoodDeed from "../GoodDeed";
-// import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {  QUERY_GOOD_DEEDS } from '../../utils/queries'
 import { useQuery } from "@apollo/client";
 import Auth from '../../utils/auth';
-
+import GoodDeedModal from "../GoodDeedModal";
 
 export default function GoodDeedList() {
   const { loading, data } = useQuery(QUERY_GOOD_DEEDS)
+  const [goodDeedModalOpen, setGoodDeedModalOpen] = useState(false);
 
   const goodDeedData = data?.goodDeeds || [];
   console.log(goodDeedData)
 
-  // if (loading) {
-  //   return (
-  //     <div>
-  //       Loading ...
-  //     </div>
-  //   )
-  // }
 
   return (
     <div>
+      {goodDeedModalOpen && <GoodDeedModal onClose={() => {setGoodDeedModalOpen(false)}}/>}   
+
       {loading ? (
         <div>Loading...</div>
       ) : (
         <div>
             {Auth.loggedIn() && (
         <div className="text-sm text-amber-500 relative h-16">
-        <button className="h-16 bg-cyan-700 hover:bg-orange-300 absolute right-0 mr-2 text-white font-bold py-2 px-4 rounded mt-1">
+        <button onClick={() => {setGoodDeedModalOpen(true)}} className="h-16 bg-cyan-700 hover:bg-orange-300 absolute right-0 mr-2 text-white font-bold py-2 px-4 rounded mt-1">
           Create Good Deed
         </button>
       </div>

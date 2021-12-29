@@ -6,6 +6,7 @@ import Sidebar from "../components/Sidebar";
 import Auth from '../utils/auth';
 import GoodDeedList from "../components/GoodDeedList";
 import {useState} from 'react';
+import EventModal from "../components/EventModal";
 
 
 export default function Home() {
@@ -14,8 +15,12 @@ export default function Home() {
   function toggleEventsDisplay() {
     toggleEvents(!renderEvents)
   }
+
+  
   return (
     <div>
+     
+
       {/* <Header /> */}
        <div className="text-center">
           {renderEvents ? <button onClick={toggleEventsDisplay}>View Good Deeds</button>: <button onClick={toggleEventsDisplay}>View Events</button>}   
