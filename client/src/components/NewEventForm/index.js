@@ -1,11 +1,11 @@
-import { CREATE_EVENT } from "../../utils/actions";
-import { useSelector, useDispatch } from 'react-redux'
+import { CREATE_EVENT } from "../../utils/mutations";
 import { useState } from 'react';
+import { useMutation } from '@apollo/client'
 
 
 export default function NewEvent() {
-// add form data to graphQL with CREATE_EVENT
-  const dispatch = useDispatch();
+  const [addEvent] = useMutation(CREATE_EVENT);
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -13,7 +13,8 @@ export default function NewEvent() {
     date: '',
     startTime: '',
     endTime: '',
-    url: ''
+    url: '',
+    image: ''
   });
 
   const handleChange = e => {
@@ -22,18 +23,25 @@ export default function NewEvent() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    dispatch({ type: CREATE_EVENT, payload: formData });
-    console.log(formData, 'formData')
-    // setFormData({
-    //   title: '',
-    //   description: '',
-    //   location: '',
-    //   date: '',
-    //   startTime: '',
-    //   endTime: '',
-    //   url: ''
-    // });
+    try {
+      const { data } = await addEvent({ variables: { ...formData } });
+      console.log(data);
+    } catch (e) {
+      console.error(e);
+    }
+
+    setFormData({
+      title: '',
+      description: '',
+      location: '',
+      date: '',
+      startTime: '',
+      endTime: '',
+      url: '',
+      image: ''
+    });
   }
+
 
   return (
     <div className="flex flex-col justify-center items-center h-full">
@@ -41,7 +49,10 @@ export default function NewEvent() {
       <form className="w-full max-w-lg" onSubmit={handleSubmit}>
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-title">
+            <label
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              htmlFor="grid-title"
+            >
               Title
             </label>
             <input
@@ -55,7 +66,10 @@ export default function NewEvent() {
             />
           </div>
           <div className="w-full md:w-1/2 px-3">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-description">
+            <label
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              htmlFor="grid-description"
+            >
               Description
             </label>
             <input
@@ -71,7 +85,10 @@ export default function NewEvent() {
         </div>
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full px-3">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-location">
+            <label
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              htmlFor="grid-location"
+            >
               Location
             </label>
             <input
@@ -87,7 +104,10 @@ export default function NewEvent() {
         </div>
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-date">
+            <label
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              htmlFor="grid-date"
+            >
               Date
             </label>
             <input
@@ -101,7 +121,10 @@ export default function NewEvent() {
             />
           </div>
           <div className="w-full md:w-1/2 px-3">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-startTime">
+            <label
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              htmlFor="grid-startTime"
+            >
               Start Time
             </label>
             <input
@@ -117,7 +140,10 @@ export default function NewEvent() {
         </div>
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-endTime">
+            <label
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              htmlFor="grid-endTime"
+            >
               End Time
             </label>
             <input
@@ -131,7 +157,10 @@ export default function NewEvent() {
             />
           </div>
           <div className="w-full md:w-1/2 px-3">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-url">
+            <label
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              htmlFor="grid-url"
+            >
               Website
             </label>
             <input
@@ -144,15 +173,33 @@ export default function NewEvent() {
               onChange={handleChange}
             />
           </div>
+          <div className="w-full md:w-1/2 px-3">
+            <label
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              htmlFor="grid-url"
+            >
+              <i class="fas fa-image    "></i>
+            </label>
+            <input
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="grid-image"
+              type="text"
+              placeholder="Image"
+              name="image"
+              value={formData.image}
+              onChange={handleChange}
+            />
+          </div>
         </div>
         <button
-                  className="w-full p-3 rounded-lg shadow-lg"
-                  type="submit"
-                  value="Submit"
-                >
-                  Submit
-                </button>
+          className="w-full p-3 rounded-lg shadow-lg"
+          type="submit"
+          value="Submit"
+        >
+          Submit
+        </button>
       </form>
     </div>
   );
 };
+

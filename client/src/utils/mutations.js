@@ -30,7 +30,8 @@ export const CREATE_USER = gql`
 
 export const CREATE_EVENT = gql`
   mutation createEvent($title: String!, $location: String!, $description: String!, $date: String!, $startTime: String!, $endTime: String!, $url: String!, $image: String!) {
-    createEvent(title: $title, location: $location, description: $description, date: $date, startTime: $startTime, endTime: $endTime, url: $url, image: $image) {
+    createEvent(title: $title, location: $location, description: $description, date: $date, startTime: $startTime, endTime: $endTime, url: $url, image: $image)
+    {
       _id
       host {
         _id
