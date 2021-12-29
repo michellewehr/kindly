@@ -1,12 +1,10 @@
 import EventList from "../components/EventList";
-import { ADD_GOOD_DEED } from "../utils/actions";
 import Footer from "../components/Footer";
 // import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Auth from '../utils/auth';
 import GoodDeedList from "../components/GoodDeedList";
 import {useState} from 'react';
-import EventModal from "../components/EventModal";
 
 
 export default function Home() {
@@ -20,7 +18,6 @@ export default function Home() {
   return (
     <div>
      
-
       {/* <Header /> */}
        <div className="text-center">
           {renderEvents ? <button onClick={toggleEventsDisplay}>View Good Deeds</button>: <button onClick={toggleEventsDisplay}>View Events</button>}   

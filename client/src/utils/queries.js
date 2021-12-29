@@ -200,6 +200,12 @@ query events {
         _id
         replyBody
       }
+      author {
+        _id
+        firstName
+        lastName
+      }
+      likes
     }
   }
 }`;

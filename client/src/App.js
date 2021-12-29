@@ -15,7 +15,6 @@ import store from './utils/store';
 import Profile from './pages/Profile';
 import Footer from './components/Footer';
 import { Provider } from 'react-redux'
-import NewEventForm from './components/NewEventForm';
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:3001/graphql'
@@ -44,7 +43,6 @@ function App() {
         <div className='relative h-100'>
           <Provider store={store}>
             <Nav />
-            <NewEventForm />
             <div className='min-h-full'>
               <Routes>
                 <Route path="/" element={<Home />} />

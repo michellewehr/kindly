@@ -1,3 +1,5 @@
+import { createSourceEventStream } from "graphql"
+import Comment from '../Comment';
 
 export default function EventCard(event) {
 
@@ -8,7 +10,11 @@ export default function EventCard(event) {
   //     </div>
   //   )
   // }
-
+  const comments = event.comments;
+  comments.map(comment => {
+    console.log(comment.commentText, 'line 15')
+    console.log(comment._id, 'line 16')
+  })
   return (
     <div className="eventCard">
       <div className="flex flex-row flex-wrap w-full p-3 mt-2 antialiased bg-white rounded-lg shadow-lg">
@@ -65,6 +71,18 @@ export default function EventCard(event) {
           </div>
         </div>
       </div>
+      {/* <Comment/> */}
+      {event.comments.map((comment) => (
+            <Comment
+              key={comment._id}
+              _id={comment._id}
+              commentText={comment.commentText}
+              likes={comment.likes}
+              replies={comment.replies}
+              // author={comment.author}
+            />
+          ))}
+   
     </div>
   );
 }

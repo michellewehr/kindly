@@ -4,6 +4,7 @@ import { QUERY_EVENTS } from '../../utils/queries'
 import { useQuery } from "@apollo/client";
 import Auth from '../../utils/auth';
 import EventModal from "../EventModal";
+import Comment from '../Comment';
 
 export default function EventList() {
   const { loading, data } = useQuery(QUERY_EVENTS);
@@ -12,7 +13,10 @@ export default function EventList() {
 
   const eventData = data?.events || [];
   console.log(eventData)
-
+  console.log(eventData.comments);
+  eventData.map((event) => event.comments.map((comment) => {
+    console.log(comment) 
+  }));
 
 
   return (
@@ -42,6 +46,9 @@ export default function EventList() {
               attendees={event.attendees}
             />
           ))}
+      
+         
+        
         </div>
       )}
     </div>

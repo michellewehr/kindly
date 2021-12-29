@@ -36,7 +36,7 @@ const resolvers = {
 
       // get all events
       events: async () => {
-         return await Event.find().populate('host').populate('attendees').populate('comments').select('-__v');
+         return await Event.find().populate('host').populate('attendees').populate('comments').populate({path: 'comments', populate: 'author'}).select('-__v');
       },
 
       // TODO: Make sure all of the optional parameters work

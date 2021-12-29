@@ -32,6 +32,7 @@ export default function GoodDeedList() {
             <GoodDeed
               key={goodDeed._id}
               _id={goodDeed._id}
+              host={goodDeed.host}
               title={goodDeed.title}
               location={goodDeed.location}
               comments={goodDeed.comments}

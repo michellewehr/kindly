@@ -22,7 +22,7 @@ export default function GoodDeed(goodDeed) {
             </div>
             <div className="text-normal hover:text-cyan-700 cursor-pointer text-cyan-900 pb-4">
               {/* //! get good deed host */}
-              <span className="pb-1">{goodDeed.host}</span>
+              <span className="pb-1">Host</span>
             </div>
             <div className="text-normal text-cyan-900 pb-1">
               <span className="">

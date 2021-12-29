@@ -191,3 +191,26 @@ export const LEAVE_GOOD_DEED = gql`
     }
   }
 `;
+
+export const ADD_COMMENT = gql`
+mutation AddComment($goodDeedId: ID, $eventId: ID, $commentText: String!) {
+  addComment(goodDeedId: $goodDeedId, eventId: $eventId commentText: $commentText) {
+    _id
+    comments {
+      _id
+      author {
+        _id
+        firstName
+      }
+      commentText
+      replies {
+        _id
+        author {
+          _id
+          firstName
+          lastName
+        }
+      }
+    }
+  }
+}`;
