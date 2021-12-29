@@ -1,15 +1,8 @@
 import EventCard from "../EventCard";
-<<<<<<< HEAD
 import { useEffect, useState } from "react";
 import Auth from '../../utils/auth';
 import EventModal from "../EventModal";
 import Comment from '../Comment';
-=======
-import { useEffect } from "react";
-import { QUERY_EVENTS } from '../../utils/queries'
-import { useQuery } from "@apollo/client";
-import Loading from "../loading";
->>>>>>> 6e8634b66d35a505f59fdd89e512ee61d6393f7d
 
 export default function EventList({ events }) {
   const [eventModalOpen, setEventModalOpen] = useState(false);
