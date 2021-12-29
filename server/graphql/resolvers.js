@@ -120,7 +120,7 @@ const resolvers = {
                { $push: { goodDeeds: goodDeed._id } },
                 { new: true });
 
-            return goodDeed.populate('host').populate('attendees');
+            return goodDeed;
          } else {
             throw new AuthenticationError('You need to be logged in to create a good deed!');
          }

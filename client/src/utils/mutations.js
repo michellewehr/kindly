@@ -51,23 +51,16 @@ export const CREATE_EVENT = gql`
 `;
 
 export const CREATE_GOOD_DEED = gql`
-  mutation createGoodDeed($title: String!, $deedText: String!, $date: String!, $location: String!) {
-    createGoodDeed(title: $title, deedText: $deedText, date: $date, location: $location) {
-      _id
-      host {
-        _id
-        firstName
-        lastName
-        kindlyScore
-      }
-      title
-      date
-      deedText
-      location
-      createdAt
-      likes
-    }
+ mutation CreateGoodDeed($title: String!, $deedText: String!, $date: String!, $location: String!) {
+  createGoodDeed(title: $title, deedText: $deedText, date: $date, location: $location) {
+    _id
+    title
+    date
+    deedText
+    location
+    likes
   }
+}
 `;
 
 export const ADD_CONNECTION = gql`
