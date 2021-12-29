@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { ADD_REPLY } from "../../utils/mutations";
+import { ADD_REPLY } from "../../utils/actions";
 
 export default function ReplyForm({commentId}) {
   const [replyBody, setReplyBody] = useState("");
