@@ -4,6 +4,7 @@ import { ADD_COMMENT } from "../../utils/mutations";
 // import { QUERY_COMMENTS, QUERY_ME } from "../../utils/queries";
 
 export default function CommentForm({eventId, goodDeedId}) {
+  // console.log(goodDeedId, 'good deed id');
   const [commentText, setCommentText] = useState("");
   // const [characterCount, setCharacterCount] = useState(0);
   const [addComment] = useMutation(ADD_COMMENT);

@@ -53,11 +53,11 @@ const resolvers = {
       },
 
       goodDeeds: async () => {
-         return await GoodDeed.find().populate('host').populate('helper').populate('comments').populate({path: 'comments', populate: 'author'}).select('-__v')
+         return await GoodDeed.find().populate('host').populate('helper').populate('comments').populate({path: 'comments', populate: 'author'}).populate({path: 'comments.replies', populate: 'author'}).select('-__v')
       },
 
       goodDeed: async () => {
-         return await GoodDeed.findOne({ _id }).populate('host').populate('helper').populate('comments').select('-__v')
+         return await GoodDeed.findOne({ _id }).populate('host').populate('helper').populate('comments').populate({path: 'comments', populate: 'author'}).select('-__v')
       }
    },
 

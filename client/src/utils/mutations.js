@@ -217,24 +217,15 @@ mutation AddComment($goodDeedId: ID, $eventId: ID, $commentText: String!) {
 }`;
 
 export const ADD_REPLY = gql`
-mutation addReply($commentId: ID!, $replyBody: String!) {
+mutation AddReply($commentId: ID!, $replyBody: String!) {
   addReply(commentId: $commentId, replyBody: $replyBody) {
     _id
-    author {
-      _id
-      firstName
-      lastName
-    }
     commentText
-    likes
     replies {
-      _id
-      author {
-        lastName
-        firstName
-        _id
-      }
       replyBody
+      author{
+        firstName
+      }
     }
   }
 }`;

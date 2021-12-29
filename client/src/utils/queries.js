@@ -274,6 +274,7 @@ query GoodDeeds {
       lastName
     }
     date
+    deedText
     location
     comments {
       _id
@@ -286,12 +287,10 @@ query GoodDeeds {
       likes
       replies {
         _id
+        replyBody
         author {
           _id
-          firstName
-          lastName
         }
-        replyBody
       }
     }
   }
