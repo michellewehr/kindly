@@ -3,7 +3,7 @@ import CommentForm from "../CommentForm";
 import CommentsList from "../CommentsList";
 import Auth from '../../utils/auth';
 
-export default function GoodDeed(goodDeed) {
+export default function GoodDeed({goodDeed}) {
   const [viewComments, setViewComments] = useState(false);
   const [addComment, setAddComment] = useState(false);
   // only in profile

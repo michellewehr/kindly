@@ -31,13 +31,13 @@ export default function GoodDeedList() {
           {goodDeedData.map((goodDeed) => (
             <GoodDeed
               key={goodDeed._id}
-              _id={goodDeed._id}
-              host={goodDeed.host}
-              title={goodDeed.title}
-              location={goodDeed.location}
-              comments={goodDeed.comments}
-              deedText={goodDeed.deedText}
-              helper={goodDeed.helper}
+              goodDeed={goodDeed}
+              // host={goodDeed.host}
+              // title={goodDeed.title}
+              // location={goodDeed.location}
+              // comments={goodDeed.comments}
+              // deedText={goodDeed.deedText}
+              // helper={goodDeed.helper}
             />
           ))}
         </div>

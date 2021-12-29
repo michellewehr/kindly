@@ -6,7 +6,7 @@ import { useState } from "react";
 import ReplyForm from '../ReplyForm';
 
 
-export default function Comment(comment) {
+export default function Comment({comment}) {
   const [viewReplies, setViewReplies] = useState(false);
   const [addReply, setAddReply] = useState(false);
 

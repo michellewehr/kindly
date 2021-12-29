@@ -80,7 +80,7 @@ export default function Sidebar() {
             <div className="text-left px-1">
               <h3 className="bg-cyan-600 hover:bg-orange-300">{goodDeed.title}</h3>
               <p>{goodDeed.location}</p>
-              <p>{goodDeed.date} at {goodDeed.startTime} - {goodDeed.endTime} </p>
+              <p>{goodDeed.date}</p>
             </div>
           </a>
           ))}  

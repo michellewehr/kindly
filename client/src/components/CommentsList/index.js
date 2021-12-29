@@ -7,10 +7,11 @@ export default function CommentsList({comments}) {
             {comments.map((comment) => (
                 <Comment
                   key={comment._id}
-                  _id={comment._id}
-                  commentText={comment.commentText}
-                  likes={comment.likes}
-                  replies={comment.replies}
+                  comment={comment}
+                  // _id={comment._id}
+                  // commentText={comment.commentText}
+                  // likes={comment.likes}
+                  // replies={comment.replies}
                   // author={comment.author}
                 />
               ))}
