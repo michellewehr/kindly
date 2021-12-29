@@ -1,9 +1,43 @@
-import EventList from "../components/EventCard";
-import GoodDeed from "../components/GoodDeed";
 import FriendsList from "../components/FriendsList";
-import UpcomingEvents from "../components/UpcomingEvents";
+import EventList from "../components/EventList";
+import GoodDeedList from "../components/GoodDeedList";
+import { useState } from "react";
+import { useQuery, useMutation } from "@apollo/client";
+import { QUERY_ME } from "../utils/queries";
+import Auth from "../utils/auth";
+import { ADD_CONNECTION } from "../utils/mutations";
 
 export default function Profile() {
+  const { loading, data } = useQuery(QUERY_ME);
+
+  const myData = data?.me || {};
+  console.log(myData, 'line 14 profile')
+  const events = myData?.events || [];
+  const myGoodDeeds = myData?.goodDeeds || [];
+  const myFriends = myData?.friends || [];
+
+ const [renderEvents, toggleEvents] = useState(true);
+
+ function toggleEventsDisplay() {
+   toggleEvents(!renderEvents);
+ }
+  console.log(myData, "me");
+  console.log(myGoodDeeds, "good deeds");
+
+  const [addConnection, { error }] = useMutation(ADD_CONNECTION);
+
+  const handleAddConnection = async () => {
+    try {
+      await addConnection({
+        variables: {
+          id: myData.id,
+        },
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   return (
     <div className="min-h-screen">
       <div
@@ -36,6 +70,10 @@ export default function Profile() {
                       >
                         Profile
                       </h2>
+                      <button
+                        className="p-1 -ml-4 text-gray-400 focus:outline-none"
+                        aria-label="Connect with me" onClick={handleAddConnection}
+                      >Connect with me</button>
                       <div className="ml-3 h-7 flex items-center">
                         <button
                           type="button"
@@ -82,17 +120,18 @@ export default function Profile() {
                           <div>
                             <div className="flex items-center">
                               <h3 className="font-bold text-xl text-gray-900 sm:text-2xl">
-                                {/* //! add name Ashley Porter */}
+                                {myData.firstName} {myData.lastName}
                               </h3>
                               <span className="ml-2.5 bg-green-400 flex-shrink-0 inline-block h-2 w-2 rounded-full">
                                 <span className="sr-only">Online</span>
                               </span>
                             </div>
-                            {/* //! add location */}
-                            <p className="text-sm text-gray-500">Location:</p>
-                            {/* //! add kindly points */}
+
                             <p className="text-sm text-gray-500">
-                              Kindly Points:
+                              Location:{myData.location}
+                            </p>
+                            <p className="text-sm text-gray-500">
+                              Kindly Points:{myData.kindlyPoints}
                             </p>
                           </div>
                         </div>
@@ -102,18 +141,31 @@ export default function Profile() {
                       <dl className="space-y-8 sm:divide-y sm:divide-gray-200 sm:space-y-0">
                         <div className="sm:flex sm:px-6 sm:py-5">
                           <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0 lg:w-48">
-                            Upcoming Events
+                            <div className="text-center">
+                              {renderEvents ? (
+                                <button onClick={toggleEventsDisplay}>
+                                  View Upcoming Good Deeds
+                                </button>
+                              ) : (
+                                <button onClick={toggleEventsDisplay}>
+                                  View Upcoming Events
+                                </button>
+                              )}
+                            </div>
+                            {renderEvents ? (
+                              <EventList events={events} host={data?.me} />
+                            ) : (
+                              <GoodDeedList />
+                            )}
                           </dt>
-                          <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:ml-6 sm:col-span-2">
-                            {/* //! add event list and Good Deeds */}
-                          </dd>
+                          <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:ml-6 sm:col-span-2"></dd>
                         </div>
                         <div className="sm:flex sm:px-6 sm:py-5">
                           <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0 lg:w-48">
                             Connections
                           </dt>
                           <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:ml-6 sm:col-span-2">
-                            {/* //! add connections */}
+                            {myData.connections}
                           </dd>
                         </div>
                         <div className="sm:flex sm:px-6 sm:py-5"></div>
