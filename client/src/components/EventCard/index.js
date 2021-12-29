@@ -1,8 +1,11 @@
 import { createSourceEventStream } from "graphql"
-import Comment from '../Comment';
+import CommentForm from "../CommentForm";
+import CommentsList from "../CommentsList";
+import { useState } from "react";
 
 export default function EventCard(event) {
-
+  const [viewComments, setViewComments] = useState(false);
+  const [addComment, setAddComment] = useState(false);
   // if (!events.length) {
   //   return (
   //     <div>
@@ -10,11 +13,6 @@ export default function EventCard(event) {
   //     </div>
   //   )
   // }
-  const comments = event.comments;
-  comments.map(comment => {
-    console.log(comment.commentText, 'line 15')
-    console.log(comment._id, 'line 16')
-  })
   return (
     <div className="eventCard">
       <div className="flex flex-row flex-wrap w-full p-3 mt-2 antialiased bg-white rounded-lg shadow-lg">
@@ -63,6 +61,12 @@ export default function EventCard(event) {
                 </span>
               </a>
             </div>
+            <div>
+              <button onClick={() => {setViewComments(true)}} >View Comments</button>
+              </div>
+            <div>
+              <button onClick={() => {setAddComment(true)}}>Add Comment</button>
+              </div>
             <div className="bottom-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
               <button className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
                 Be Kind
@@ -72,16 +76,8 @@ export default function EventCard(event) {
         </div>
       </div>
       {/* <Comment/> */}
-      {event.comments.map((comment) => (
-            <Comment
-              key={comment._id}
-              _id={comment._id}
-              commentText={comment.commentText}
-              likes={comment.likes}
-              replies={comment.replies}
-              // author={comment.author}
-            />
-          ))}
+      {addComment && <CommentForm/>}
+      {viewComments && <CommentsList comments={event.comments} key={event._id}/>}
    
     </div>
   );
