@@ -3,7 +3,7 @@ import CommentForm from "../CommentForm";
 import CommentsList from "../CommentsList";
 import { useState } from "react";
 
-export default function EventCard(event) {
+export default function EventCard({event}) {
   const [viewComments, setViewComments] = useState(false);
   const [addComment, setAddComment] = useState(false);
   // if (!events.length) {

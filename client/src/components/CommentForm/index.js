@@ -42,7 +42,7 @@ export default function CommentForm({eventId, goodDeedId}) {
   // submit form
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    console.log(commentText, 'comment text');
     try {
       await addComment({
         variables: { commentText, eventId, goodDeedId },

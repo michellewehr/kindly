@@ -101,7 +101,8 @@ const resolvers = {
                { _id: context.user._id },
                 { $push: { events: event._id } }, 
                 { new: true });
-            return event.populate('host').populate('attendees');
+
+             return event;
          } else {
             throw new AuthenticationError('You need to be logged in to create an event!');
          }

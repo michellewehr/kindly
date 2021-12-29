@@ -35,9 +35,6 @@ export const CREATE_EVENT = gql`
       _id
       host {
         _id
-        firstName
-        lastName
-        kindlyScore
       }
       title
       location
@@ -201,15 +198,12 @@ mutation AddComment($goodDeedId: ID, $eventId: ID, $commentText: String!) {
       _id
       author {
         _id
-        firstName
       }
       commentText
       replies {
         _id
         author {
           _id
-          firstName
-          lastName
         }
       }
     }
