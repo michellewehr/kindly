@@ -1,4 +1,10 @@
+import { useState } from "react";
+import CommentForm from "../CommentForm";
+import CommentsList from "../CommentsList";
+
 export default function GoodDeed(goodDeed) {
+  const [viewComments, setViewComments] = useState(false);
+  const [addComment, setAddComment] = useState(false);
   // only in profile
   // if (!goodDeeds.length) {
   //   return (
@@ -9,7 +15,7 @@ export default function GoodDeed(goodDeed) {
   // }
 
   return (
-    <div className="goodDeed">
+    <div className="goodDeed w-full">
       <div className="rounded-lg mt-2 shadow-lg bg-white	 w-full flex flex-row flex-wrap p-3 antialiased">
         <div className="md:w-2/3 w-full px-3 flex flex-row flex-wrap">
           <div className="w-full text-gray-700 font-semibold relative pt-3 md:pt-0">
@@ -42,6 +48,12 @@ export default function GoodDeed(goodDeed) {
                 <b>Created At:</b> {goodDeed.createdAt}
               </span>
             </div>
+            <div>
+              <button onClick={() => {setViewComments(true)}} >View Comments</button>
+              </div>
+            <div>
+              <button onClick={() => {setAddComment(true)}}>Add Comment</button>
+              </div>
             </div>
             <div className="text-sm text-amber-500 md:absolute pt-3 md:pt-0 bottom-0 right-0">
               <button className="bg-cyan-700  hover:bg-orange-300 text-white font-bold py-2 px-4 rounded mt-1">
@@ -51,6 +63,9 @@ export default function GoodDeed(goodDeed) {
             </div>
           </div>
         </div>
+        {addComment && <CommentForm key={goodDeed._id} goodDeedId={goodDeed._id}/>}
+      {viewComments && <CommentsList comments={goodDeed.comments} key={goodDeed._id}/>}
+
       </div>
   );
 }

@@ -259,21 +259,22 @@ export const QUERY_EVENT = gql`
 }`;
 
 export const QUERY_GOOD_DEEDS = gql`
-query goodDeeds {
+query GoodDeeds {
   goodDeeds {
-    title
-    deedText
-    location
     _id
     host {
       _id
       firstName
       lastName
     }
+    title
     helper {
       _id
       firstName
+      lastName
     }
+    date
+    location
     comments {
       _id
       author {
@@ -282,6 +283,7 @@ query goodDeeds {
         lastName
       }
       commentText
+      likes
       replies {
         _id
         author {
