@@ -1,122 +1,156 @@
 import { ADD_EVENT } from "../../utils/actions";
 import { useSelector, useDispatch } from 'react-redux'
+import { useState } from 'react'
 
 export default function NewEvent() {
-
+// add form data to graphQL with ADD_EVENT
   const dispatch = useDispatch();
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    location: '',
+    date: '',
+    startTime: '',
+    endTime: '',
+    url: ''
+  });
 
-  const {
-    title,
-    description,
-    location,
-    date,
-    startTime,
-    endTime,
-    url,
-    } = useSelector(state => state.newEvent);
+  const handleChange = e => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  }
 
-    const { newEvent } = dispatch;
+  const handleSubmit = async e => {
+    e.preventDefault();
+    dispatch({ type: ADD_EVENT, payload: formData });
+    setFormData({
+      title: '',
+      description: '',
+      location: '',
+      date: '',
+      startTime: '',
+      endTime: '',
+      url: ''
+    });
+  }
 
-
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      dispatch({
-        type: ADD_EVENT,
-        payload: {
-          title: title,
-          description: description,
-          location: location,
-          date: date,
-          startTime: startTime,
-          endTime: endTime,
-          url: url,
-        }
-      });
-    }
-    // const onChange = (event) => {
-    //   const { name, value } = event.target;
-    //   newEvent({
-    //     type: 'newEvent',
-    //     payload: {
-    //       [name]: value
-    //     }
-    //   });
-    // }
-
-
-    return (
-      <div className="flex flex-col w-full p-3 mt-2 antialiased bg-white rounded-lg shadow-lg">
-        <div className="flex flex-row flex-wrap w-full px-3 md:w-2/3">
-          <div className="relative w-full pt-3 font-semibold text-left text-gray-700 md:pt-0">
-            <div className="flex flex-row pb-1 text-2xl leading-tight text-amber-500">
-              <form onSubmit={handleSubmit}>
-                <input
-                  className="w-full p-3 rounded-lg shadow-lg"
-                  type="text"
-                  name="title"
-                  placeholder="Event Title"
-                  value={title}
-                  onChange={e => newEvent({ ...newEvent, title: e.target.value })}
-                />
-                <input
-                  className="w-full p-3 rounded-lg shadow-lg"
-                  type="text"
-                  name="description"
-                  placeholder="Event Description"
-                  value={description}
-                  onChange={e => newEvent({ ...newEvent, description: e.target.value })}
-                />
-                <input
-                  className="w-full p-3 rounded-lg shadow-lg"
-                  type="text"
-                  name="location"
-                  placeholder="Event Location"
-                  value={location}
-                  onChange={e => newEvent({ ...newEvent, location: e.target.value })}
-                />
-                <input
-                  className="w-full p-3 rounded-lg shadow-lg"
-                  type="date"
-                  name="date"
-                  placeholder="Event Date"
-                  value={date}
-                  onChange={e => newEvent({ ...newEvent, date: e.target.value })}
-                />
-                <input
-                  className="w-full p-3 rounded-lg shadow-lg"
-                  type="time"
-                  name="startTime"
-                  placeholder="Event Start Time"
-                  value={startTime}
-                  onChange={e => newEvent({ ...newEvent, startTime: e.target.value })}
-                />
-                <input
-                  className="w-full p-3 rounded-lg shadow-lg"
-                  type="time"
-                  name="endTime"
-                  placeholder="Event End Time"
-                  value={endTime}
-                  onChange={e => newEvent({ ...newEvent, endTime: e.target.value })}
-                />
-                <input
-                  className="w-full p-3 rounded-lg shadow-lg"
-                  type="text"
-                  name="url"
-                  placeholder="Event URL"
-                  value={url}
-                  onChange={e => newEvent({ ...newEvent, url: e.target.value })}
-                />
-                <button
+  return (
+    <div className="flex flex-col justify-center items-center h-full">
+      <h1 className="text-4xl font-bold text-center">Add an Event</h1>
+      <form className="w-full max-w-lg" onSubmit={handleSubmit}>
+        <div className="flex flex-wrap -mx-3 mb-6">
+          <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-title">
+              Title
+            </label>
+            <input
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="grid-title"
+              type="text"
+              placeholder="Title"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="w-full md:w-1/2 px-3">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-description">
+              Description
+            </label>
+            <input
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="grid-description"
+              type="text"
+              placeholder="Description"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="flex flex-wrap -mx-3 mb-6">
+          <div className="w-full px-3">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-location">
+              Location
+            </label>
+            <input
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="grid-location"
+              type="text"
+              placeholder="Location"
+              name="location"
+              value={formData.location}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="flex flex-wrap -mx-3 mb-6">
+          <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-date">
+              Date
+            </label>
+            <input
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="grid-date"
+              type="date"
+              placeholder="Date"
+              name="date"
+              value={formData.date}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="w-full md:w-1/2 px-3">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-startTime">
+              Start Time
+            </label>
+            <input
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="grid-startTime"
+              type="time"
+              placeholder="Start Time"
+              name="startTime"
+              value={formData.startTime}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="flex flex-wrap -mx-3 mb-6">
+          <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-endTime">
+              End Time
+            </label>
+            <input
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="grid-endTime"
+              type="time"
+              placeholder="End Time"
+              name="endTime"
+              value={formData.endTime}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="w-full md:w-1/2 px-3">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-url">
+              Website
+            </label>
+            <input
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="grid-url"
+              type="text"
+              placeholder="Website"
+              name="url"
+              value={formData.url}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <button
                   className="w-full p-3 rounded-lg shadow-lg"
                   type="submit"
                   value="Submit"
                 >
                   Submit
                 </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+      </form>
+    </div>
+  );
+};
