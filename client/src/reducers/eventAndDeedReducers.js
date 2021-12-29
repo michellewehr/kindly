@@ -31,9 +31,10 @@ const initialState = {
 export const eventAndDeedReducers = (state = initialState, action) => {
   switch (action.type) {
     case ADD_EVENT:
+    console.log(...state.events, 'line 34')
       return {
         ...state,
-        events: [...state.events, action.payload],
+        events: [...action.events, action.payload],
       };
 
     default:
