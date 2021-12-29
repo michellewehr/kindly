@@ -76,7 +76,7 @@ export default function EventCard(event) {
         </div>
       </div>
       {/* <Comment/> */}
-      {addComment && <CommentForm/>}
+      {addComment && <CommentForm key={event._id} eventId={event._id}/>}
       {viewComments && <CommentsList comments={event.comments} key={event._id}/>}
    
     </div>

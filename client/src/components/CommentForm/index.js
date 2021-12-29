@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import { ADD_COMMENT } from "../../utils/mutations";
 // import { QUERY_COMMENTS, QUERY_ME } from "../../utils/queries";
 
-export default function CommentForm() {
+export default function CommentForm({eventId}) {
   const [commentText, setCommentText] = useState("");
   // const [characterCount, setCharacterCount] = useState(0);
   const [addComment] = useMutation(ADD_COMMENT);
@@ -31,12 +31,12 @@ export default function CommentForm() {
   // });
 
   // update state based on form input changes
-  // const handleChange = (event) => {
-  //   if (event.target.value.length <= 280) {
-  //     setCommentText(event.target.value);
-  //     setCharacterCount(event.target.value.length);
-  //   }
-  // };
+  const handleChange = (event) => {
+    if (event.target.value.length <= 280) {
+      setCommentText(event.target.value);
+      // setCharacterCount(event.target.value.length);
+    }
+  };
 
   // submit form
   const handleSubmit = async (event) => {
@@ -44,7 +44,7 @@ export default function CommentForm() {
 
     try {
       await addComment({
-        variables: { commentText },
+        variables: { commentText, eventId },
       });
 
       // clear form value
@@ -66,9 +66,9 @@ export default function CommentForm() {
              <textarea
                     className="w-full p-3 rounded-lg shadow-lg text-sm"
                     type="text"
-                    name="deedText"
+                    name="commentText"
                     placeholder="Great idea! I'll be there!"
-                   
+                    onChange={handleChange}
                   />
               
              
