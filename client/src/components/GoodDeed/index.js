@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CommentForm from "../CommentForm";
 import CommentsList from "../CommentsList";
+import Auth from '../../utils/auth';
 
 export default function GoodDeed(goodDeed) {
   const [viewComments, setViewComments] = useState(false);
@@ -48,11 +49,14 @@ export default function GoodDeed(goodDeed) {
                 <b>Created At:</b> {goodDeed.createdAt}
               </span>
             </div>
+           
             <div>
-              <button onClick={() => {setViewComments(true)}} >View Comments</button>
+            {Auth.loggedIn() && 
+              <button onClick={() => {setViewComments(true)}} >View Comments</button>}
               </div>
             <div>
-              <button onClick={() => {setAddComment(true)}}>Add Comment</button>
+            {Auth.loggedIn() && 
+              <button onClick={() => {setAddComment(true)}}>Add Comment</button>}
               </div>
             </div>
             <div className="text-sm text-amber-500 md:absolute pt-3 md:pt-0 bottom-0 right-0">
