@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import { ADD_COMMENT } from "../../utils/mutations";
 // import { QUERY_COMMENTS, QUERY_ME } from "../../utils/queries";
 
-export default function CommentForm({eventId}) {
+export default function CommentForm({eventId, goodDeedId}) {
   const [commentText, setCommentText] = useState("");
   // const [characterCount, setCharacterCount] = useState(0);
   const [addComment] = useMutation(ADD_COMMENT);
@@ -44,7 +44,7 @@ export default function CommentForm({eventId}) {
 
     try {
       await addComment({
-        variables: { commentText, eventId },
+        variables: { commentText, eventId, goodDeedId },
       });
 
       // clear form value
