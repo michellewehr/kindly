@@ -184,6 +184,8 @@ export const QUERY_EVENTS = gql`
       _id
       host {
         _id
+        firstName
+        lastName
       }
       title
       attendees {

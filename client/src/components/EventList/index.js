@@ -7,7 +7,7 @@ import Comment from '../Comment';
 export default function EventList({ events, host }) {
   const [eventModalOpen, setEventModalOpen] = useState(false);
   // console.log(events, 'line 11 ')
-
+  console.log(events.host, 'events.host');
 
 if (!events.length) {
   return <div>No events found</div>;
