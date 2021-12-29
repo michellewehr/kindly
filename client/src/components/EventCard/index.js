@@ -53,7 +53,7 @@ export default function EventCard({event}) {
             </div>
             <div className="pb-1 text-normal text-cyan-900">
               <span className="">
-                <b>Time:</b> {event.startTime + ' - ' + event.endtime}
+                <b>Time:</b> {event.startTime + ' - ' + event.endTime}
               </span>
             </div>
             <div className="pb-1 text-normal text-cyan-900 hover:text-orange-300">

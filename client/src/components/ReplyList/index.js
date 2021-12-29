@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 export default function ReplyList({ replies }) {
+  // console.log(replies.author.firstName, 'reply list atuhor')
   return (
     //todo needs Tailwind style
     <div className="bg-sky-200">
