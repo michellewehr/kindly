@@ -1,9 +1,10 @@
-import { ADD_EVENT } from "../../utils/actions";
+import { CREATE_EVENT } from "../../utils/actions";
 import { useSelector, useDispatch } from 'react-redux'
-import { useState } from 'react'
+import { useState } from 'react';
+
 
 export default function NewEvent() {
-// add form data to graphQL with ADD_EVENT
+// add form data to graphQL with CREATE_EVENT
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     title: '',
@@ -21,16 +22,17 @@ export default function NewEvent() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    dispatch({ type: ADD_EVENT, payload: formData });
-    setFormData({
-      title: '',
-      description: '',
-      location: '',
-      date: '',
-      startTime: '',
-      endTime: '',
-      url: ''
-    });
+    dispatch({ type: CREATE_EVENT, payload: formData });
+    console.log(formData, 'formData')
+    // setFormData({
+    //   title: '',
+    //   description: '',
+    //   location: '',
+    //   date: '',
+    //   startTime: '',
+    //   endTime: '',
+    //   url: ''
+    // });
   }
 
   return (

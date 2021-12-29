@@ -13,7 +13,7 @@ export const JOIN_GOOD_DEED = "JOIN_GOOD_DEED";
 export const LEAVE_GOOD_DEED = "LEAVE_GOOD_DEED";
 export const CANCEL_GOOD_DEED = "CANCEL_GOOD_DEED";
 //event Actions
-export const ADD_EVENT = "ADD_EVENT";
+export const CREATE_EVENT = "CREATE_EVENT";
 export const REMOVE_EVENT = "REMOVE_EVENT";
 export const JOIN_EVENT = "JOIN_EVENT";
 export const LEAVE_EVENT = "LEAVE_EVENT";

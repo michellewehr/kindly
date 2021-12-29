@@ -1,5 +1,5 @@
 import {
-  ADD_EVENT,
+  CREATE_EVENT,
   // REMOVE_EVENT,
   // JOIN_EVENT,
   // LEAVE_EVENT,
@@ -30,11 +30,11 @@ const initialState = {
 
 export const eventAndDeedReducers = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_EVENT:
-    console.log(...state.events, 'line 34')
+    case CREATE_EVENT:
+    console.log(state.events, 'line 34')
       return {
         ...state,
-        events: [...action.events, action.payload],
+        events: [...state.events, action.payload],
       };
 
     default:
