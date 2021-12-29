@@ -1,9 +1,15 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { ADD_COMMENT } from "../../utils/actions";
+import ReplyList from '../ReplyList';
+import { useState } from "react";
+import ReplyForm from '../ReplyForm';
 
 
 export default function Comment(comment) {
+  const [viewReplies, setViewReplies] = useState(false);
+  const [addReply, setAddReply] = useState(false);
+
   // const state = useSelector((state) => {
   //   return state;
   // });
@@ -24,7 +30,7 @@ export default function Comment(comment) {
   
 
   return (
-    <section className="overflow-hidden text-gray-600 body-font">
+    <section className="overflow-hidden text-gray-600 body-font bg-sky-300">
       <div className="container px-5 py-24 mx-auto">
         <div className="divide-y-2 divide-gray-100">
           <div className="flex flex-wrap py-8 md:flex-nowrap">
@@ -67,22 +73,26 @@ export default function Comment(comment) {
                 </svg>
               </a>
             </div>
-           
           </div>
+          <div>
+          {!viewReplies ? <button onClick={() => {setViewReplies(true)}}>View Replies</button> : <button onClick={() => {setViewReplies(false)}}>Hide Replies</button>} 
+              </div>
+            <div>
+              <button onClick={() => {setAddReply(true)}}>Add Reply</button>
+              </div>
+            
         </div>
+      </div>
+      <div>
+        {addReply && <ReplyForm key={comment._id} commentId={comment._id}/>}
       </div>
        {/* Replies */}
        <div>
-              <ul> Replies
-            {comment.replies.map((reply) => (
-            <li
-              key={reply._id}
-              _id={reply._id}
-              replyBody={reply.commentText}
-              // author={reply.author}
-            > Singular Reply: {reply.replyBody} </li>
-          ))}
-          </ul>
+         {comment.replies.length > 1 && viewReplies &&
+         <ReplyList
+         key={comment._id}
+         replies={comment.replies}/>
+         }
             </div>
     </section>
   );

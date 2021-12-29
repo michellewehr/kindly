@@ -51,9 +51,8 @@ export default function GoodDeed(goodDeed) {
             </div>
            
             <div>
-            {Auth.loggedIn() && 
-              <button onClick={() => {setViewComments(true)}} >View Comments</button>}
-              </div>
+            {Auth.loggedIn() && !viewComments ? <button onClick={() => {setViewComments(true)}}>View Comments</button> : <button onClick={() => {setViewComments(false)}}>Hide Comments</button>} 
+          </div>
             <div>
             {Auth.loggedIn() && 
               <button onClick={() => {setAddComment(true)}}>Add Comment</button>}
