@@ -1,6 +1,16 @@
 import FriendsList from "../FriendsList";
+import { QUERY_ME } from '../../utils/queries'
+import { useQuery } from "@apollo/client";
 
 export default function Sidebar() {
+  const { loading, data } = useQuery(QUERY_ME)
+
+  const myData = data?.me || {};
+  const myEvents = myData?.events || [];
+  const myGoodDeeds = myData?.goodDeeds || [];
+  console.log(myData, 'me')
+  console.log(myGoodDeeds, 'good deeds')
+
   return (
     <div className="sidebar">
       <div className="flex flex-col bg-cyan-700 w-full">
@@ -15,8 +25,12 @@ export default function Sidebar() {
         </div>
         {/* end of profile pic */}
         {/* div for name */}
-        <h1 className="text-sky-100 text-2xl text-center
-        p-1">Michelle Wehr</h1>
+        <h1
+          className="text-sky-100 text-2xl text-center
+        p-1"
+        >
+         {myData.firstName} {myData.lastName}
+        </h1>
         {/* div for name end */}
         {/* points */}
         <div className="flex flex-row mx-auto ">
@@ -47,42 +61,29 @@ export default function Sidebar() {
         <div className="bg-sky-100 mx-auto text-center rounded w-9/12 mb-2">
           <h2 className="mb-1 underline">Upcoming Registered Events</h2>
           {/* div for each event */}
-          <a className="bg-sky-100" href="">
+          {myEvents.map(event => (
+            <a key={event._id} className="bg-sky-100" href="">
             <div className="text-left px-1">
-              <h3 className="bg-cyan-600 hover:bg-orange-300">Event Name</h3>
-              <p>Location</p>
-              <p>Date at Start Time- End Time</p>
+              <h3 className="bg-cyan-600 hover:bg-orange-300">{event.title}</h3>
+              <p>{event.location}</p>
+              <p>{event.date} at {event.startTime} - {event.endTime} </p>
             </div>
           </a>
-          {/* end of div for each event */}
-          {/* div for each event */}
-          <a className="" href="">
-            <div className="text-left px-1 mb-2">
-              <h3 className="bg-cyan-600 hover:bg-orange-300">Event Name</h3>
-              <p>Location</p>
-              <p>Date at Start Time- End Time</p>
-            </div>
-          </a>
-          {/* end of div for each event */}
+          ))}        
         </div>
         {/* End of upcoming events */}
         <div className="bg-sky-100 mx-auto text-center rounded w-9/12 mb-2">
           <h2 className="mb-1 underline">Good Deads</h2>
           {/* div for good deeds */}
-          <a className="" href="">
+          {myGoodDeeds.map(goodDeed => (
+            <a key={goodDeed._id} className="bg-sky-100" href="">
             <div className="text-left px-1">
-              <h3 className="bg-cyan-600 hover:bg-orange-300">Help Neighbor</h3>
-              <p>Tolland, CT</p>
+              <h3 className="bg-cyan-600 hover:bg-orange-300">{goodDeed.title}</h3>
+              <p>{goodDeed.location}</p>
+              <p>{goodDeed.date}</p>
             </div>
           </a>
-          {/* end of div for good deeds */}
-          {/* div for good deeds */}
-          <a className="" href="">
-            <div className="text-left px-1">
-              <h3 className="bg-cyan-600 hover:bg-orange-300">Help Neighbor</h3>
-              <p>Tolland, CT</p>
-            </div>
-          </a>
+          ))}  
           {/* end of div for good deeds */}
         </div>
         {/* div for my postings */}
@@ -95,6 +96,6 @@ export default function Sidebar() {
         </a>
         {/* end of view my profile */}
       </div>
-    </div>
+      </div>
   );
 }

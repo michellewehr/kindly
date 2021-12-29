@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-// import { ADD_REPLY } from "../../utils/mutations";
+import { ADD_REPLY } from "../../utils/mutations";
 
-export default function ReplyForm(commentId) {
+export default function ReplyForm({commentId}) {
   const [replyBody, setReplyBody] = useState("");
   const [characterCount, setCharacterCount] = useState(0);
-  // const [addReply, { error }] = useMutation(ADD_REPLY);
+  const [addReply] = useMutation(ADD_REPLY);
 
   const handleChange = (event) => {
     if (event.target.value.length <= 280) {
@@ -14,23 +14,23 @@ export default function ReplyForm(commentId) {
     }
   };
 
-  // const handleFormSubmit = async (event) => {
-  //   event.preventDefault();
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    console.log(replyBody, 'reply body')
+    console.log(commentId);
+    try {
+      // ! add reply to database
+      await addReply({
+        variables: { replyBody, commentId}
+      });
 
-  //   try {
-  //     //! add reply to database
-  //     await addReply({
-  //       variables: { replyBody, commentId },
-  //     });
-
-  //     // clear form value
-  //     setReplyBody("");
-  //     setCharacterCount(0);
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // };
-
+      // clear form value
+      setReplyBody("");
+      setCharacterCount(0);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <div>
@@ -42,7 +42,7 @@ export default function ReplyForm(commentId) {
       </p>
       <form
         className=""
-      // onSubmit={handleFormSubmit}
+        onSubmit={handleFormSubmit}
       >
         <textarea
           placeholder="reply to this comment..."

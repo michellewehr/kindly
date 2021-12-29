@@ -5,17 +5,17 @@ import UpcomingEvents from "../components/UpcomingEvents";
 
 export default function Profile() {
   return (
-    <div>
+    <div className="min-h-screen">
       <div
-        className="fixed inset-0 overflow-hidden"
+        className="overflow-hidden"
         aria-labelledby="slide-over-title"
         role="dialog"
         aria-modal="true"
       >
-        <div className="absolute inset-0 overflow-hidden">
+        <div className="overflow-hidden">
           {/* <!-- Background overlay, show/hide based on slide-over state. --> */}
-          <div className="absolute inset-0" aria-hidden="true">
-            <div className="fixed inset-y-0 right-0 pl-10 max-w-full flex sm:pl-16">
+          <div className="" aria-hidden="true">
+            <div className=" right-0 h-full  max-w-full flex">
               {/* <!--
           Slide-over panel, show/hide based on slide-over state.
 
@@ -26,8 +26,8 @@ export default function Profile() {
             From: "translate-x-0"
             To: "translate-x-full"
         --> */}
-              <div className="w-screen max-w-2xl">
-                <div className="h-full flex flex-col bg-white shadow-xl overflow-y-scroll">
+              <div className="w-screen max-w-2xl mx-auto">
+                <div className="flex flex-col bg-white shadow-xl">
                   <div className="px-4 py-6 sm:px-6">
                     <div className="flex items-start justify-between">
                       <h2
@@ -82,19 +82,19 @@ export default function Profile() {
                           <div>
                             <div className="flex items-center">
                               <h3 className="font-bold text-xl text-gray-900 sm:text-2xl">
-                                //! add name
-                                Ashley Porter
+                                {/* //! add name Ashley Porter */}
                               </h3>
                               <span className="ml-2.5 bg-green-400 flex-shrink-0 inline-block h-2 w-2 rounded-full">
                                 <span className="sr-only">Online</span>
                               </span>
                             </div>
-                            //! add location
+                            {/* //! add location */}
                             <p className="text-sm text-gray-500">Location:</p>
-                            //! add kindly points
-                            <p className="text-sm text-gray-500">Kindly Points:</p>
+                            {/* //! add kindly points */}
+                            <p className="text-sm text-gray-500">
+                              Kindly Points:
+                            </p>
                           </div>
-
                         </div>
                       </div>
                     </div>
@@ -105,7 +105,7 @@ export default function Profile() {
                             Upcoming Events
                           </dt>
                           <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:ml-6 sm:col-span-2">
-                            //! add event list and Good Deeds
+                            {/* //! add event list and Good Deeds */}
                           </dd>
                         </div>
                         <div className="sm:flex sm:px-6 sm:py-5">
@@ -113,7 +113,7 @@ export default function Profile() {
                             Connections
                           </dt>
                           <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:ml-6 sm:col-span-2">
-                            //! add connections
+                            {/* //! add connections */}
                           </dd>
                         </div>
                         <div className="sm:flex sm:px-6 sm:py-5"></div>

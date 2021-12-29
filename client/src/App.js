@@ -1,37 +1,61 @@
-import "./App.css";
-import GoodDeed from "./components/GoodDeed";
-import FriendsList from "./components/FriendsList";
-import EventCard from "./components/EventCard";
-import Comment from "./components/Comment";
-import Sidebar from "./components/Sidebar";
-import Header from "./components/Header";
-import Reply from "./components/Reply";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Profile from "./pages/Profile";
-import GoodDeeds from "./pages/GoodDeeds";
-import CommentForm from './components/CommentForm'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
-//* we can clean this up, just used it for testing so had to import everything
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Nav from './components/Nav';
+import store from './utils/store';
+import Profile from './pages/Profile';
+import Footer from './components/Footer';
+import { Provider } from 'react-redux'
+
+const httpLink = createHttpLink({
+  uri: 'http://localhost:3001/graphql'
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('id_token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  // uri: 'http://localhost:3001/graphql',
+  cache: new InMemoryCache(),
+});
+
 function App() {
   return (
-    <div className="App">
-      {/* <Header /> */}
-      <div>
-        {/* <Home /> */}
-        <CommentForm/>
-
-        {/* <GoodDeed /> */}
-        {/* <FriendsList /> */}
-        {/* <EventCard /> */}
-        {/* <Comment /> */}
-        {/* <Reply /> */}
-        {/* <Profile /> */}
-      </div>
-
-      {/* <Sidebar /> */}
-    </div>
+    <ApolloProvider client={client}>
+      <Router>
+        <div className='relative h-100'>
+          <Provider store={store}>
+            <Nav />
+            <div className='min-h-full'>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route exact path="/login" element={<Login />} />
+                <Route exact path="/signup" element={<Signup />} />
+                <Route exact path="/myprofile" element={<Profile />} />
+              </Routes>
+            </div>
+            <Footer />
+          </Provider>
+        </div>
+      </Router>
+    </ApolloProvider>
   );
 }
 

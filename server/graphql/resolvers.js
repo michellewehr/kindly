@@ -11,7 +11,12 @@ const resolvers = {
       // find current logged in user
       me: async (parent, args, context) => {
          if (context.user) {
-            const userData = await User.findOne({ _id: context.user._id }).select('-__v -password').populate('connections').populate('events');
+            const userData = await User.findOne({ _id: context.user._id })
+            .select('-__v -password')
+            .populate('connections')
+            .populate('events').populate({path: 'events', populate: 'host'})
+            .populate('goodDeeds').populate({path: 'goodDeeds', populate: 'host'})
+            
             return userData;
          }
          throw new AuthenticationError('Not logged in');
@@ -31,7 +36,7 @@ const resolvers = {
 
       // get all events
       events: async () => {
-         return await Event.find().populate('host').populate('attendees').populate('comments').select('-__v');
+         return await Event.find().populate('host').populate('attendees').populate('comments').populate({path: 'comments', populate: 'author'}).select('-__v');
       },
 
       // TODO: Make sure all of the optional parameters work
@@ -48,11 +53,11 @@ const resolvers = {
       },
 
       goodDeeds: async () => {
-         return await GoodDeed.find().populate('host').populate('helper').populate('comments').select('-__v')
+         return await GoodDeed.find().populate('host').populate('helper').populate('comments').populate({path: 'comments', populate: 'author'}).populate({path: 'comments.replies', populate: 'author'}).select('-__v')
       },
 
       goodDeed: async () => {
-         return await GoodDeed.findOne({ _id }).populate('host').populate('helper').populate('comments').select('-__v')
+         return await GoodDeed.findOne({ _id }).populate('host').populate('helper').populate('comments').populate({path: 'comments', populate: 'author'}).select('-__v')
       }
    },
 
@@ -96,7 +101,8 @@ const resolvers = {
                { _id: context.user._id },
                 { $push: { events: event._id } }, 
                 { new: true });
-            return event.populate('host').populate('attendees');
+
+             return event;
          } else {
             throw new AuthenticationError('You need to be logged in to create an event!');
          }
@@ -115,7 +121,7 @@ const resolvers = {
                { $push: { goodDeeds: goodDeed._id } },
                 { new: true });
 
-            return goodDeed.populate('host').populate('attendees');
+            return goodDeed;
          } else {
             throw new AuthenticationError('You need to be logged in to create a good deed!');
          }
