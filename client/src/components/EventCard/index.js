@@ -2,6 +2,7 @@ import { createSourceEventStream } from "graphql"
 import CommentForm from "../CommentForm";
 import CommentsList from "../CommentsList";
 import { useState } from "react";
+import Auth from '../../utils/auth';
 
 export default function EventCard({event}) {
   const [viewComments, setViewComments] = useState(false);
@@ -62,7 +63,7 @@ export default function EventCard({event}) {
               </a>
             </div>
             <div>
-              <button onClick={() => {setViewComments(true)}} >View Comments</button>
+            {Auth.loggedIn() && !viewComments ? <button onClick={() => {setViewComments(true)}}>View Comments</button> : <button onClick={() => {setViewComments(false)}}>Hide Comments</button>} 
               </div>
             <div>
               <button onClick={() => {setAddComment(true)}}>Add Comment</button>
