@@ -3,7 +3,7 @@ import CommentForm from "../CommentForm";
 import CommentsList from "../CommentsList";
 import Auth from '../../utils/auth';
 
-export default function GoodDeed({goodDeed}) {
+export default function GoodDeed({ goodDeed }) {
   const [viewComments, setViewComments] = useState(false);
   const [addComment, setAddComment] = useState(false);
   // only in profile
@@ -43,32 +43,31 @@ export default function GoodDeed({goodDeed}) {
                 <b>Location:</b>{goodDeed.location}
               </span>
             </div>
-            <div className="text-normal text-cyan-900 pb-1">
+            {/* <div className="text-normal text-cyan-900 pb-1">
               <span className="">
-                {/* //! get good deed dateTime */}
                 <b>Created At:</b> {goodDeed.createdAt}
               </span>
-            </div>
-           
+            </div> */}
+
             <div>
-            {Auth.loggedIn() && !viewComments ? <button onClick={() => {setViewComments(true)}}>View Comments</button> : <button onClick={() => {setViewComments(false)}}>Hide Comments</button>} 
+              {Auth.loggedIn() && !viewComments ? <button onClick={() => { setViewComments(true) }}>View Comments</button> : <button onClick={() => { setViewComments(false) }}>Hide Comments</button>}
+            </div>
+            <div>
+              {Auth.loggedIn() &&
+                <button onClick={() => { setAddComment(true) }}>Add Comment</button>}
+            </div>
           </div>
-            <div>
-            {Auth.loggedIn() && 
-              <button onClick={() => {setAddComment(true)}}>Add Comment</button>}
-              </div>
-            </div>
-            <div className="text-sm text-amber-500 md:absolute pt-3 md:pt-0 bottom-0 right-0">
-              <button className="bg-cyan-700  hover:bg-orange-300 text-white font-bold py-2 px-4 rounded mt-1">
-                Be Kind 
-                {/* //! need to add helper after signup */}
-              </button>
-            </div>
+          <div className="text-sm text-amber-500 md:absolute pt-3 md:pt-0 bottom-0 right-0">
+            <button className="bg-cyan-700  hover:bg-orange-300 text-white font-bold py-2 px-4 rounded mt-1">
+              Be Kind
+              {/* //! need to add helper after signup */}
+            </button>
           </div>
         </div>
-        {addComment && <CommentForm key={goodDeed._id} goodDeedId={goodDeed._id}/>}
-      {viewComments && <CommentsList comments={goodDeed.comments} key={goodDeed._id}/>}
-
       </div>
+      {addComment && <CommentForm key={goodDeed._id} goodDeedId={goodDeed._id} />}
+      {viewComments && <CommentsList comments={goodDeed.comments} key={goodDeed._id} />}
+
+    </div>
   );
 }

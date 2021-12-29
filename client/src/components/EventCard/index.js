@@ -4,7 +4,7 @@ import CommentsList from "../CommentsList";
 import { useState } from "react";
 import Auth from '../../utils/auth';
 
-export default function EventCard({event}) {
+export default function EventCard({ event }) {
   const [viewComments, setViewComments] = useState(false);
   const [addComment, setAddComment] = useState(false);
   console.log(event.host.firstName, 'event card host first name')
@@ -43,7 +43,7 @@ export default function EventCard({event}) {
             </div>
             <div className="pb-1 text-normal text-cyan-900">
               <span className="">
-                <b>Location:</b>{event.location}
+                <b>Location:</b> {event.location}
               </span>
             </div>
             <div className="pb-1 text-normal text-cyan-900">
@@ -64,11 +64,11 @@ export default function EventCard({event}) {
               </a>
             </div>
             <div>
-            {Auth.loggedIn() && !viewComments ? <button onClick={() => {setViewComments(true)}}>View Comments</button> : <button onClick={() => {setViewComments(false)}}>Hide Comments</button>} 
-              </div>
+              {Auth.loggedIn() && !viewComments ? <button onClick={() => { setViewComments(true) }}>View Comments</button> : <button onClick={() => { setViewComments(false) }}>Hide Comments</button>}
+            </div>
             <div>
-              <button onClick={() => {setAddComment(true)}}>Add Comment</button>
-              </div>
+              <button onClick={() => { setAddComment(true) }}>Add Comment</button>
+            </div>
             <div className="bottom-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
               <button className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
                 Be Kind
@@ -78,9 +78,9 @@ export default function EventCard({event}) {
         </div>
       </div>
       {/* <Comment/> */}
-      {addComment && <CommentForm key={event._id} eventId={event._id}/>}
-      {viewComments && <CommentsList comments={event.comments} key={event._id}/>}
-   
+      {addComment && <CommentForm key={event._id} eventId={event._id} />}
+      {viewComments && <CommentsList comments={event.comments} key={event._id} />}
+
     </div>
   );
 }
