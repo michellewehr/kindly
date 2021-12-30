@@ -15,17 +15,17 @@ export default function EventCard({event}) {
   const [leaveEvent] = useMutation(LEAVE_EVENT);
 
 
-//   const handleJoin = async e => {
-//     e.preventDefault();
-//     try {
-//       const eventId = event._id;
-//       const { data } = await joinEvent({ variables: eventId });
-//       console.log(data, 'data');
-//     } catch (e) {
-//       console.error(e);
-//     }
-//    setToggleAttendBtn(false);
-//   }
+  const onJoin = async e => {
+    e.preventDefault();
+    try {
+      const eventId = event._id;
+      const { data } = await joinEvent({ variables: {eventId} });
+      console.log(data, 'data');
+    } catch (e) {
+      console.error(e);
+    }
+  //  setToggleAttendBtn(false);
+  }
 
 // async function onLeave(eventId) {
 //   try {
@@ -97,7 +97,7 @@ export default function EventCard({event}) {
               {Auth.loggedIn() && <button onClick={() => {setAddComment(true)}}>Add Comment</button>}
               </div>
             <div className="bottom-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
-              <button onClick={() => joinEvent({ variables: eventId })}
+              <button onClick={onJoin}
               className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
                 Be Kind & Attend Event
               </button> 
