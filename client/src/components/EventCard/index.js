@@ -4,7 +4,8 @@ import CommentsList from "../CommentsList";
 import { useState } from "react";
 import Auth from '../../utils/auth';
 import { CANCEL_EVENT, JOIN_EVENT, LEAVE_EVENT } from "../../utils/mutations";
-import { useMutation } from "@apollo/client";
+import { QUERY_ME } from "../../utils/queries";
+import { useMutation, useQuery } from "@apollo/client";
 
 export default function EventCard({event, me}) {
   const [viewComments, setViewComments] = useState(false);
@@ -17,7 +18,8 @@ export default function EventCard({event, me}) {
   const [count, setCount] = useState(0);
 
   // check to see if i am an attendee
-  console.log(me, 'me');
+  const { data: meData } = useQuery(QUERY_ME);
+  console.log(meData, 'me');
   const attendees = event.attendees;
   const hostId = event.host._id
 
@@ -34,7 +36,7 @@ export default function EventCard({event, me}) {
     window.location.reload(false);
 
   }
- 
+
   async function onLeave() {
     const eventId = event._id;
     try {
@@ -69,7 +71,7 @@ export default function EventCard({event, me}) {
   // }
 
 const checkAttendance = () => {
-  if(hostId === me._id) {
+  if(hostId === meData._id) {
     return (
       <div>
         <button onClick={onCancel}
@@ -101,7 +103,7 @@ Verify Event       </button>}
       Verify Event       </button>}
     </div>
   )
-} 
+}
 }
 return (
   <button onClick={onJoin}
@@ -169,26 +171,26 @@ return (
               </a>
             </div>
             <div>
-            {Auth.loggedIn() && !viewComments && event.comments.length > 1 ? <button onClick={() => {setViewComments(true)}}>View Comments</button> : Auth.loggedIn() && event.comments.length > 1 && <button onClick={() => {setViewComments(false)}}>Hide Comments</button>} 
+            {Auth.loggedIn() && !viewComments && event.comments.length > 1 ? <button onClick={() => {setViewComments(true)}}>View Comments</button> : Auth.loggedIn() && event.comments.length > 1 && <button onClick={() => {setViewComments(false)}}>Hide Comments</button>}
               </div>
             <div>
               {Auth.loggedIn() && <button onClick={() => {setAddComment(true)}}>Add Comment</button>}
               </div>
             <div className="bottom-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
-              {Auth.loggedIn() && 
+              {Auth.loggedIn() &&
               <div>
                 {checkAttendance()}
                 </div>}
-               
-           
-             
+
+
+
             </div>
           </div>
         </div>
       </div>
       {addComment && <CommentForm key={event._id} eventId={event._id}/>}
       {viewComments && <CommentsList comments={event.comments} key={event._id}/>}
-   
+
     </div>
   );
 }
