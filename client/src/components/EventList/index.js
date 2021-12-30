@@ -28,7 +28,7 @@ if (!events.length) {
             <EventCard
               key={event._id}
               event={event}
-              myId={me._id}
+              me={me}
             />
           ))}
 

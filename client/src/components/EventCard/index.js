@@ -6,7 +6,7 @@ import Auth from '../../utils/auth';
 import { CANCEL_EVENT, JOIN_EVENT, LEAVE_EVENT } from "../../utils/mutations";
 import { useMutation } from "@apollo/client";
 
-export default function EventCard({event, myId}) {
+export default function EventCard({event, me}) {
   const [viewComments, setViewComments] = useState(false);
   const [addComment, setAddComment] = useState(false);
   const [joinEvent] = useMutation(JOIN_EVENT);
@@ -16,6 +16,9 @@ export default function EventCard({event, myId}) {
 
 
   // check to see if i am an attendee
+  console.log(me, 'me');
+  console.log(me._id, 'me._id')
+  const myId = me._id;
   const attendees = event.attendees;
   const hostId = event.host._id
 
@@ -34,7 +37,8 @@ export default function EventCard({event, myId}) {
   //  setToggleAttendBtn(false);
   }
  
-  async function onLeave(eventId) {
+  async function onLeave() {
+    const eventId = event._id;
     try {
       return await leaveEvent({ variables: {eventId} });
     } catch (e) {
@@ -42,12 +46,15 @@ export default function EventCard({event, myId}) {
     }
   }
 
-  async function onCancel(eventId) {
+  async function onCancel() {
+    const eventId = event._id;
+
     try {
-      return await cancelEvent({ variables: {eventId} });
+       await cancelEvent({ variables: {eventId} });
     } catch (e) {
       console.error(e);
     }
+    window.location.reload(false);
   }
 
 
@@ -60,24 +67,24 @@ export default function EventCard({event, myId}) {
       </button>
       )
     }
+    else{
     for(let i =0; i < attendees.length; i++) {
-    if(attendees[i]._id === myId) {
+      if(attendees[i]._id !== myId) {
       return (
         <button onClick={onJoin}
       className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
         Be Kind & Attend Event
       </button>
       )
-    }
-    else if(attendees[i]._id !== myId) {
+    } 
     return (
       <button onClick={onLeave}
               className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
                 Leave Event
               </button>
     ); 
-    } 
   }
+}
 }
 
 
