@@ -13,12 +13,10 @@ export default function EventCard({event, me}) {
   const [leaveEvent] = useMutation(LEAVE_EVENT);
   const [cancelEvent] =useMutation(CANCEL_EVENT);
   // const [joined, setJoined] = useState(false);
-
+  console.log(event.attendees, 'attendees');
 
   // check to see if i am an attendee
   console.log(me, 'me');
-  console.log(me._id, 'me._id')
-  const myId = me._id;
   const attendees = event.attendees;
   const hostId = event.host._id
 
@@ -34,7 +32,6 @@ export default function EventCard({event, me}) {
     checkAttendance();
     window.location.reload(false);
 
-  //  setToggleAttendBtn(false);
   }
  
   async function onLeave() {
@@ -44,6 +41,8 @@ export default function EventCard({event, me}) {
     } catch (e) {
       console.error(e);
     }
+    window.location.reload(false);
+
   }
 
   async function onCancel() {
@@ -58,39 +57,45 @@ export default function EventCard({event, me}) {
   }
 
 
-  const checkAttendance = () => {
-    if(hostId === myId) {
-      return (
-        <button onClick={onCancel}
-      className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-        Cancel Event
-      </button>
-      )
-    }
-    else{
-    for(let i =0; i < attendees.length; i++) {
-      if(attendees[i]._id !== myId) {
-      return (
-        <button onClick={onJoin}
-      className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-        Be Kind & Attend Event
-      </button>
-      )
-    } 
+  // const checkHost = () => {
+  //   if(hostId === myId) {
+  //     return (
+  //       <button onClick={onCancel}
+  //     className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+  //       Cancel Event
+  //     </button>
+  //     )
+  //   }
+  // }
+
+const checkAttendance = () => {
+  if(hostId === me._id) {
     return (
-      <button onClick={onLeave}
-              className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-                Leave Event
-              </button>
-    ); 
+      <button onClick={onCancel}
+    className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+      Cancel Event
+    </button>
+    )
   }
+  // let attendeesIdArr = [];
+  for(let i =0; i < attendees.length; i++) {
+  if(attendees[i]._id === me._id) {
+    console.log('match!');
+  return (
+    <button onClick={onLeave}
+    className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+      Leave Event
+    </button>
+  )
+} 
 }
+return (
+  <button onClick={onJoin}
+  className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+    Be Kind & Attend Event
+  </button>
+)
 }
-
-
-
-
-
 
 
 

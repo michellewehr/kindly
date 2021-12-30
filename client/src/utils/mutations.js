@@ -96,29 +96,12 @@ export const JOIN_EVENT = gql`
 `;
 
 export const LEAVE_EVENT = gql`
-  mutation leaveEvent($eventId: ID!) {
-    leaveEvent(eventId: $eventId) {
-    host{
-        _id
-        firstName
-        lastName
-        kindlyScore
-      }
-      title
-      attendees {
-        _id
-        firstName
-        lastName
-      }
-      location
-      description
-      date
-      startTime
-      endTime
-      url
-      image
-    }
+mutation LeaveEvent($eventId: ID!) {
+  leaveEvent(eventId: $eventId) {
+    _id
+    title
   }
+}
 `;
 
 export const CANCEL_EVENT = gql`
