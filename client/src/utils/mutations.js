@@ -82,24 +82,59 @@ export const REMOVE_CONNECTION = gql`
 `;
 
 export const JOIN_EVENT = gql`
-  mutation JoinEvent($eventId: ID!) {
-  joinEvent(eventId: $eventId) {
-    _id
-    title
-    date
-    startTime
-    endTime
-    description
-    location
+  mutation joinEvent($eventId: ID!) {
+    joinEvent(eventId: $eventId) {
+      _id
+      host {
+        _id
+      }
+      title
+      attendees {
+        _id
+      }
+      location
+      description
+      date
+      startTime
+      endTime
+      url
+      image
+    }
   }
-}
 `;
 
 export const LEAVE_EVENT = gql`
-mutation LeaveEvent($eventId: ID!) {
+mutation leaveEvent($eventId: ID!) {
   leaveEvent(eventId: $eventId) {
     _id
+    host {
+      _id
+    }
     title
+    attendees {
+      _id
+    }
+    location
+    description
+    date
+    startTime
+    endTime
+    url
+    image
+    comments {
+      _id
+      author {
+        _id
+      }
+      commentText
+      likes
+      replies {
+        _id
+        author {
+          _id
+        }
+      }
+    }
   }
 }
 `;
