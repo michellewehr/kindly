@@ -37,12 +37,11 @@ export default function EventCard({event, me}) {
   async function onLeave() {
     const eventId = event._id;
     try {
-      return await leaveEvent({ variables: {eventId} });
+      await leaveEvent({ variables: {eventId} });
     } catch (e) {
       console.error(e);
     }
     window.location.reload(false);
-
   }
 
   async function onCancel() {
@@ -161,18 +160,12 @@ return (
               {Auth.loggedIn() && <button onClick={() => {setAddComment(true)}}>Add Comment</button>}
               </div>
             <div className="bottom-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
-              {checkAttendance()}
-              {/* {
-                if(checkAttendance) {
-                return <button onClick={onJoin}
-                className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-                  Be Kind & Attend Event
-                </button>
-              } 
-              {!checkAttendance && <button onClick={onLeave}
-              className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-                Leave Event
-              </button>} */}
+              {Auth.loggedIn() && 
+              <div>
+                {checkAttendance()}
+                </div>}
+               
+           
              
             </div>
           </div>
