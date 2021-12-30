@@ -46,12 +46,12 @@ export default function GoodDeed({goodDeed}) {
             <div className="text-normal text-cyan-900 pb-1">
               <span className="">
                 {/* //! get good deed dateTime */}
-                <b>Created At:</b> {goodDeed.createdAt}
+                <b>Date:</b> {goodDeed.date}
               </span>
             </div>
            
             <div>
-            {Auth.loggedIn() && !viewComments ? <button onClick={() => {setViewComments(true)}}>View Comments</button> : <button onClick={() => {setViewComments(false)}}>Hide Comments</button>} 
+            {Auth.loggedIn() && !viewComments ? <button onClick={() => {setViewComments(true)}}>View Comments</button> : Auth.loggedIn() && <button onClick={() => {setViewComments(false)}}>Hide Comments</button>} 
           </div>
             <div>
             {Auth.loggedIn() && 

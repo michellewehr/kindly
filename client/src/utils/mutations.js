@@ -82,30 +82,17 @@ export const REMOVE_CONNECTION = gql`
 `;
 
 export const JOIN_EVENT = gql`
-  mutation joinEvent($eventId: ID!) {
-    joinEvent(eventId: $eventId) {
-      _id
-      host {
-        _id
-        firstName
-        lastName
-        kindlyScore
-      }
-      title
-      attendees {
-        _id
-        firstName
-        lastName
-      }
-      location
-      description
-      date
-      startTime
-      endTime
-      url
-      image
-    }
+  mutation JoinEvent($eventId: ID!) {
+  joinEvent(eventId: $eventId) {
+    _id
+    title
+    date
+    startTime
+    endTime
+    description
+    location
   }
+}
 `;
 
 export const LEAVE_EVENT = gql`

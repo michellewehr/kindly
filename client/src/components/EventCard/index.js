@@ -1,13 +1,40 @@
-import { createSourceEventStream } from "graphql"
+// import { createSourceEventStream } from "graphql"
 import CommentForm from "../CommentForm";
 import CommentsList from "../CommentsList";
 import { useState } from "react";
 import Auth from '../../utils/auth';
+import { JOIN_EVENT, LEAVE_EVENT } from "../../utils/mutations";
+import { useMutation } from "@apollo/client";
 
 export default function EventCard({event}) {
+  const eventId = event._id
   const [viewComments, setViewComments] = useState(false);
   const [addComment, setAddComment] = useState(false);
-  console.log(event.host.firstName, 'event card host first name')
+  // const [toggleAttendBtn, setToggleAttendBtn] = useState(true)
+  const [joinEvent] = useMutation(JOIN_EVENT);
+  const [leaveEvent] = useMutation(LEAVE_EVENT);
+
+
+//   const handleJoin = async e => {
+//     e.preventDefault();
+//     try {
+//       const eventId = event._id;
+//       const { data } = await joinEvent({ variables: eventId });
+//       console.log(data, 'data');
+//     } catch (e) {
+//       console.error(e);
+//     }
+//    setToggleAttendBtn(false);
+//   }
+
+// async function onLeave(eventId) {
+//   try {
+//     return await leaveEvent({ variables: eventId });
+//   } catch (e) {
+//     console.error(e);
+//   }
+// }
+
   // if (!events.length) {
   //   return (
   //     <div>
@@ -21,7 +48,7 @@ export default function EventCard({event}) {
         <div className="w-full md:w-1/3">
           <img
             className="antialiased rounded-lg shadow-lg"
-            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+            src={event.image}
             alt="Alt tag"
           />
         </div>
@@ -59,25 +86,26 @@ export default function EventCard({event}) {
             <div className="pb-1 text-normal text-cyan-900 hover:text-orange-300">
               <a href={event.url}>
                 <span className="">
-                  <i>More Information</i>
+                  <i>Event Website</i>
                 </span>
               </a>
             </div>
             <div>
-            {Auth.loggedIn() && !viewComments ? <button onClick={() => {setViewComments(true)}}>View Comments</button> : <button onClick={() => {setViewComments(false)}}>Hide Comments</button>} 
+            {Auth.loggedIn() && !viewComments && event.comments.length > 1 ? <button onClick={() => {setViewComments(true)}}>View Comments</button> : Auth.loggedIn() && event.comments.length > 1 && <button onClick={() => {setViewComments(false)}}>Hide Comments</button>} 
               </div>
             <div>
-              <button onClick={() => {setAddComment(true)}}>Add Comment</button>
+              {Auth.loggedIn() && <button onClick={() => {setAddComment(true)}}>Add Comment</button>}
               </div>
             <div className="bottom-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
-              <button className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-                Be Kind
-              </button>
+              <button onClick={() => joinEvent({ variables: eventId })}
+              className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+                Be Kind & Attend Event
+              </button> 
+              
             </div>
           </div>
         </div>
       </div>
-      {/* <Comment/> */}
       {addComment && <CommentForm key={event._id} eventId={event._id}/>}
       {viewComments && <CommentsList comments={event.comments} key={event._id}/>}
    
