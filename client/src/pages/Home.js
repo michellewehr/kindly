@@ -39,6 +39,7 @@ const loggedIn = Auth.loggedIn();
         )}
         {renderEvents ? <EventList
             events={events}
+            me={userData?.me}
             host={userData?.me}
               />: <GoodDeedList/>}
        </div>

@@ -1,13 +1,120 @@
-import { createSourceEventStream } from "graphql"
+// import { createSourceEventStream } from "graphql"
 import CommentForm from "../CommentForm";
 import CommentsList from "../CommentsList";
 import { useState } from "react";
 import Auth from '../../utils/auth';
+import { CANCEL_EVENT, JOIN_EVENT, LEAVE_EVENT } from "../../utils/mutations";
+import { QUERY_ME } from "../../utils/queries";
+import { useMutation, useQuery } from "@apollo/client";
 
-export default function EventCard({event}) {
+export default function EventCard({event, me}) {
   const [viewComments, setViewComments] = useState(false);
   const [addComment, setAddComment] = useState(false);
-  console.log(event.host.firstName, 'event card host first name')
+  const [joinEvent] = useMutation(JOIN_EVENT);
+  const [leaveEvent] = useMutation(LEAVE_EVENT);
+  const [cancelEvent] =useMutation(CANCEL_EVENT);
+  // const [joined, setJoined] = useState(false);
+  console.log(event.attendees, 'attendees');
+  const [count, setCount] = useState(0);
+
+  // check to see if i am an attendee
+  const { data: meData } = useQuery(QUERY_ME);
+  console.log(meData, 'me');
+  const attendees = event.attendees;
+  const hostId = event.host._id
+
+  const onJoin = async e => {
+    e.preventDefault();
+    try {
+      const eventId = event._id;
+      const { data } = await joinEvent({ variables: {eventId} });
+      console.log(data, 'data');
+    } catch (e) {
+      console.error(e);
+    }
+    checkAttendance();
+    window.location.reload(false);
+
+  }
+
+  async function onLeave() {
+    const eventId = event._id;
+    try {
+      await leaveEvent({ variables: {eventId} });
+    } catch (e) {
+      console.error(e);
+    }
+    window.location.reload(false);
+  }
+
+  async function onCancel() {
+    const eventId = event._id;
+
+    try {
+       await cancelEvent({ variables: {eventId} });
+    } catch (e) {
+      console.error(e);
+    }
+    window.location.reload(false);
+  }
+
+
+  // const checkHost = () => {
+  //   if(hostId === myId) {
+  //     return (
+  //       <button onClick={onCancel}
+  //     className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+  //       Cancel Event
+  //     </button>
+  //     )
+  //   }
+  // }
+
+const checkAttendance = () => {
+  if(hostId === meData._id) {
+    return (
+      <div>
+        <button onClick={onCancel}
+            className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+        Cancel Event
+            </button>
+          {count >  attendees.length /2 + 1 ? <h1
+            className="px-4 py-2 mt-1 font-bold text-black rounded bg-amber-200 ">
+Event Verified            </h1> : <button onClick={() => setCount(count + 1)}
+            className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+Verify Event       </button>}
+      </div>
+    )
+  }
+  // let attendeesIdArr = [];
+  for(let i =0; i < attendees.length; i++) {
+  if(attendees[i]._id === me._id) {
+    console.log('match!');
+  return (
+    <div>
+      <button onClick={onLeave}
+      className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+        Leave Event
+      </button>
+        {count >  attendees.length /2 + 1 ? <h1
+          className="px-4 py-2 mt-1 font-bold text-black rounded bg-amber-200 ">
+      Event Verified            </h1> : <button onClick={() => setCount(count + 1)}
+          className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+      Verify Event       </button>}
+    </div>
+  )
+}
+}
+return (
+  <button onClick={onJoin}
+  className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+    Be Kind & Attend Event
+  </button>
+)
+}
+
+
+
   // if (!events.length) {
   //   return (
   //     <div>
@@ -21,7 +128,7 @@ export default function EventCard({event}) {
         <div className="w-full md:w-1/3">
           <img
             className="antialiased rounded-lg shadow-lg"
-            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+            src={event.image}
             alt="Alt tag"
           />
         </div>
@@ -59,28 +166,31 @@ export default function EventCard({event}) {
             <div className="pb-1 text-normal text-cyan-900 hover:text-orange-300">
               <a href={event.url}>
                 <span className="">
-                  <i>More Information</i>
+                  <i>Event Website</i>
                 </span>
               </a>
             </div>
             <div>
-            {Auth.loggedIn() && !viewComments ? <button onClick={() => {setViewComments(true)}}>View Comments</button> : <button onClick={() => {setViewComments(false)}}>Hide Comments</button>} 
+            {Auth.loggedIn() && !viewComments && event.comments.length > 1 ? <button onClick={() => {setViewComments(true)}}>View Comments</button> : Auth.loggedIn() && event.comments.length > 1 && <button onClick={() => {setViewComments(false)}}>Hide Comments</button>}
               </div>
             <div>
-              <button onClick={() => {setAddComment(true)}}>Add Comment</button>
+              {Auth.loggedIn() && <button onClick={() => {setAddComment(true)}}>Add Comment</button>}
               </div>
             <div className="bottom-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
-              <button className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-                Be Kind
-              </button>
+              {Auth.loggedIn() &&
+              <div>
+                {checkAttendance()}
+                </div>}
+
+
+
             </div>
           </div>
         </div>
       </div>
-      {/* <Comment/> */}
       {addComment && <CommentForm key={event._id} eventId={event._id}/>}
       {viewComments && <CommentsList comments={event.comments} key={event._id}/>}
-   
+
     </div>
   );
 }

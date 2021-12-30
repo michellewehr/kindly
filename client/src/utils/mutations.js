@@ -87,15 +87,10 @@ export const JOIN_EVENT = gql`
       _id
       host {
         _id
-        firstName
-        lastName
-        kindlyScore
       }
       title
       attendees {
         _id
-        firstName
-        lastName
       }
       location
       description
@@ -109,29 +104,39 @@ export const JOIN_EVENT = gql`
 `;
 
 export const LEAVE_EVENT = gql`
-  mutation leaveEvent($eventId: ID!) {
-    leaveEvent(eventId: $eventId) {
-    host{
+mutation leaveEvent($eventId: ID!) {
+  leaveEvent(eventId: $eventId) {
+    _id
+    host {
+      _id
+    }
+    title
+    attendees {
+      _id
+    }
+    location
+    description
+    date
+    startTime
+    endTime
+    url
+    image
+    comments {
+      _id
+      author {
         _id
-        firstName
-        lastName
-        kindlyScore
       }
-      title
-      attendees {
+      commentText
+      likes
+      replies {
         _id
-        firstName
-        lastName
+        author {
+          _id
+        }
       }
-      location
-      description
-      date
-      startTime
-      endTime
-      url
-      image
     }
   }
+}
 `;
 
 export const CANCEL_EVENT = gql`

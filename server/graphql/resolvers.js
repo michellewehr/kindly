@@ -248,12 +248,12 @@ const resolvers = {
       cancelEvent: async (parent, { eventId }, context) => {
          if (context.user) {
             // remove all associated users from event before deleting it
-            const updatedEvent = await Event.findOneAndUpdate(
-               { _id: eventId },
-               { $unset: { attendees: [] } },
-               { $unset: { host: "" } },
-               { new: true }
-            )
+            // const updatedEvent = await Event.findOneAndUpdate(
+            //    { _id: eventId },
+            //    { $unset: { attendees: [] } },
+            //    { $unset: { host: "" } },
+            //    { new: true }
+            // )
             // delete the event fully
             const removeEvent = await Event.findByIdAndRemove(
                { _id: eventId },

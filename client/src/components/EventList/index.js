@@ -4,10 +4,10 @@ import Auth from '../../utils/auth';
 import EventModal from "../EventModal";
 import Comment from '../Comment';
 
-export default function EventList({ events }) {
+export default function EventList({ events, me }) {
   const [eventModalOpen, setEventModalOpen] = useState(false);
   // console.log(events, 'line 11 ')
-
+  // console.log(me.me._id, 'events list me')
 if (!events.length) {
   return <div>No events found</div>;
   }
@@ -28,6 +28,7 @@ if (!events.length) {
             <EventCard
               key={event._id}
               event={event}
+              me={me}
             />
           ))}
 

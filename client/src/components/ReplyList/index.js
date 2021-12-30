@@ -12,8 +12,8 @@ export default function ReplyList({ replies }) {
       <div className="card-body">
         {replies &&
           replies.map((reply) => (
-            <div className="">
-              <p className="" key={reply._id}>
+            <div key={reply._id} className="">
+              <p className="" >
                 {reply.replyBody} </p>
                 <Link
                   to={`/profile/${reply.author}`}
