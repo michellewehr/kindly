@@ -6,9 +6,12 @@ import { useState } from "react";
 import ReplyForm from '../ReplyForm';
 
 
-export default function Comment({comment}) {
+export default function Comment({ comment }) {
   const [viewReplies, setViewReplies] = useState(false);
   const [addReply, setAddReply] = useState(false);
+
+
+  // console.log(props.comments, 'Comments props line 4 in CommentsList');
 
   // const state = useSelector((state) => {
   //   return state;
@@ -27,7 +30,7 @@ export default function Comment({comment}) {
 
   // const {comment } = state;
 
-  
+
 
   return (
     <section className="overflow-hidden text-gray-600 body-font bg-sky-300">
@@ -75,25 +78,25 @@ export default function Comment({comment}) {
             </div>
           </div>
           <div>
-          {!viewReplies ? <button onClick={() => {setViewReplies(true)}}>View Replies</button> : <button onClick={() => {setViewReplies(false)}}>Hide Replies</button>} 
-              </div>
-            <div>
-              <button onClick={() => {setAddReply(true)}}>Add Reply</button>
-              </div>
-            
+            {!viewReplies ? <button onClick={() => { setViewReplies(true) }}>View Replies</button> : <button onClick={() => { setViewReplies(false) }}>Hide Replies</button>}
+          </div>
+          <div>
+            <button onClick={() => { setAddReply(true) }}>Add Reply</button>
+          </div>
+
         </div>
       </div>
       <div>
-        {addReply && <ReplyForm key={comment._id} commentId={comment._id}/>}
+        {addReply && <ReplyForm key={comment._id} commentId={comment._id} />}
       </div>
-       {/* Replies */}
-       <div>
-         {comment.replies.length > 1 && viewReplies &&
-         <ReplyList
-         key={comment._id}
-         replies={comment.replies}/>
-         }
-            </div>
+      {/* Replies */}
+      <div>
+        {comment.replies.length > 1 && viewReplies &&
+          <ReplyList
+            key={comment._id}
+            replies={comment.replies} />
+        }
+      </div>
     </section>
   );
 }

@@ -1,11 +1,11 @@
 export default function UpcomingEvents() {
   return (
     <div>
-      <div className="bg-sky-100 mx-auto text-center rounded w-9/12 mb-2">
+      <div className="w-9/12 mx-auto mb-2 text-center rounded bg-sky-100">
         <h2 className="mb-1 underline">Upcoming Registered Events</h2>
         {/* div for each event */}
         <a className="bg-sky-100" href="">
-          <div className="text-left px-1">
+          <div className="px-1 text-left">
             {/* get upcoming event data */}
             <h3 className="bg-cyan-600 hover:bg-orange-300">Event Name</h3>
             <p>Location</p>

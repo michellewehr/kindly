@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { useState } from 'react';
-import {CREATE_GOOD_DEED} from '../../utils/mutations';
+import { CREATE_GOOD_DEED } from '../../utils/mutations';
 
 export default function NewGoodDeed() {
   const [addGoodDeed] = useMutation(CREATE_GOOD_DEED);
@@ -24,7 +24,7 @@ export default function NewGoodDeed() {
     e.preventDefault();
     try {
       const { data } = await addGoodDeed({ variables: { ...formData } });
-      console.log(data);
+      // console.log(data);
     } catch (e) {
       console.error(e);
     }
@@ -40,58 +40,58 @@ export default function NewGoodDeed() {
   }
 
 
-    return (
-        <div className="flex flex-col w-full p-3 mt-2 antialiased bg-white rounded-lg shadow-lg">
-          <div className="flex flex-row flex-wrap w-full px-3 ">
-            <div className="relative w-full pt-3 font-semibold text-left text-gray-700 md:pt-0">
-              <div className="flex flex-row pb-1 text-2xl leading-tight text-amber-500">
-                <form onSubmit={handleSubmit}>
-                <label className='text-black text-sm'for='title'>Name of Good Deed:</label>
-                  <input
-                    className="w-full p-3 rounded-lg shadow-lg text-sm"
-                    type="text"
-                    name="title"
-                    placeholder="Good Deed Title"
-                    value={formData.title}
-                    onChange={handleChange}
-                  />
-                    <label className='text-black text-sm'for='deedText'>Description:</label>
-                  <textarea
-                    className="w-full p-3 rounded-lg shadow-lg text-sm"
-                    type="text"
-                    name="deedText"
-                    placeholder="Description of Good Deed"
-                    value={formData.deedText}
-                    onChange={handleChange}
-                  />
-                  <label className='text-black text-sm'for='date'>Date:</label>
-                  <input
-                    className="w-full p-3 rounded-lg shadow-lg text-sm"
-                    type="date"
-                    name="date"
-                    value={formData.date}
-                    onChange={handleChange}
-                  />
-                    <label className='text-black text-sm'for='loaction'>Location:</label>
-                  <input
-                    className="w-full p-3 rounded-lg shadow-lg text-sm"
-                    type="text"
-                    name="location"
-                    placeholder="Good Deed Location"
-                    value={formData.location}
-                    onChange={handleChange}
-                  />
-                  <button
-                    className="w-full p-3 rounded-lg shadow-lg"
-                    type="submit"
-                    value="Submit"
-                  >
-                    Submit
-                  </button>
-                </form>
-              </div>
-            </div>
+  return (
+    <div className="flex flex-col w-full p-3 mt-2 antialiased bg-white rounded-lg shadow-lg">
+      <div className="flex flex-row flex-wrap w-full px-3 ">
+        <div className="relative w-full pt-3 font-semibold text-left text-gray-700 md:pt-0">
+          <div className="flex flex-row pb-1 text-2xl leading-tight text-amber-500">
+            <form onSubmit={handleSubmit}>
+              <label className='text-sm text-black' for='title'>Name of Good Deed:</label>
+              <input
+                className="w-full p-3 text-sm rounded-lg shadow-lg"
+                type="text"
+                name="title"
+                placeholder="Good Deed Title"
+                value={formData.title}
+                onChange={handleChange}
+              />
+              <label className='text-sm text-black' for='deedText'>Description:</label>
+              <textarea
+                className="w-full p-3 text-sm rounded-lg shadow-lg"
+                type="text"
+                name="deedText"
+                placeholder="Description of Good Deed"
+                value={formData.deedText}
+                onChange={handleChange}
+              />
+              <label className='text-sm text-black' for='date'>Date:</label>
+              <input
+                className="w-full p-3 text-sm rounded-lg shadow-lg"
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleChange}
+              />
+              <label className='text-sm text-black' for='loaction'>Location:</label>
+              <input
+                className="w-full p-3 text-sm rounded-lg shadow-lg"
+                type="text"
+                name="location"
+                placeholder="Good Deed Location"
+                value={formData.location}
+                onChange={handleChange}
+              />
+              <button
+                className="w-full p-3 rounded-lg shadow-lg"
+                type="submit"
+                value="Submit"
+              >
+                Submit
+              </button>
+            </form>
           </div>
         </div>
-      );
+      </div>
+    </div>
+  );
 }

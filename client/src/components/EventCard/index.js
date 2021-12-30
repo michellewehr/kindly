@@ -4,22 +4,19 @@ import CommentsList from "../CommentsList";
 import { useState } from "react";
 import Auth from '../../utils/auth';
 import { CANCEL_EVENT, JOIN_EVENT, LEAVE_EVENT } from "../../utils/mutations";
-import { QUERY_ME } from "../../utils/queries";
-import { useMutation, useQuery } from "@apollo/client";
+// import { QUERY_ME } from "../../utils/queries";
+import { useMutation } from "@apollo/client";
 
-export default function EventCard({event, me}) {
+export default function EventCard({ event, me }) {
   const [viewComments, setViewComments] = useState(false);
   const [addComment, setAddComment] = useState(false);
   const [joinEvent] = useMutation(JOIN_EVENT);
   const [leaveEvent] = useMutation(LEAVE_EVENT);
-  const [cancelEvent] =useMutation(CANCEL_EVENT);
+  const [cancelEvent] = useMutation(CANCEL_EVENT);
   // const [joined, setJoined] = useState(false);
-  console.log(event.attendees, 'attendees');
+  // console.log(event.attendees, 'attendees');
   const [count, setCount] = useState(0);
 
-  // check to see if i am an attendee
-  const { data: meData } = useQuery(QUERY_ME);
-  console.log(meData, 'me');
   const attendees = event.attendees;
   const hostId = event.host._id
 
@@ -27,20 +24,18 @@ export default function EventCard({event, me}) {
     e.preventDefault();
     try {
       const eventId = event._id;
-      const { data } = await joinEvent({ variables: {eventId} });
-      console.log(data, 'data');
+      await joinEvent({ variables: { eventId } });
     } catch (e) {
       console.error(e);
     }
     checkAttendance();
     window.location.reload(false);
-
-  }
+  };
 
   async function onLeave() {
     const eventId = event._id;
     try {
-      await leaveEvent({ variables: {eventId} });
+      await leaveEvent({ variables: { eventId } });
     } catch (e) {
       console.error(e);
     }
@@ -49,9 +44,8 @@ export default function EventCard({event, me}) {
 
   async function onCancel() {
     const eventId = event._id;
-
     try {
-       await cancelEvent({ variables: {eventId} });
+      await cancelEvent({ variables: { eventId } });
     } catch (e) {
       console.error(e);
     }
@@ -70,48 +64,53 @@ export default function EventCard({event, me}) {
   //   }
   // }
 
-const checkAttendance = () => {
-  if(hostId === meData._id) {
-    return (
-      <div>
-        <button onClick={onCancel}
+  const checkAttendance = () => {
+
+    // check if current user is host
+    if (hostId === me._id) {
+      return (
+        <div>
+          <button onClick={onCancel}
             className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-        Cancel Event
+            Cancel Event
+          </button>
+          {count > attendees.length / 2 + 1 ?
+            <h1 className="px-4 py-2 mt-1 font-bold text-black rounded bg-amber-200">Event Verified</h1> :
+
+            <button onClick={() => setCount(count + 1)}
+              className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+              Verify Event
+            </button>}
+        </div>
+      )
+    };
+
+    // check if user is attendee
+    for (let i = 0; i < attendees.length; i++) {
+      if (attendees[i]._id === me._id) {
+        // console.log('match!');
+        return (
+          <div>
+            <button onClick={onLeave}
+              className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+              Leave Event
             </button>
-          {count >  attendees.length /2 + 1 ? <h1
-            className="px-4 py-2 mt-1 font-bold text-black rounded bg-amber-200 ">
-Event Verified            </h1> : <button onClick={() => setCount(count + 1)}
-            className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-Verify Event       </button>}
-      </div>
+            {count > attendees.length / 2 + 1 ? <h1
+              className="px-4 py-2 mt-1 font-bold text-black rounded bg-amber-200 ">
+              Event Verified            </h1> : <button onClick={() => setCount(count + 1)}
+                className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+              Verify Event       </button>}
+          </div>
+        )
+      }
+    }
+    return (
+      <button onClick={onJoin}
+        className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+        Be Kind & Attend Event
+      </button>
     )
   }
-  // let attendeesIdArr = [];
-  for(let i =0; i < attendees.length; i++) {
-  if(attendees[i]._id === me._id) {
-    console.log('match!');
-  return (
-    <div>
-      <button onClick={onLeave}
-      className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-        Leave Event
-      </button>
-        {count >  attendees.length /2 + 1 ? <h1
-          className="px-4 py-2 mt-1 font-bold text-black rounded bg-amber-200 ">
-      Event Verified            </h1> : <button onClick={() => setCount(count + 1)}
-          className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-      Verify Event       </button>}
-    </div>
-  )
-}
-}
-return (
-  <button onClick={onJoin}
-  className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-    Be Kind & Attend Event
-  </button>
-)
-}
 
 
 
@@ -171,15 +170,15 @@ return (
               </a>
             </div>
             <div>
-            {Auth.loggedIn() && !viewComments && event.comments.length > 1 ? <button onClick={() => {setViewComments(true)}}>View Comments</button> : Auth.loggedIn() && event.comments.length > 1 && <button onClick={() => {setViewComments(false)}}>Hide Comments</button>}
-              </div>
+              {Auth.loggedIn() && !viewComments && event.comments.length > 1 ? <button onClick={() => { setViewComments(true) }}>View Comments</button> : Auth.loggedIn() && event.comments.length > 1 && <button onClick={() => { setViewComments(false) }}>Hide Comments</button>}
+            </div>
             <div>
-              {Auth.loggedIn() && <button onClick={() => {setAddComment(true)}}>Add Comment</button>}
-              </div>
+              {Auth.loggedIn() && <button onClick={() => { setAddComment(true) }}>Add Comment</button>}
+            </div>
             <div className="bottom-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
               {Auth.loggedIn() &&
-              <div>
-                {checkAttendance()}
+                <div>
+                  {checkAttendance()}
                 </div>}
 
 
@@ -188,8 +187,8 @@ return (
           </div>
         </div>
       </div>
-      {addComment && <CommentForm key={event._id} eventId={event._id}/>}
-      {viewComments && <CommentsList comments={event.comments} key={event._id}/>}
+      {addComment && <CommentForm key={event._id} eventId={event._id} />}
+      {viewComments && <CommentsList comments={event.comments} key={event._id} />}
 
     </div>
   );
