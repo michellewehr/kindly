@@ -3,17 +3,21 @@ import CommentForm from "../CommentForm";
 import CommentsList from "../CommentsList";
 import { useState } from "react";
 import Auth from '../../utils/auth';
-import { JOIN_EVENT, LEAVE_EVENT } from "../../utils/mutations";
+import { CANCEL_EVENT, JOIN_EVENT, LEAVE_EVENT } from "../../utils/mutations";
 import { useMutation } from "@apollo/client";
 
-export default function EventCard({event}) {
-  const eventId = event._id
+export default function EventCard({event, myId}) {
   const [viewComments, setViewComments] = useState(false);
   const [addComment, setAddComment] = useState(false);
-  // const [toggleAttendBtn, setToggleAttendBtn] = useState(true)
   const [joinEvent] = useMutation(JOIN_EVENT);
   const [leaveEvent] = useMutation(LEAVE_EVENT);
+  const [cancelEvent] =useMutation(CANCEL_EVENT);
+  // const [joined, setJoined] = useState(false);
 
+
+  // check to see if i am an attendee
+  const attendees = event.attendees;
+  const hostId = event.host._id
 
   const onJoin = async e => {
     e.preventDefault();
@@ -24,16 +28,64 @@ export default function EventCard({event}) {
     } catch (e) {
       console.error(e);
     }
+    checkAttendance();
+    window.location.reload(false);
+
   //  setToggleAttendBtn(false);
   }
+ 
+  async function onLeave(eventId) {
+    try {
+      return await leaveEvent({ variables: {eventId} });
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
-// async function onLeave(eventId) {
-//   try {
-//     return await leaveEvent({ variables: eventId });
-//   } catch (e) {
-//     console.error(e);
-//   }
-// }
+  async function onCancel(eventId) {
+    try {
+      return await cancelEvent({ variables: {eventId} });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+
+  const checkAttendance = () => {
+    if(hostId === myId) {
+      return (
+        <button onClick={onCancel}
+      className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+        Cancel Event
+      </button>
+      )
+    }
+    for(let i =0; i < attendees.length; i++) {
+    if(attendees[i]._id === myId) {
+      return (
+        <button onClick={onJoin}
+      className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+        Be Kind & Attend Event
+      </button>
+      )
+    }
+    else if(attendees[i]._id !== myId) {
+    return (
+      <button onClick={onLeave}
+              className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+                Leave Event
+              </button>
+    ); 
+    } 
+  }
+}
+
+
+
+
+
+
+
 
   // if (!events.length) {
   //   return (
@@ -97,11 +149,19 @@ export default function EventCard({event}) {
               {Auth.loggedIn() && <button onClick={() => {setAddComment(true)}}>Add Comment</button>}
               </div>
             <div className="bottom-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
-              <button onClick={onJoin}
+              {checkAttendance()}
+              {/* {
+                if(checkAttendance) {
+                return <button onClick={onJoin}
+                className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+                  Be Kind & Attend Event
+                </button>
+              } 
+              {!checkAttendance && <button onClick={onLeave}
               className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-                Be Kind & Attend Event
-              </button> 
-              
+                Leave Event
+              </button>} */}
+             
             </div>
           </div>
         </div>
