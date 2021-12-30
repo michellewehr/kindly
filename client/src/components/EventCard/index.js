@@ -14,6 +14,7 @@ export default function EventCard({event, me}) {
   const [cancelEvent] =useMutation(CANCEL_EVENT);
   // const [joined, setJoined] = useState(false);
   console.log(event.attendees, 'attendees');
+  const [count, setCount] = useState(0);
 
   // check to see if i am an attendee
   console.log(me, 'me');
@@ -70,10 +71,17 @@ export default function EventCard({event, me}) {
 const checkAttendance = () => {
   if(hostId === me._id) {
     return (
-      <button onClick={onCancel}
-    className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-      Cancel Event
-    </button>
+      <div>
+        <button onClick={onCancel}
+            className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+        Cancel Event
+            </button>
+          {count >  attendees.length /2 + 1 ? <h1
+            className="px-4 py-2 mt-1 font-bold text-black rounded bg-amber-200 ">
+Event Verified            </h1> : <button onClick={() => setCount(count + 1)}
+            className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+Verify Event       </button>}
+      </div>
     )
   }
   // let attendeesIdArr = [];
@@ -81,10 +89,17 @@ const checkAttendance = () => {
   if(attendees[i]._id === me._id) {
     console.log('match!');
   return (
-    <button onClick={onLeave}
-    className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-      Leave Event
-    </button>
+    <div>
+      <button onClick={onLeave}
+      className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+        Leave Event
+      </button>
+        {count >  attendees.length /2 + 1 ? <h1
+          className="px-4 py-2 mt-1 font-bold text-black rounded bg-amber-200 ">
+      Event Verified            </h1> : <button onClick={() => setCount(count + 1)}
+          className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+      Verify Event       </button>}
+    </div>
   )
 } 
 }
