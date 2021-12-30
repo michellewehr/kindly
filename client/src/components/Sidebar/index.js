@@ -1,6 +1,7 @@
 import FriendsList from "../FriendsList";
 import { QUERY_ME } from '../../utils/queries'
 import { useQuery } from "@apollo/client";
+import { Link} from "react-router-dom";
 
 export default function Sidebar() {
   const { loading, data } = useQuery(QUERY_ME)
@@ -69,7 +70,7 @@ export default function Sidebar() {
               <p>{event.date} at {event.startTime} - {event.endTime} </p>
             </div>
           </a>
-          ))}        
+          ))}
         </div>
         {/* End of upcoming events */}
         <div className="bg-sky-100 mx-auto text-center rounded w-9/12 mb-2">
@@ -83,7 +84,7 @@ export default function Sidebar() {
               <p>{goodDeed.date}</p>
             </div>
           </a>
-          ))}  
+          ))}
           {/* end of div for good deeds */}
         </div>
         {/* div for my postings */}
@@ -91,7 +92,9 @@ export default function Sidebar() {
         {/* view my profile */}
         <a href="">
           <p className="text-sky-100 text-xl text-center pt-3 hover:text-orange-300">
+          <Link to='myprofile'>
             View My Full Profile
+            </Link>
           </p>
         </a>
         {/* end of view my profile */}
