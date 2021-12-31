@@ -1,47 +1,66 @@
 import { CREATE_EVENT } from "../../utils/mutations";
+import { QUERY_EVENTS, QUERY_ME } from "../../utils/queries";
 import { useState } from 'react';
 import { useMutation } from '@apollo/client'
 
 
 export default function NewEvent() {
-  const [addEvent] = useMutation(CREATE_EVENT);
-
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    location: '',
-    date: '',
-    startTime: '',
-    endTime: '',
-    url: '',
-    image: ''
+    title: "",
+    description: "",
+    location: "",
+    date: "",
+    startTime: "",
+    endTime: "",
+    url: "",
+    image: "",
   });
 
-  const handleChange = e => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  }
+  const [addEvent, { error }] = useMutation(CREATE_EVENT, {
+    update(cache, { data: { createEvent } }) {
+      try {
+        const { events } = cache.readQuery({ query: QUERY_EVENTS });
+        cache.writeQuery({
+          query: QUERY_EVENTS,
+          data: { events: [addEvent, ...events] },
+        });
+      } catch (e) {
+        console.error(e);
+      }
 
-  const handleSubmit = async e => {
+      const { me } = cache.readQuery({ query: QUERY_ME });
+      cache.writeQuery({
+        query: QUERY_ME,
+        data: { me: { ...me, events: [addEvent, ...me.events, addEvent] } },
+      });
+    },
+  });
+  // update state based on form input changes
+  const handleChange = (e) => {
+
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await addEvent({ variables: { ...formData } });
+      await addEvent({
+      variables: { ...formData } });
       // console.log(data);
+    setFormData({
+      title: "",
+      description: "",
+      location: "",
+      date: "",
+      startTime: "",
+      endTime: "",
+      url: "",
+      image: "",
+    });
     } catch (e) {
       console.error(e);
     }
-
-    setFormData({
-      title: '',
-      description: '',
-      location: '',
-      date: '',
-      startTime: '',
-      endTime: '',
-      url: '',
-      image: ''
-    });
-  }
-
+  };
 
   return (
     <div className="flex flex-col items-center justify-center h-full">
@@ -177,7 +196,8 @@ export default function NewEvent() {
             <label
               className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
               htmlFor="grid-url"
-            >Upload Image
+            >
+              Upload Image
               <i class="fas fa-image    "></i>
             </label>
             <input

@@ -6,7 +6,6 @@ export default function CommentsList({ comments, eventId, goodDeedId }) {
     <div>
       {comments.map((comment) => (
         <Comment
-          key={comment._id}
           comment={comment}
           eventId={eventId}
           goodDeedId={goodDeedId}
