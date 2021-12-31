@@ -6,13 +6,12 @@ import ReplyForm from '../ReplyForm';
 import { useMutation } from "@apollo/client";
 import { REMOVE_COMMENT } from "../../utils/mutations";
 
-
 export default function Comment({ comment, eventId, goodDeedId }) {
   const [viewReplies, setViewReplies] = useState(false);
   const [addReply, setAddReply] = useState(false);
   const [removeComment] = useMutation(REMOVE_COMMENT);
+  const commentAuthor = `${comment.author.firstName} ${comment.author.lastName}`;
 
-  
   const onDelete = async (e) => {
     e.preventDefault();
     const commentId = comment._id;
@@ -21,7 +20,7 @@ export default function Comment({ comment, eventId, goodDeedId }) {
     } catch (e) {
       console.error(e);
     }
-  }
+  };
 
   // console.log(props.comments, 'Comments props line 4 in CommentsList');
 
@@ -41,9 +40,6 @@ export default function Comment({ comment, eventId, goodDeedId }) {
   // } = comment;
 
   // const {comment } = state;
-
-
-
   return (
     <section className="overflow-hidden text-gray-600 body-font bg-sky-300">
       <div className="container px-5 py-24 mx-auto">
@@ -53,7 +49,7 @@ export default function Comment({ comment, eventId, goodDeedId }) {
               <span className="font-semibold text-gray-700 title-font">
                 {/* get users name */}
                 {/* {comment.author} */}
-                {comment.author.firstName} {comment.author.lastName}
+                {commentAuthor}
                 {/* Author */}
                 {/* this is where we would call the imported user name concat function */}
               </span>
@@ -68,8 +64,8 @@ export default function Comment({ comment, eventId, goodDeedId }) {
                 {comment.commentText}
               </p>
               {/* <a className="inline-flex items-center mt-4 text-indigo-500"> */}
-                {/* get likeCount */}
-                {/* Likes: {comment.likes}
+              {/* get likeCount */}
+              {/* Likes: {comment.likes}
                 <svg
                   className="w-4 h-4 ml-2"
                   viewBox="0 0 24 24"
@@ -87,9 +83,9 @@ export default function Comment({ comment, eventId, goodDeedId }) {
             {/* delete comment button  */}
             <div className="group">
               <button onClick={onDelete}>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </button>
               <p className="invisible group-hover:block group-hover:visible">Delete Comment</p>
             </div>
