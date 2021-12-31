@@ -121,10 +121,14 @@ export default function EventCard({ event, me }) {
       }
     }
     return (
-      <button className='pr-3' onClick={onJoin}
-        className="px-4 py-2 mt-1 mx-3 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-        Be Kind & Attend Event
-      </button>
+      <div>
+        {attendees.length > 1 && event.verifyNumber >= (attendees.length / 2) &&
+          <h1 className="px-4 py-2 mt-1 font-bold text-black rounded bg-amber-200">Event Verified</h1> }
+        <button className='pr-3' onClick={onJoin}
+          className="px-4 py-2 mt-1 mx-3 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+          Be Kind & Attend Event
+        </button>
+      </div>
     )
   }
 
