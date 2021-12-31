@@ -25,7 +25,7 @@ export default function NewEvent() {
     e.preventDefault();
     try {
       const { data } = await addEvent({ variables: { ...formData } });
-      console.log(data);
+      // console.log(data);
     } catch (e) {
       console.error(e);
     }
@@ -44,19 +44,19 @@ export default function NewEvent() {
 
 
   return (
-    <div className="flex flex-col justify-center items-center h-full">
+    <div className="flex flex-col items-center justify-center h-full">
       <h1 className="text-4xl font-bold text-center">Add an Event</h1>
       <form className="w-full max-w-lg" onSubmit={handleSubmit}>
-        <div className="flex flex-wrap -mx-3 mb-6">
-          <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <div className="flex flex-wrap mb-6 -mx-3">
+          <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
               htmlFor="grid-title"
             >
               Title
             </label>
             <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
               id="grid-title"
               type="text"
               placeholder="Title"
@@ -65,15 +65,15 @@ export default function NewEvent() {
               onChange={handleChange}
             />
           </div>
-          <div className="w-full md:w-1/2 px-3">
+          <div className="w-full px-3 md:w-1/2">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
               htmlFor="grid-description"
             >
               Description
             </label>
             <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
               id="grid-description"
               type="text"
               placeholder="Description"
@@ -83,16 +83,16 @@ export default function NewEvent() {
             />
           </div>
         </div>
-        <div className="flex flex-wrap -mx-3 mb-6">
+        <div className="flex flex-wrap mb-6 -mx-3">
           <div className="w-full px-3">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
               htmlFor="grid-location"
             >
               Location
             </label>
             <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
               id="grid-location"
               type="text"
               placeholder="Location"
@@ -102,16 +102,16 @@ export default function NewEvent() {
             />
           </div>
         </div>
-        <div className="flex flex-wrap -mx-3 mb-6">
-          <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <div className="flex flex-wrap mb-6 -mx-3">
+          <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
               htmlFor="grid-date"
             >
               Date
             </label>
             <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
               id="grid-date"
               type="date"
               placeholder="Date"
@@ -120,15 +120,15 @@ export default function NewEvent() {
               onChange={handleChange}
             />
           </div>
-          <div className="w-full md:w-1/2 px-3">
+          <div className="w-full px-3 md:w-1/2">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
               htmlFor="grid-startTime"
             >
               Start Time
             </label>
             <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
               id="grid-startTime"
               type="time"
               placeholder="Start Time"
@@ -138,16 +138,16 @@ export default function NewEvent() {
             />
           </div>
         </div>
-        <div className="flex flex-wrap -mx-3 mb-6">
-          <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <div className="flex flex-wrap mb-6 -mx-3">
+          <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
               htmlFor="grid-endTime"
             >
               End Time
             </label>
             <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
               id="grid-endTime"
               type="time"
               placeholder="End Time"
@@ -156,15 +156,15 @@ export default function NewEvent() {
               onChange={handleChange}
             />
           </div>
-          <div className="w-full md:w-1/2 px-3">
+          <div className="w-full px-3 md:w-1/2">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
               htmlFor="grid-url"
             >
               Website
             </label>
             <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
               id="grid-url"
               type="text"
               placeholder="Website"
@@ -173,15 +173,15 @@ export default function NewEvent() {
               onChange={handleChange}
             />
           </div>
-          <div className="w-full md:w-1/2 px-3">
+          <div className="w-full px-3 md:w-1/2">
             <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              className="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
               htmlFor="grid-url"
             >Upload Image
               <i class="fas fa-image    "></i>
             </label>
             <input
-              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
               id="grid-image"
               type="text"
               placeholder=""

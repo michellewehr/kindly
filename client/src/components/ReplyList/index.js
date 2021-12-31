@@ -10,18 +10,15 @@ export default function ReplyList({ replies }) {
       </div>
       {/* //! get reply data */}
       <div className="card-body">
-        {replies &&
+        {
           replies.map((reply) => (
             <div key={reply._id} className="">
               <p className="" >
                 {reply.replyBody} </p>
                 <Link
                   to={`/profile/${reply.author}`}
-                  // Get author but breaks because seeds
                   style={{ fontWeight: 700 }}
-                >
-                  {/* add createdAt in query- may break bc seeds right now */}
-                 on {reply.createdAt}
+                >Get Author on get created at{reply.createdAt}
                 </Link>
               
             </div>
