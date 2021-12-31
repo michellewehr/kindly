@@ -1,5 +1,6 @@
 // import { createSourceEventStream } from "graphql"
 import CommentForm from "../CommentForm";
+import { Link } from "react-router-dom";
 import CommentsList from "../CommentsList";
 import { useState } from "react";
 import Auth from '../../utils/auth';
@@ -56,17 +57,6 @@ export default function EventCard({ event, me }) {
   }
 
 
-  // const checkHost = () => {
-  //   if(hostId === myId) {
-  //     return (
-  //       <button onClick={onCancel}
-  //     className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-  //       Cancel Event
-  //     </button>
-  //     )
-  //   }
-  // }
-
   const checkAttendance = () => {
 
     // check if current user is host
@@ -74,10 +64,10 @@ export default function EventCard({ event, me }) {
       return (
         <div>
           <button onClick={onCancel}
-            className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+            className="px-4 py-2 mr-3 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
             Cancel Event
           </button>
-          {count > attendees.length / 2 + 1 ?
+          {count > (attendees.length / 2 + 1) ?
             <h1 className="px-4 py-2 mt-1 font-bold text-black rounded bg-amber-200">Event Verified</h1> :
 
             <button onClick={() => setCount(count + 1)}
@@ -94,8 +84,8 @@ export default function EventCard({ event, me }) {
         // console.log('match!');
         return (
           <div>
-            <button onClick={onLeave}
-              className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+            <button className='pr-3' onClick={onLeave}
+              className="px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
               Leave Event
             </button>
             {count > attendees.length / 2 + 1 ? <h1
@@ -108,8 +98,8 @@ export default function EventCard({ event, me }) {
       }
     }
     return (
-      <button onClick={onJoin}
-        className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+      <button className='pr-3' onClick={onJoin}
+        className="px-4 py-2 mt-1 mx-3 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
         Be Kind & Attend Event
       </button>
     )
@@ -172,18 +162,37 @@ export default function EventCard({ event, me }) {
                 </span>
               </a>
             </div>
-            <div>
-              {Auth.loggedIn() && !viewAttendees && event.attendees.length > 1 ? <button onClick={() => { setViewAttendees(true) }}>View Attendees</button> : Auth.loggedIn() && event.attendees.length > 1 && <button onClick={() => { setViewAttendees(false) }}>Hide Attendees</button>}
-            </div>
+            {/* button div for viewing comments/ hiding comments */}
             <div>
               {Auth.loggedIn() && !viewComments && event.comments.length > 1 ? <button onClick={() => { setViewComments(true) }}>View Comments</button> : Auth.loggedIn() && event.comments.length > 1 && <button onClick={() => { setViewComments(false) }}>Hide Comments</button>}
             </div>
+            {/* button div to add comment */}
             <div>
               {Auth.loggedIn() && <button onClick={() => { setAddComment(true) }}>Add Comment</button>}
             </div>
+            {/* hover to see attendees list */}
+            <div className="group relative flex flex-col">
+              {/* {Auth.loggedIn() && !viewAttendees && event.attendees.length > 1 ? 
+                <button onClick={() => { setViewAttendees(true) }}>View Attendees</button> 
+                : Auth.loggedIn() && event.attendees.length > 1 && 
+                <button onClick={() => { setViewAttendees(false) }}>Hide Attendees</button>} */}
+                <span>View Attendees</span>
+                <ul className="invisible group-hover:visible top-0 z-10 flex flex-col justify-center text-sm bg-orange-300 text-black w-1/3 rounded">
+                  {attendees.map((attendee) => (
+                        <li key={attendee._id} className="">
+                            <Link
+                              to={`/profile/${attendee._id}`}
+                              style={{ fontWeight: 700 }}
+                            >{attendee.firstName} {attendee.lastName}
+                            </Link>
+                        </li>
+                      ))}
+              </ul>
+            </div>
+            {/* button depending on attendence to join/leave/cancel event*/}
             <div className="bottom-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
               {Auth.loggedIn() &&
-                <div>
+            <div>
                   {checkAttendance()}
                 </div>}
             </div>
@@ -192,8 +201,6 @@ export default function EventCard({ event, me }) {
       </div>
       {addComment && <CommentForm key={event._id} eventId={event._id} />}
       {viewComments && <CommentsList comments={event.comments} key={event._id} />}
-      {viewAttendees && <AttendeesList key={event._id} attendees={event.attendees} />}
-
     </div>
   );
 }
