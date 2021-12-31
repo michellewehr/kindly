@@ -167,28 +167,28 @@ export default function EventCard({ event, me }) {
               {Auth.loggedIn() && <button onClick={() => { setAddComment(true) }}>Add Comment</button>}
             </div>
             {/* hover to see attendees list */}
-            <div className="group relative flex flex-col">
+            <div className="group relative flex flex-col w-max">
               {/* {Auth.loggedIn() && !viewAttendees && event.attendees.length > 1 ? 
                 <button onClick={() => { setViewAttendees(true) }}>View Attendees</button> 
                 : Auth.loggedIn() && event.attendees.length > 1 && 
                 <button onClick={() => { setViewAttendees(false) }}>Hide Attendees</button>} */}
-                <span>View Attendees</span>
-                <ul className="invisible group-hover:visible top-0 z-10 flex flex-col justify-center text-sm bg-orange-300 text-black w-1/3 rounded">a
-                  {attendees.map((attendee) => (
-                        <li key={attendee._id} className="">
-                            <Link
-                              to={`/profile/${attendee._id}`}
-                              style={{ fontWeight: 700 }}
-                            >{attendee.firstName} {attendee.lastName}
-                            </Link>
-                        </li>
-                      ))}
+              <span className="cursor-pointer">View Attendees</span>
+              <ul className="hidden attendee-list group-hover:block top-0 z-10 flex-col justify-center text-sm bg-orange-300 text-black rounded w-max">
+                {attendees.map((attendee, index) => (
+                  <li key={attendee._id} className="pl-4 py-1 pr-1">
+                    <Link
+                      to={`/profile/${attendee._id}`}
+                      style={{ fontWeight: 700 }}
+                    >{index + 1}. {attendee.firstName} {attendee.lastName}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
             {/* button depending on attendence to join/leave/cancel event*/}
             <div className="bottom-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
               {Auth.loggedIn() &&
-            <div>
+                <div>
                   {checkAttendance()}
                 </div>}
             </div>
