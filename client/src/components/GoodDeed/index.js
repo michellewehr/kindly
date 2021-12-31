@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation } from "@apollo/client";
 import CommentForm from "../CommentForm";
 import CommentsList from "../CommentsList";
 import Auth from '../../utils/auth';
-import { ADD_GOOD_DEED_LIKE, CANCEL_GOOD_DEED, JOIN_GOOD_DEED, LEAVE_GOOD_DEED } from '../../utils/mutations';
+import { ADD_GOOD_DEED_LIKE, ADD_VERIFICATION, CANCEL_GOOD_DEED, JOIN_GOOD_DEED, LEAVE_GOOD_DEED } from '../../utils/mutations';
 
 export default function GoodDeed({ goodDeedData, me }) {
   const [viewComments, setViewComments] = useState(false);
@@ -12,12 +12,32 @@ export default function GoodDeed({ goodDeedData, me }) {
   const [cancelGoodDeed] = useMutation(CANCEL_GOOD_DEED);
   const [joinGoodDeed] = useMutation(JOIN_GOOD_DEED);
   const [leaveGoodDeed] = useMutation(LEAVE_GOOD_DEED);
+  const [addVerification, { loading, error }] = useMutation(ADD_VERIFICATION)
   const goodDeed = goodDeedData || {};
 
   const hostId = goodDeed.host._id;
   const myId = me._id;
   const helper = goodDeed.helper
 
+  const goodDeedPassed = () => { return Date.now() > goodDeed.date };
+
+  const isVerified = () => {
+    if (goodDeedPassed())
+      // TODO: ADD_KINDLY_POINTS mutation runs here
+      console.log('this is a function');
+  };
+
+  useEffect(() => { isVerified() });
+
+  const onVerify = async (e) => {
+    e.preventDefault();
+    const goodDeedId = goodDeed._id;
+    try {
+      await addVerification({ variables: { goodDeedId } });
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const onJoin = async (e) => {
     e.preventDefault();
@@ -61,6 +81,11 @@ export default function GoodDeed({ goodDeedData, me }) {
             className="absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
             Cancel Good Deed
           </button>
+          {goodDeedPassed() &&
+            <button onClick={onVerify}
+              className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+              Verify Event
+            </button>}
         </div>
       )
     };
@@ -78,6 +103,11 @@ export default function GoodDeed({ goodDeedData, me }) {
               className="absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
               Leave Good Deed
             </button>
+            {goodDeedPassed() &&
+              <button onClick={onVerify}
+                className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+                Verify Event
+              </button>}
           </div>
         )
       }

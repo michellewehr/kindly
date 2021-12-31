@@ -15,7 +15,7 @@ export default function EventCard({ event, me }) {
   const [leaveEvent] = useMutation(LEAVE_EVENT);
   const [cancelEvent] = useMutation(CANCEL_EVENT);
   // const [count, setCount] = useState(0);
-  const [addVerification, { loading, error }] = useMutation(ADD_VERIFICATION)
+  const [addVerification, { loading, error }] = useMutation(ADD_VERIFICATION);
   // console.log(event.likes);
 
   // console.log(event.verifyNumber, 'verified')
@@ -92,7 +92,6 @@ export default function EventCard({ event, me }) {
   }
 
   const checkAttendance = () => {
-    console.log(attendees.length, 'length')
     // check if current user is host
     if (hostId === me._id) {
       return (
@@ -102,7 +101,7 @@ export default function EventCard({ event, me }) {
             Cancel Event
           </button>
           {/* if verify number in db more than half attendees, event verified */}
-          {isHalfOfAttendees && eventPassed &&
+          {isHalfOfAttendees() && eventPassed() &&
             < button onClick={onVerify}
               className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
               Verify Event
@@ -121,7 +120,7 @@ export default function EventCard({ event, me }) {
               className="px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
               Leave Event
             </button>
-            {event.verifyNumber < (attendees.length / 2) && eventPassed &&
+            {isHalfOfAttendees && eventPassed &&
               <button onClick={onVerify}
                 className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
                 Verify Event
@@ -132,7 +131,6 @@ export default function EventCard({ event, me }) {
     }
     return (
       <div>
-
         <button className='pr-3' onClick={onJoin}
           className="px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
           Be Kind & Attend Event
