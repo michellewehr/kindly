@@ -48,7 +48,7 @@ export default function Sidebar() {
         {/* location */}
         <div className="">
           <p className="px-6 mx-auto mb-2 text-center bg-orange-300 rounded w-max">
-            Tolland, CT
+            {myData.location}
           </p>
         </div>
         {/* end of location */}

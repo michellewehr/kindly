@@ -15,17 +15,20 @@ export const LOGIN = gql`
 `;
 
 export const CREATE_USER = gql`
-  mutation createUser($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
-    createUser(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
-      user {
-        _id
-        firstName
-        lastName
-        email
-      }
-      token
+mutation CreateUser($firstName: String!, $lastName: String!, $email: String!, $password: String!, $location: String!) {
+  createUser(firstName: $firstName, lastName: $lastName, email: $email, password: $password, location: $location) {
+    user {
+      _id
+      firstName
+      lastName
+      email
+      location
+      profilePicture
+      kindlyScore
     }
+    token
   }
+}
 `;
 
 export const CREATE_EVENT = gql`
