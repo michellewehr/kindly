@@ -381,6 +381,18 @@ const resolvers = {
             }
          }
          throw new AuthenticationError('need logged in!');
+   },
+
+   addToVerifyNumber: async (parent, args, context) => {
+      if(context.user) {
+         const updatedEvent = await Event.findByIdAndUpdate(
+            {_id: args.eventId},
+            {$inc: {verifyNumber: +1}}, 
+            {new: true}
+         )
+         return updatedEvent;
+      }
+      throw new AuthenticationError('need logged in!');
    }
 }
 };

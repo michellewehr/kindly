@@ -293,3 +293,41 @@ mutation removeComment($commentId: ID!, $eventId: ID, $goodDeedId: ID, ) {
     }
   }
 }`;
+
+export const ADD_VERIFICATION = gql`mutation Mutation($eventId: ID!) {
+  addToVerifyNumber(eventId: $eventId) {
+    _id
+    host {
+      _id
+    }
+    title
+    attendees {
+      _id
+    }
+    location
+    description
+    date
+    startTime
+    endTime
+    url
+    image
+    comments {
+      _id
+      author {
+        _id
+      }
+      commentText
+      likes
+      replies {
+        _id
+        author {
+          _id
+        }
+        replyBody
+      }
+    }
+    likes
+    verifyNumber
+  }
+}
+`;

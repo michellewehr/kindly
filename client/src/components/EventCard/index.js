@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import CommentsList from "../CommentsList";
 import { useState } from "react";
 import Auth from '../../utils/auth';
-import { CANCEL_EVENT, JOIN_EVENT, LEAVE_EVENT, ADD_EVENT_LIKE } from "../../utils/mutations";
+import { CANCEL_EVENT, JOIN_EVENT, LEAVE_EVENT, ADD_EVENT_LIKE, ADD_VERIFICATION } from "../../utils/mutations";
 // import { QUERY_ME } from "../../utils/queries";
 import { useMutation } from "@apollo/client";
 
@@ -14,15 +14,27 @@ export default function EventCard({ event, me }) {
   const [joinEvent] = useMutation(JOIN_EVENT);
   const [leaveEvent] = useMutation(LEAVE_EVENT);
   const [cancelEvent] = useMutation(CANCEL_EVENT);
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
+  const [addVerification, {loading, error}] = useMutation(ADD_VERIFICATION)
   console.log(event.likes);
 
+  console.log(event.verifyNumber, 'verified')
   const attendees = event.attendees;
   console.log(attendees, 'attendees');
   const hostId = event.host._id
 
   const [addLike] = useMutation(ADD_EVENT_LIKE);
 
+  const onVerify = async (e) =>  {
+    e.preventDefault();
+    const eventId = event._id;
+    try{
+      await addVerification({ variables: { eventId } });
+    } catch(e) {
+      console.error(e);
+    }
+  }
+  
   const onLike = async (e) => {
     e.preventDefault();
     const eventId = event._id;
@@ -66,7 +78,7 @@ export default function EventCard({ event, me }) {
 
 
   const checkAttendance = () => {
-
+    console.log(attendees.length, 'length')
     // check if current user is host
     if (hostId === me._id) {
       return (
@@ -75,10 +87,11 @@ export default function EventCard({ event, me }) {
             className="px-4 py-2 mr-3 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
             Cancel Event
           </button>
-          {count > (attendees.length / 2 + 1) ?
+          {/* if verify number in db more than half attendees, event verified */}
+          {event.verifyNumber >= (attendees.length / 2 ) ?
             <h1 className="px-4 py-2 mt-1 font-bold text-black rounded bg-amber-200">Event Verified</h1> :
 
-            <button onClick={() => setCount(count + 1)}
+            <button onClick={onVerify}
               className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
               Verify Event
             </button>}
@@ -96,11 +109,13 @@ export default function EventCard({ event, me }) {
               className="px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
               Leave Event
             </button>
-            {count >= attendees.length / 2 ? <h1
-              className="px-4 py-2 mt-1 font-bold text-black rounded bg-amber-200 ">
-              Event Verified            </h1> : <button onClick={() => setCount(count + 1)}
-                className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-              Verify Event       </button>}
+            {event.verifyNumber >= (attendees.length / 2 ) ?
+            <h1 className="px-4 py-2 mt-1 font-bold text-black rounded bg-amber-200">Event Verified</h1> :
+
+            <button onClick={onVerify}
+              className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+              Verify Event
+            </button>}
           </div>
         )
       }
