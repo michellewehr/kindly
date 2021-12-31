@@ -19,6 +19,7 @@ const hostId = goodDeed.host._id;
 console.log(hostId, 'host id good deed');
 const myId = me._id;
 console.log(myId, 'good deed my id')
+console.log(goodDeed.helper, 'helper')
 // const helperId = goodDeed.helper || {};
 // console.log(helperId, 'helper')
 
