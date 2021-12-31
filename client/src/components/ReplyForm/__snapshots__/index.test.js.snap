@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReplyForm component renders Matches snapshot DOM node structure 1`] = `
+<DocumentFragment>
+  <div>
+    <p>
+      Character Count: 0/280
+    </p>
+    <form
+      className=""
+    >
+      <textarea
+        className="form-input col-12 col-md-9"
+        placeholder="reply to this comment..."
+      />
+      <button
+        className="btn col-12 col-md-3"
+        type="submit"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</DocumentFragment>
+`;

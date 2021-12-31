@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CommentForm component renders Matches snapshot DOM node structure 1`] = `
+<DocumentFragment>
+  <div>
+    <p>
+      Character Count: 0/280
+    </p>
+    <textarea
+      className=""
+    />
+    <button
+      className=""
+      type="submit"
+    >
+      Submit
+    </button>
+  </div>
+</DocumentFragment>
+`;

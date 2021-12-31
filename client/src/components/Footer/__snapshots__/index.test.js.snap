@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer component renders Matches snapshot DOM node structure 1`] = `
+<DocumentFragment>
+  <footer
+    className="w-100 mt-auto bg-secondary p-4"
+  >
+    <div
+      className="container"
+    >
+      ©2021 Kindly
+    </div>
+  </footer>
+</DocumentFragment>
+`;
