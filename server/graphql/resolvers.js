@@ -327,6 +327,18 @@ const resolvers = {
          }
 
          throw new AuthenticationError('You need to be logged in!')
+      }, 
+      //add event like
+      addEventLike: async (parent, args, context) => {
+         if(context.user) {
+            const updatedEvent = await Event.findOneAndUpdate(
+               {_id: args.eventId}, 
+               {$inc: {likes: +1}}, 
+               {new: true}
+            )
+            return updatedEvent;
+         }
+         throw new AuthenticationError('need to be logged in')
       }
    }
 };

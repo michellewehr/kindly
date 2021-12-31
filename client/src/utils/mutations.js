@@ -228,3 +228,14 @@ mutation AddReply($commentId: ID!, $replyBody: String!) {
     }
   }
 }`;
+
+export const ADD_EVENT_LIKE = gql`
+mutation addEventLike($eventId: ID!) {
+  addEventLike(eventId: $eventId) {
+    _id
+    title
+    location
+    description
+    likes
+  }
+}`;

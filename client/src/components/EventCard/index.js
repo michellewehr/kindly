@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import CommentsList from "../CommentsList";
 import { useState } from "react";
 import Auth from '../../utils/auth';
-import { CANCEL_EVENT, JOIN_EVENT, LEAVE_EVENT } from "../../utils/mutations";
+import { CANCEL_EVENT, JOIN_EVENT, LEAVE_EVENT, ADD_EVENT_LIKE } from "../../utils/mutations";
 // import { QUERY_ME } from "../../utils/queries";
 import { useMutation } from "@apollo/client";
 
@@ -15,10 +15,25 @@ export default function EventCard({ event, me }) {
   const [leaveEvent] = useMutation(LEAVE_EVENT);
   const [cancelEvent] = useMutation(CANCEL_EVENT);
   const [count, setCount] = useState(0);
+  console.log(event.likes);
 
   const attendees = event.attendees;
   console.log(attendees, 'attendees');
   const hostId = event.host._id
+
+  const [addLike] = useMutation(ADD_EVENT_LIKE);
+
+  const onLike = async (e) => {
+    e.preventDefault();
+    const eventId = event._id;
+    try {
+      await addLike({ variables: { eventId } });
+    } catch (e) {
+      console.error(e);
+    }
+    window.location.reload(false);
+  }
+
 
   const onJoin = async e => {
     e.preventDefault();
@@ -115,10 +130,16 @@ export default function EventCard({ event, me }) {
       <div className="flex flex-row flex-wrap w-full p-3 mt-2 antialiased bg-white rounded-lg shadow-lg">
         <div className="w-full md:w-1/3">
           <img
-            className="antialiased rounded-lg shadow-lg"
+            className="antialiased rounded-lg shadow-lg xl"
             src={event.image}
             alt="Alt tag"
           />
+          <p>Likes: {event.likes} </p>
+          <button onClick={onLike}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+            </svg>
+        </button>
         </div>
         <div className="flex flex-row flex-wrap w-full px-3 md:w-2/3">
           <div className="relative w-full pt-3 font-semibold text-left text-gray-700 md:pt-0">
