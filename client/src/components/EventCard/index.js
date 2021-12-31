@@ -96,7 +96,7 @@ export default function EventCard({ event, me }) {
               className="px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
               Leave Event
             </button>
-            {count > attendees.length / 2 + 1 ? <h1
+            {count >= attendees.length / 2 ? <h1
               className="px-4 py-2 mt-1 font-bold text-black rounded bg-amber-200 ">
               Event Verified            </h1> : <button onClick={() => setCount(count + 1)}
                 className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
