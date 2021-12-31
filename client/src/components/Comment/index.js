@@ -41,7 +41,7 @@ export default function Comment({ comment }) {
               <span className="font-semibold text-gray-700 title-font">
                 {/* get users name */}
                 {/* {comment.author} */}
-                Author
+                {comment.author.firstName} {comment.author.lastName}
                 {/* Author */}
                 {/* this is where we would call the imported user name concat function */}
               </span>
