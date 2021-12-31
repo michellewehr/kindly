@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import CommentsList from "../CommentsList";
 import { useState } from "react";
 import Auth from '../../utils/auth';
-import { CANCEL_EVENT, JOIN_EVENT, LEAVE_EVENT, ADD_EVENT_LIKE } from "../../utils/mutations";
+import { CANCEL_EVENT, JOIN_EVENT, LEAVE_EVENT, ADD_EVENT_LIKE, ADD_VERIFICATION } from "../../utils/mutations";
 // import { QUERY_ME } from "../../utils/queries";
 import { useMutation } from "@apollo/client";
 
@@ -14,15 +14,27 @@ export default function EventCard({ event, me }) {
   const [joinEvent] = useMutation(JOIN_EVENT);
   const [leaveEvent] = useMutation(LEAVE_EVENT);
   const [cancelEvent] = useMutation(CANCEL_EVENT);
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
+  const [addVerification, {loading, error}] = useMutation(ADD_VERIFICATION)
   console.log(event.likes);
 
+  console.log(event.verifyNumber, 'verified')
   const attendees = event.attendees;
   console.log(attendees, 'attendees');
   const hostId = event.host._id
 
   const [addLike] = useMutation(ADD_EVENT_LIKE);
 
+  const onVerify = async (e) =>  {
+    e.preventDefault();
+    const eventId = event._id;
+    try{
+      await addVerification({ variables: { eventId } });
+    } catch(e) {
+      console.error(e);
+    }
+  }
+  
   const onLike = async (e) => {
     e.preventDefault();
     const eventId = event._id;
@@ -66,7 +78,7 @@ export default function EventCard({ event, me }) {
 
 
   const checkAttendance = () => {
-
+    console.log(attendees.length, 'length')
     // check if current user is host
     if (hostId === me._id) {
       return (
@@ -75,10 +87,9 @@ export default function EventCard({ event, me }) {
             className="px-4 py-2 mr-3 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
             Cancel Event
           </button>
-          {count > (attendees.length / 2 + 1) ?
-            <h1 className="px-4 py-2 mt-1 font-bold text-black rounded bg-amber-200">Event Verified</h1> :
-
-            <button onClick={() => setCount(count + 1)}
+          {/* if verify number in db more than half attendees, event verified */}
+          {event.verifyNumber < (attendees.length / 2 ) &&
+            <button onClick={onVerify}
               className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
               Verify Event
             </button>}
@@ -96,20 +107,23 @@ export default function EventCard({ event, me }) {
               className="px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
               Leave Event
             </button>
-            {count >= attendees.length / 2 ? <h1
-              className="px-4 py-2 mt-1 font-bold text-black rounded bg-amber-200 ">
-              Event Verified            </h1> : <button onClick={() => setCount(count + 1)}
-                className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-              Verify Event       </button>}
+            {event.verifyNumber < (attendees.length / 2 ) &&
+            <button onClick={onVerify}
+              className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+              Verify Event
+            </button>}
           </div>
         )
       }
     }
     return (
-      <button className='pr-3' onClick={onJoin}
-        className="px-4 py-2 mt-1 mx-3 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-        Be Kind & Attend Event
-      </button>
+      <div>
+     
+        <button className='pr-3' onClick={onJoin}
+          className="px-4 py-2 mt-1 mx-3 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+          Be Kind & Attend Event
+        </button>
+      </div>
     )
   }
 
@@ -140,7 +154,15 @@ export default function EventCard({ event, me }) {
         <div className="flex flex-row flex-wrap w-full px-3 md:w-2/3">
           <div className="relative w-full pt-3 font-semibold text-left text-gray-700 md:pt-0">
             <div className="flex flex-row pb-1 text-2xl leading-tight text-amber-500">
-              {event.title}
+              <span>{event.title}</span>
+              {/* verified check start */}
+              {attendees.length > 1 && event.verifyNumber >= (attendees.length / 2) &&
+              <div className="group inline-block">
+               <svg xmlns="http://www.w3.org/2000/svg" className="mx-4 h-5 w-5 inline-block" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+                <p className="inline-block group-hover:visible invisible text-sm">Event Verified</p>
+              </div>}
+              {/* verified check end */}
             </div>
             <div className="top-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
               Kindly Points: <b>+10</b>

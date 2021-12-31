@@ -34,6 +34,7 @@ const typeDefs = gql`
     image: String
     comments: [Comment]
     likes: Int
+    verifyNumber: Int
   }
 
   type GoodDeed {
@@ -93,7 +94,7 @@ const typeDefs = gql`
     addEventLike(eventId: ID!): Event
     addGoodDeedLike(goodDeedId: ID!): GoodDeed
     removeComment(commentId: ID!, eventId: ID, goodDeedId: ID): Event
-
+    addToVerifyNumber(eventId: ID!): Event
   }
 `
 module.exports = typeDefs

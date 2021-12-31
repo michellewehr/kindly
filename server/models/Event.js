@@ -58,6 +58,10 @@ const eventSchema = new Schema(
     likes: {
       type: Number,
       default: 0
+    }, 
+    verifyNumber: {
+      type: Number, 
+      default: 0
     }
   },
   {

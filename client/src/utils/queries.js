@@ -219,6 +219,7 @@ export const QUERY_EVENTS = gql`
     description
     date
     startTime
+    verifyNumber
     endTime
     url
     image
@@ -262,6 +263,7 @@ export const QUERY_EVENT = gql`
     date
     startTime
     endTime
+    verifyNumber
     url
     image
        comments {
