@@ -91,6 +91,8 @@ const typeDefs = gql`
     leaveGoodDeed(goodDeedId: ID!): GoodDeed
     cancelGoodDeed(goodDeedId: ID!): [GoodDeed]
     addEventLike(eventId: ID!): Event
+    addGoodDeedLike(goodDeedId: ID!): GoodDeed
+
   }
 `
 module.exports = typeDefs
