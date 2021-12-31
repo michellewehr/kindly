@@ -1,4 +1,4 @@
-import FriendsList from "../components/FriendsList";
+// import FriendsList from "../components/FriendsList";
 import EventList from "../components/EventList";
 import GoodDeedList from "../components/GoodDeedList";
 import { useState } from "react";
@@ -14,7 +14,7 @@ export default function Profile() {
   console.log(myData, 'line 14 profile')
   const events = myData?.events || [];
   const myGoodDeeds = myData?.goodDeeds || [];
-  const myFriends = myData?.friends || [];
+  // const myFriends = myData?.friends || [];
 
  const [renderEvents, toggleEvents] = useState(true);
 
@@ -153,7 +153,7 @@ export default function Profile() {
                               )}
                             </div>
                             {renderEvents ? (
-                              <EventList events={events} host={data?.me} />
+                              <EventList  />
                             ) : (
                               <GoodDeedList />
                             )}

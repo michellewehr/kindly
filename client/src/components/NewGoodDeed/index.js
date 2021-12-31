@@ -1,9 +1,9 @@
 import { useMutation } from '@apollo/client';
 import { useState } from 'react';
 import { CREATE_GOOD_DEED } from '../../utils/mutations';
+import { QUERY_GOOD_DEEDS, QUERY_ME } from '../../utils/queries';
 
 export default function NewGoodDeed() {
-  const [addGoodDeed] = useMutation(CREATE_GOOD_DEED);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -15,19 +15,36 @@ export default function NewGoodDeed() {
     url: ''
   });
 
-  const handleChange = e => {
+  const [addGoodDeed, { error }] = useMutation(CREATE_GOOD_DEED, {
+    update(cache, { data: { createGoodDeed } }) {
+      try {
+        const { goodDeeds } = cache.readQuery({ query: QUERY_GOOD_DEEDS });
+        cache.writeQuery({
+          query: QUERY_GOOD_DEEDS,
+          data: { goodDeeds: [createGoodDeed, ...goodDeeds] },
+        });
+      } catch (e) {
+        console.error(e);
+      }
+
+      const { me } = cache.readQuery({ query: QUERY_ME });
+      cache.writeQuery({
+        query: QUERY_ME,
+        data: { me: { ...me, goodDeeds: [addGoodDeed, ...me.goodDeeds, addGoodDeed] } },
+      });
+    },
+  });
+  // update state based on form input changes
+  const handleChange = (e) => {
+
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  }
+  };
 
-
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await addGoodDeed({ variables: { ...formData } });
-      // console.log(data);
-    } catch (e) {
-      console.error(e);
-    }
+      await addGoodDeed({
+      variables: { ...formData } });
     setFormData({
       title: '',
       description: '',
@@ -37,7 +54,11 @@ export default function NewGoodDeed() {
       endTime: '',
       url: ''
     });
+
+  } catch (e) {
+    console.error(e);
   }
+};
 
 
   return (

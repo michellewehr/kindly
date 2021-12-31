@@ -100,13 +100,12 @@ export default function Comment({ comment, eventId, goodDeedId }) {
         </div>
       </div>
       <div>
-        {addReply && <ReplyForm key={comment._id} commentId={comment._id} />}
+        {addReply && <ReplyForm  commentId={comment._id} />}
       </div>
       {/* Replies */}
       <div>
         {comment.replies.length > 1 && viewReplies &&
           <ReplyList
-            key={comment._id}
             replies={comment.replies} />
         }
       </div>
