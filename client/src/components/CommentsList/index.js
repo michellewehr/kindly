@@ -6,7 +6,6 @@ export default function CommentsList({ comments }) {
     <div>
       {comments.map((comment) => (
         <Comment
-          key={comment._id}
           comment={comment}
         // _id={comment._id}
         // commentText={comment.commentText}
