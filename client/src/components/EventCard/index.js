@@ -61,7 +61,7 @@ export default function EventCard({ event, me }) {
     } catch (e) {
       console.error(e);
     }
-    window.location.reload(false);
+    // window.location.reload(false);
   }
 
 
