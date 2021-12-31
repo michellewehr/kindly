@@ -33,6 +33,7 @@ const typeDefs = gql`
     url: String
     image: String
     comments: [Comment]
+    likes: Int
   }
 
   type GoodDeed {
@@ -89,6 +90,9 @@ const typeDefs = gql`
     joinGoodDeed(goodDeedId: ID!): GoodDeed
     leaveGoodDeed(goodDeedId: ID!): GoodDeed
     cancelGoodDeed(goodDeedId: ID!): [GoodDeed]
+    addEventLike(eventId: ID!): Event
+    addGoodDeedLike(goodDeedId: ID!): GoodDeed
+
   }
 `
 module.exports = typeDefs

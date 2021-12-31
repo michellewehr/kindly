@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import CommentsList from "../CommentsList";
 import { useState } from "react";
 import Auth from '../../utils/auth';
-import { CANCEL_EVENT, JOIN_EVENT, LEAVE_EVENT } from "../../utils/mutations";
+import { CANCEL_EVENT, JOIN_EVENT, LEAVE_EVENT, ADD_EVENT_LIKE } from "../../utils/mutations";
 // import { QUERY_ME } from "../../utils/queries";
 import { useMutation } from "@apollo/client";
 
@@ -15,10 +15,24 @@ export default function EventCard({ event, me }) {
   const [leaveEvent] = useMutation(LEAVE_EVENT);
   const [cancelEvent] = useMutation(CANCEL_EVENT);
   const [count, setCount] = useState(0);
+  console.log(event.likes);
 
   const attendees = event.attendees;
   console.log(attendees, 'attendees');
   const hostId = event.host._id
+
+  const [addLike] = useMutation(ADD_EVENT_LIKE);
+
+  const onLike = async (e) => {
+    e.preventDefault();
+    const eventId = event._id;
+    try {
+      await addLike({ variables: { eventId } });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
 
   const onJoin = async e => {
     e.preventDefault();
@@ -29,7 +43,6 @@ export default function EventCard({ event, me }) {
       console.error(e);
     }
     checkAttendance();
-    window.location.reload(false);
   };
 
   async function onLeave() {
@@ -39,7 +52,6 @@ export default function EventCard({ event, me }) {
     } catch (e) {
       console.error(e);
     }
-    window.location.reload(false);
   }
 
   async function onCancel() {
@@ -115,10 +127,15 @@ export default function EventCard({ event, me }) {
       <div className="flex flex-row flex-wrap w-full p-3 mt-2 antialiased bg-white rounded-lg shadow-lg">
         <div className="w-full md:w-1/3">
           <img
-            className="antialiased rounded-lg shadow-lg"
+            className="antialiased rounded-lg shadow-lg xl"
             src={event.image}
             alt="Alt tag"
           />
+        {Auth.loggedIn() && <button className='inline-block text-sky-700 ' onClick={onLike}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="inline h-8 w-8 text-yellow" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+              </svg> <span className="text-cyan-800">This event has {event.likes} likes!</span>
+        </button> }
         </div>
         <div className="flex flex-row flex-wrap w-full px-3 md:w-2/3">
           <div className="relative w-full pt-3 font-semibold text-left text-gray-700 md:pt-0">
@@ -167,28 +184,24 @@ export default function EventCard({ event, me }) {
               {Auth.loggedIn() && <button onClick={() => { setAddComment(true) }}>Add Comment</button>}
             </div>
             {/* hover to see attendees list */}
-            <div className="group relative flex flex-col">
-              {/* {Auth.loggedIn() && !viewAttendees && event.attendees.length > 1 ? 
-                <button onClick={() => { setViewAttendees(true) }}>View Attendees</button> 
-                : Auth.loggedIn() && event.attendees.length > 1 && 
-                <button onClick={() => { setViewAttendees(false) }}>Hide Attendees</button>} */}
-                <span>View Attendees</span>
-                <ul className="invisible group-hover:visible top-0 z-10 flex flex-col justify-center text-sm bg-orange-300 text-black w-1/3 rounded">a
-                  {attendees.map((attendee) => (
-                        <li key={attendee._id} className="">
-                            <Link
-                              to={`/profile/${attendee._id}`}
-                              style={{ fontWeight: 700 }}
-                            >{attendee.firstName} {attendee.lastName}
-                            </Link>
-                        </li>
-                      ))}
+            <div className="group relative flex flex-col w-max">
+              <span className="cursor-pointer">View {attendees.length} Attendees</span>
+              <ul className="hidden attendee-list group-hover:block top-0 z-10 flex-col justify-center text-sm bg-orange-300 text-black rounded w-max">
+                {attendees.map((attendee, index) => (
+                  <li key={attendee._id} className="pl-4 py-1 pr-1">
+                    <Link
+                      to={`/profile/${attendee._id}`}
+                      style={{ fontWeight: 700 }}
+                    >{index + 1}. {attendee.firstName} {attendee.lastName}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
             {/* button depending on attendence to join/leave/cancel event*/}
             <div className="bottom-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
               {Auth.loggedIn() &&
-            <div>
+                <div>
                   {checkAttendance()}
                 </div>}
             </div>
