@@ -5,11 +5,12 @@ import { useQuery } from "@apollo/client";
 import Auth from '../../utils/auth';
 import GoodDeedModal from "../GoodDeedModal";
 
-export default function GoodDeedList() {
+export default function GoodDeedList({me}) {
   const { loading, data } = useQuery(QUERY_GOOD_DEEDS)
   const [goodDeedModalOpen, setGoodDeedModalOpen] = useState(false);
-
   const goodDeedData = data?.goodDeeds || [];
+  const userMeData = me || {};
+
   // console.log(goodDeedData)
 
 
@@ -32,6 +33,7 @@ export default function GoodDeedList() {
             <GoodDeed
               key={goodDeed._id}
               goodDeed={goodDeed}
+              me={userMeData}
             // host={goodDeed.host}
             // title={goodDeed.title}
             // location={goodDeed.location}

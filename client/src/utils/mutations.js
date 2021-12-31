@@ -157,23 +157,30 @@ export const CANCEL_GOOD_DEED = gql`
   }
 `;
 
-export const JOIN_GOOD_DEED = gql`
-  mutation joinGoodDeed($goodDeedId: ID!) {
-    joinGoodDeed(goodDeedId: $goodDeedId) {
+export const JOIN_GOOD_DEED = gql`mutation JoinGoodDeed($goodDeedId: ID!) {
+  joinGoodDeed(goodDeedId: $goodDeedId) {
+    _id
+    title
+    deedText
+    date
+    location
+    comments {
       _id
-      host {
+      author {
         _id
         firstName
         lastName
       }
-      title
-      helper {
-        _id
-        firstName
-        lastName
-      }
+      commentText
+      createdAt
+    }
+    helper {
+      _id
+      firstName
+      lastName
     }
   }
+}
 `;
 
 export const LEAVE_GOOD_DEED = gql`
