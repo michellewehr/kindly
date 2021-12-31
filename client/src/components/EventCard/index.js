@@ -31,7 +31,6 @@ export default function EventCard({ event, me }) {
     } catch (e) {
       console.error(e);
     }
-    window.location.reload(false);
   }
 
 
@@ -44,7 +43,6 @@ export default function EventCard({ event, me }) {
       console.error(e);
     }
     checkAttendance();
-    window.location.reload(false);
   };
 
   async function onLeave() {
@@ -54,7 +52,6 @@ export default function EventCard({ event, me }) {
     } catch (e) {
       console.error(e);
     }
-    window.location.reload(false);
   }
 
   async function onCancel() {
@@ -134,11 +131,10 @@ export default function EventCard({ event, me }) {
             src={event.image}
             alt="Alt tag"
           />
-          <p>Likes: {event.likes} </p>
-          <button onClick={onLike}>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
-            </svg>
+          <button className='inline-block text-sky-700 ' onClick={onLike}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="inline h-8 w-8 text-yellow" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+              </svg> <span className="text-cyan-800">This event has {event.likes} likes!</span>
         </button>
         </div>
         <div className="flex flex-row flex-wrap w-full px-3 md:w-2/3">
@@ -189,11 +185,7 @@ export default function EventCard({ event, me }) {
             </div>
             {/* hover to see attendees list */}
             <div className="group relative flex flex-col w-max">
-              {/* {Auth.loggedIn() && !viewAttendees && event.attendees.length > 1 ? 
-                <button onClick={() => { setViewAttendees(true) }}>View Attendees</button> 
-                : Auth.loggedIn() && event.attendees.length > 1 && 
-                <button onClick={() => { setViewAttendees(false) }}>Hide Attendees</button>} */}
-              <span className="cursor-pointer">View Attendees</span>
+              <span className="cursor-pointer">View {attendees.length} Attendees</span>
               <ul className="hidden attendee-list group-hover:block top-0 z-10 flex-col justify-center text-sm bg-orange-300 text-black rounded w-max">
                 {attendees.map((attendee, index) => (
                   <li key={attendee._id} className="pl-4 py-1 pr-1">
