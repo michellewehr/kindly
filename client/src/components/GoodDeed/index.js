@@ -70,7 +70,7 @@ const checkAttendance = () => {
     const helperFirstName = helper.firstName
     const helperLastName = helper.lastName
     console.log(helperId);
-
+    //check to see if i am the helper and if so i can leave good deed
     if(helperId === myId) {
       return (
               <div>
@@ -90,28 +90,6 @@ const checkAttendance = () => {
       </div>
     )
   }
-//check if i am helper 
-
-  // check if user is attendee
-  // TODO: can't access helper id so can't check if i'm helper/ if there are helpers
-  // for (let i = 0; i < attendees.length; i++) {
-  //   if (attendees[i]._id === me._id) {
-  //     // console.log('match!');
-  //     return (
-  //       <div>
-  //         <button className='pr-3' onClick={onLeave}
-  //           className="px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-  //           Leave Event
-  //         </button>
-  //         {count > attendees.length / 2 + 1 ? <h1
-  //           className="px-4 py-2 mt-1 font-bold text-black rounded bg-amber-200 ">
-  //           Event Verified            </h1> : <button onClick={() => setCount(count + 1)}
-  //             className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-  //           Verify Event       </button>}
-  //       </div>
-  //     )
-  //   }
-  // }
 
   return (
     
@@ -200,7 +178,7 @@ const checkAttendance = () => {
             {/* </div> */} 
             {/* end of be kind button */}
             </div>
-          {checkAttendance()}
+          {Auth.loggedIn() && <div>{checkAttendance()}</div>}
           </div>
 
         </div>
