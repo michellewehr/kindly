@@ -4,14 +4,16 @@ import { QUERY_GOOD_DEEDS } from '../../utils/queries'
 import { useQuery } from "@apollo/client";
 import Auth from '../../utils/auth';
 import GoodDeedModal from "../GoodDeedModal";
+import loading from '../loading';
 
 export default function GoodDeedList({me}) {
   const { loading, data } = useQuery(QUERY_GOOD_DEEDS)
   const [goodDeedModalOpen, setGoodDeedModalOpen] = useState(false);
   const goodDeedData = data?.goodDeeds || [];
   const userMeData = me || {};
-
+  console.log(goodDeedData, 'list good deed data')
   // console.log(goodDeedData)
+  if (loading) return <loading />;
 
 
   return (
@@ -32,7 +34,7 @@ export default function GoodDeedList({me}) {
           {goodDeedData.map((goodDeed) => (
             <GoodDeed
               key={goodDeed._id}
-              goodDeed={goodDeed}
+              goodDeedData={goodDeed}
               me={userMeData}
             // host={goodDeed.host}
             // title={goodDeed.title}

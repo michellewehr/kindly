@@ -5,56 +5,50 @@ import CommentsList from "../CommentsList";
 import Auth from '../../utils/auth';
 import {ADD_GOOD_DEED_LIKE, CANCEL_GOOD_DEED, JOIN_GOOD_DEED, LEAVE_GOOD_DEED} from '../../utils/mutations';
 
-export default function GoodDeed({goodDeed, me}) {
+export default function GoodDeed({goodDeedData, me}) {
   const [viewComments, setViewComments] = useState(false);
   const [addComment, setAddComment] = useState(false);
   const [addLike] = useMutation(ADD_GOOD_DEED_LIKE);
   const [cancelGoodDeed] = useMutation(CANCEL_GOOD_DEED);
   const [joinGoodDeed] = useMutation(JOIN_GOOD_DEED);
-  // const [leaveGoodDeed] = useMutation(LEAVE_GOOD_DEED);
+  const [leaveGoodDeed] = useMutation(LEAVE_GOOD_DEED);
+  const goodDeed = goodDeedData || {};
 
-// start
-
-const hostId = goodDeed.host._id;
-console.log(hostId, 'host id good deed');
-const myId = me._id;
-console.log(myId, 'good deed my id')
-console.log(goodDeed.helper, 'helper')
-// const helperId = goodDeed.helper || {};
-// console.log(helperId, 'helper')
+  const hostId = goodDeed.host._id;
+  const myId = me._id;
+  const helper = goodDeed.helper
 
 
+  const onJoin = async e => {
+    e.preventDefault();
+    try {
+      const goodDeedId = goodDeed._id;
+      await joinGoodDeed({ variables: { goodDeedId } });
+    } catch (e) {
+      console.error(e);
+    }
+    checkAttendance();
+  };
 
-const onJoin = async e => {
-  e.preventDefault();
-  try {
+  async function onLeave() {
+    const goodDeedId =  goodDeed._id;
+    try {
+      await leaveGoodDeed({ variables: { goodDeedId } });
+    } catch (e) {
+      console.error(e);
+    }
+    checkAttendance();
+  }
+
+  async function onCancel() {
     const goodDeedId = goodDeed._id;
-    await joinGoodDeed({ variables: { goodDeedId } });
-  } catch (e) {
-    console.error(e);
+    try {
+      await cancelGoodDeed({ variables: { goodDeedId } });
+    } catch (e) {
+      console.error(e);
+    }
+    checkAttendance();
   }
-  checkAttendance();
-};
-
-// async function onLeave() {
-//   const goodDeedId =  goodDeed._id;
-//   try {
-//     await leaveGoodDeed({ variables: { goodDeedId } });
-//   } catch (e) {
-//     console.error(e);
-//   }
-//   checkAttendance();
-// }
-
-async function onCancel() {
-  const goodDeedId = goodDeed._id;
-  try {
-    await cancelGoodDeed({ variables: { goodDeedId } });
-  } catch (e) {
-    console.error(e);
-  }
-  checkAttendance();
-}
 
 
 const checkAttendance = () => {
@@ -70,6 +64,33 @@ const checkAttendance = () => {
       </div>
     )
   };
+  //check to see if there is helper 
+  if(helper) {
+    const helperId = helper._id
+    const helperFirstName = helper.firstName
+    const helperLastName = helper.lastName
+    console.log(helperId);
+
+    if(helperId === myId) {
+      return (
+              <div>
+                <button className='pr-3' onClick={onLeave}
+                  className="px-4 py-2 mt-1 mx-3 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300 absolute right-0 bottom-0">
+                  Leave Good Deed
+                </button>
+              </div>
+            )
+    }
+    return (
+      <div>
+        <h4 className='pr-3' 
+          className="px-4 py-2 mt-1 mx-3 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300 absolute right-0 bottom-0">
+          {helperFirstName} {helperLastName} is already helping! 
+        </h4>
+      </div>
+    )
+  }
+//check if i am helper 
 
   // check if user is attendee
   // TODO: can't access helper id so can't check if i'm helper/ if there are helpers
