@@ -41,7 +41,7 @@ export default function Home() {
           events={events}
           me={userData?.me}
           host={userData?.me}
-        /> : <GoodDeedList />}
+        /> : <GoodDeedList me={userData?.me}/>}
       </div>
     </div>
   );

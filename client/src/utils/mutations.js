@@ -157,23 +157,30 @@ export const CANCEL_GOOD_DEED = gql`
   }
 `;
 
-export const JOIN_GOOD_DEED = gql`
-  mutation joinGoodDeed($goodDeedId: ID!) {
-    joinGoodDeed(goodDeedId: $goodDeedId) {
+export const JOIN_GOOD_DEED = gql`mutation JoinGoodDeed($goodDeedId: ID!) {
+  joinGoodDeed(goodDeedId: $goodDeedId) {
+    _id
+    title
+    deedText
+    date
+    location
+    comments {
       _id
-      host {
+      author {
         _id
         firstName
         lastName
       }
-      title
-      helper {
-        _id
-        firstName
-        lastName
-      }
+      commentText
+      createdAt
+    }
+    helper {
+      _id
+      firstName
+      lastName
     }
   }
+}
 `;
 
 export const LEAVE_GOOD_DEED = gql`
@@ -226,5 +233,27 @@ mutation AddReply($commentId: ID!, $replyBody: String!) {
         firstName
       }
     }
+  }
+}`;
+
+export const ADD_EVENT_LIKE = gql`
+mutation addEventLike($eventId: ID!) {
+  addEventLike(eventId: $eventId) {
+    _id
+    title
+    location
+    description
+    likes
+  }
+}`;
+
+export const ADD_GOOD_DEED_LIKE = gql`
+mutation AddGoodDeedLike($goodDeedId: ID!) {
+  addGoodDeedLike(goodDeedId: $goodDeedId) {
+    _id
+    title
+    deedText
+    location
+    likes
   }
 }`;

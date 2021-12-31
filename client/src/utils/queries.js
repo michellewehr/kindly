@@ -236,6 +236,7 @@ export const QUERY_EVENTS = gql`
       }
       likes
     }
+    likes
   }
 }`;
 
@@ -322,6 +323,7 @@ export const QUERY_GOOD_DEEDS = gql`
         }
       }
     }
+    likes
   }
 }`;
 
