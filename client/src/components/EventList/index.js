@@ -19,32 +19,25 @@ export default function EventList({ events, me }) {
 
       {eventModalOpen && <EventModal onClose={() => { setEventModalOpen(false) }} />}
       <div>
-       <div>
-        {Auth.loggedIn() && (
-          <div className="relative h-16 text-sm text-amber-500">
-            <button onClick={() => { setEventModalOpen(true) }} className="absolute right-0 h-16 px-4 py-2 mt-1 mr-2 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-              Create Event
-            </button>
-          </div>
-        )}
-        {events &&
-          events.map((event) => (
-            < div key={event._id}>
-          <EventCard
-            event={event}
-            me={userMeData}
-          />
-        </div>
-          ))}
+        <div>
+          {Auth.loggedIn() && (
+            <div className="relative h-16 text-sm text-amber-500">
+              <button onClick={() => { setEventModalOpen(true) }} className="absolute right-0 h-16 px-4 py-2 mt-1 mr-2 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+                Create Event
+              </button>
+            </div>
+          )}
+          {events &&
+            events.map((event) => (
+              < div key={event._id}>
+                <EventCard
+                  event={event}
+                  me={userMeData}
+                />
+              </div>
+            ))}
         </div>
       </div>
     </div>
   );
 }
-
-
-
-
-
-
-
