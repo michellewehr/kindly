@@ -7,7 +7,6 @@ import Auth from '../../utils/auth';
 import { CANCEL_EVENT, JOIN_EVENT, LEAVE_EVENT } from "../../utils/mutations";
 // import { QUERY_ME } from "../../utils/queries";
 import { useMutation } from "@apollo/client";
-import AttendeesList from "../AttendeesList";
 
 export default function EventCard({ event, me }) {
   const [viewComments, setViewComments] = useState(false);
@@ -15,10 +14,7 @@ export default function EventCard({ event, me }) {
   const [joinEvent] = useMutation(JOIN_EVENT);
   const [leaveEvent] = useMutation(LEAVE_EVENT);
   const [cancelEvent] = useMutation(CANCEL_EVENT);
-  // const [joined, setJoined] = useState(false);
-  // console.log(event.attendees, 'attendees');
   const [count, setCount] = useState(0);
-  const [viewAttendees, setViewAttendees] = useState(false);
 
   const attendees = event.attendees;
   console.log(attendees, 'attendees');
@@ -177,7 +173,7 @@ export default function EventCard({ event, me }) {
                 : Auth.loggedIn() && event.attendees.length > 1 && 
                 <button onClick={() => { setViewAttendees(false) }}>Hide Attendees</button>} */}
                 <span>View Attendees</span>
-                <ul className="invisible group-hover:visible top-0 z-10 flex flex-col justify-center text-sm bg-orange-300 text-black w-1/3 rounded">
+                <ul className="invisible group-hover:visible top-0 z-10 flex flex-col justify-center text-sm bg-orange-300 text-black w-1/3 rounded">a
                   {attendees.map((attendee) => (
                         <li key={attendee._id} className="">
                             <Link
