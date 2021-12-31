@@ -212,6 +212,8 @@ export const QUERY_EVENTS = gql`
     title
       attendees {
       _id
+      firstName
+      lastName
     }
     location
     description

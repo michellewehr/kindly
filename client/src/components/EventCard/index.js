@@ -6,6 +6,7 @@ import Auth from '../../utils/auth';
 import { CANCEL_EVENT, JOIN_EVENT, LEAVE_EVENT } from "../../utils/mutations";
 // import { QUERY_ME } from "../../utils/queries";
 import { useMutation } from "@apollo/client";
+import AttendeesList from "../AttendeesList";
 
 export default function EventCard({ event, me }) {
   const [viewComments, setViewComments] = useState(false);
@@ -16,8 +17,10 @@ export default function EventCard({ event, me }) {
   // const [joined, setJoined] = useState(false);
   // console.log(event.attendees, 'attendees');
   const [count, setCount] = useState(0);
+  const [viewAttendees, setViewAttendees] = useState(false);
 
   const attendees = event.attendees;
+  console.log(attendees, 'attendees');
   const hostId = event.host._id
 
   const onJoin = async e => {
@@ -170,6 +173,9 @@ export default function EventCard({ event, me }) {
               </a>
             </div>
             <div>
+              {Auth.loggedIn() && !viewAttendees && event.attendees.length > 1 ? <button onClick={() => { setViewAttendees(true) }}>View Attendees</button> : Auth.loggedIn() && event.attendees.length > 1 && <button onClick={() => { setViewAttendees(false) }}>Hide Attendees</button>}
+            </div>
+            <div>
               {Auth.loggedIn() && !viewComments && event.comments.length > 1 ? <button onClick={() => { setViewComments(true) }}>View Comments</button> : Auth.loggedIn() && event.comments.length > 1 && <button onClick={() => { setViewComments(false) }}>Hide Comments</button>}
             </div>
             <div>
@@ -180,15 +186,13 @@ export default function EventCard({ event, me }) {
                 <div>
                   {checkAttendance()}
                 </div>}
-
-
-
             </div>
           </div>
         </div>
       </div>
       {addComment && <CommentForm key={event._id} eventId={event._id} />}
       {viewComments && <CommentsList comments={event.comments} key={event._id} />}
+      {viewAttendees && <AttendeesList key={event._id} attendees={event.attendees} />}
 
     </div>
   );
