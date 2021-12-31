@@ -351,9 +351,38 @@ const resolvers = {
             return updatedGoodDeed;
          }
          throw new AuthenticationError('need to be logged in')
-      }, 
-
+      },
+      removeComment: async (parent, args, context) => {
+         if (context.user) {
+            const removedComment = await Comment.findByIdAndRemove(
+               { _id: args.commentId},
+               {new: true}
+            );
+            // check and set params for either event or good deed
+            // const params = args.eventId ? { args.eventId, args.commentText } : { args.goodDeedId, args.commentText };
+   
+            // if params are event-oriented, update the event, otherwise update the good deed
+            if (args.eventId) {
+               const updatedEvent = await Event.findByIdAndUpdate(
+                  { _id: args.eventId },
+                  { $pull: { comments: removedComment } },
+                  { new: true }
+               ).populate('comments').populate({path: 'comments', populate: 'author'});
+               return updatedEvent;
+            } else if(args.goodDeedId) {
+               const updatedGoodDeed = await GoodDeed.findByIdAndUpdate(
+                  { _id: args.goodDeedId },
+                  { $pull: { comments: removedComment } },
+                  { new: true }
+               ).populate('helper');
+               return updatedGoodDeed.populate({path: 'comments', populate: 'author'});
+            } else {
+               throw new Error('Something went wrong!');
+            }
+         }
+         throw new AuthenticationError('need logged in!');
    }
+}
 };
 
 module.exports = resolvers

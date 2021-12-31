@@ -4,7 +4,7 @@ import { QUERY_GOOD_DEEDS } from '../../utils/queries'
 import { useQuery } from "@apollo/client";
 import Auth from '../../utils/auth';
 import GoodDeedModal from "../GoodDeedModal";
-import loading from '../loading';
+import Loading from '../Loading';
 
 export default function GoodDeedList({me}) {
   const { loading, data } = useQuery(QUERY_GOOD_DEEDS)
@@ -13,7 +13,7 @@ export default function GoodDeedList({me}) {
   const userMeData = me || {};
   console.log(goodDeedData, 'list good deed data')
   // console.log(goodDeedData)
-  if (loading) return <loading />;
+  if (loading) return <Loading />;
 
 
   return (
