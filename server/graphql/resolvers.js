@@ -393,6 +393,18 @@ const resolvers = {
          return updatedEvent;
       }
       throw new AuthenticationError('need logged in!');
+   }, 
+
+   increaseKindlyScore: async (parent, args, context) => {
+      if(context.user) {
+         const updatedUser = await User.findByIdAndUpdate(
+            {_id: context.user._id},
+            {$inc: {kindlyScore: +10}},
+            {new: true}
+         )
+         return updatedUser;
+      }
+      throw new AuthenticationError('need logged in!');
    }
 }
 };
