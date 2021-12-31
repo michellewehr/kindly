@@ -323,6 +323,7 @@ export const QUERY_GOOD_DEEDS = gql`
         }
       }
     }
+    likes
   }
 }`;
 

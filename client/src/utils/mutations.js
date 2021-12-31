@@ -239,3 +239,14 @@ mutation addEventLike($eventId: ID!) {
     likes
   }
 }`;
+
+export const ADD_GOOD_DEED_LIKE = gql`
+mutation AddGoodDeedLike($goodDeedId: ID!) {
+  addGoodDeedLike(goodDeedId: $goodDeedId) {
+    _id
+    title
+    deedText
+    location
+    likes
+  }
+}`;
