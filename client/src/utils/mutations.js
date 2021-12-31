@@ -257,3 +257,39 @@ mutation AddGoodDeedLike($goodDeedId: ID!) {
     likes
   }
 }`;
+
+export const REMOVE_COMMENT = gql`
+mutation removeComment($commentId: ID!, $eventId: ID, $goodDeedId: ID, ) {
+  removeComment(commentId: $commentId, eventId: $eventId, goodDeedId: $goodDeedId) {
+    _id
+    host {
+      _id
+    }
+    title
+    attendees {
+      _id
+    }
+    location
+    description
+    date
+    startTime
+    endTime
+    url
+    image
+    comments {
+      _id
+      author {
+        _id
+      }
+      commentText
+      likes
+      replies {
+        _id
+        author {
+          _id
+        }
+        replyBody
+      }
+    }
+  }
+}`;

@@ -183,7 +183,7 @@ const checkAttendance = () => {
 
         </div>
         {addComment && <CommentForm key={goodDeed._id} goodDeedId={goodDeed._id}/>}
-      {viewComments && <CommentsList comments={goodDeed.comments} key={goodDeed._id}/>}
+      {viewComments && <CommentsList comments={goodDeed.comments} goodDeedId={goodDeed._id} key={goodDeed._id}/>}
 
       </div>
   );

@@ -92,6 +92,7 @@ const typeDefs = gql`
     cancelGoodDeed(goodDeedId: ID!): [GoodDeed]
     addEventLike(eventId: ID!): Event
     addGoodDeedLike(goodDeedId: ID!): GoodDeed
+    removeComment(commentId: ID!, eventId: ID, goodDeedId: ID): Event
 
   }
 `
