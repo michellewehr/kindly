@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import CommentsList from "../CommentsList";
 import { useState, useEffect } from "react";
 import Auth from '../../utils/auth';
-import { CANCEL_EVENT, JOIN_EVENT, LEAVE_EVENT, ADD_EVENT_LIKE, ADD_VERIFICATION } from "../../utils/mutations";
+import { CANCEL_EVENT, JOIN_EVENT, LEAVE_EVENT, ADD_EVENT_LIKE, ADD_VERIFICATION, INCREASE_KINDLY_SCORE } from "../../utils/mutations";
 // import { QUERY_ME } from "../../utils/queries";
 import { useMutation } from "@apollo/client";
 
@@ -14,26 +14,47 @@ export default function EventCard({ event, me }) {
   const [joinEvent] = useMutation(JOIN_EVENT);
   const [leaveEvent] = useMutation(LEAVE_EVENT);
   const [cancelEvent] = useMutation(CANCEL_EVENT);
-  // const [count, setCount] = useState(0);
+  const [increaseScore] = useMutation(INCREASE_KINDLY_SCORE);
   const [addVerification, { loading, error }] = useMutation(ADD_VERIFICATION)
+
+  // const [count, setCount] = useState(0);
   // console.log(event.likes);
 
-  // console.log(event.verifyNumber, 'verified')
+  const verifyNum = event.verifyNumber;
   const attendees = event.attendees;
   // console.log(attendees, 'attendees');
   const hostId = event.host._id
 
   const [addLike] = useMutation(ADD_EVENT_LIKE);
 
+  //create an array of just attendee ids 
+  const attendeeIdArr = [];
+  for(let i = 0; i < attendees.length; i++) {
+    attendeeIdArr.push(attendees[i]._id);
+  }
   // check if event passes verification requirements and distribute kindly points
-  const isVerified = () => {
-    if (eventPassed() && isHalfOfAttendees())
-      // TODO: ADD_KINDLY_POINTS mutation runs here
-      console.log('this is a function');
-  };
+  // async function addKindlyPoints() {
+  //   //check to see if i'm host or attendee
+  //   if((attendeeIdArr.includes(me._id) || hostId === me._id) && event.verifyNumber >= attendees.length /2) {
+  //     // check to see if event is verified
+  //     try{
+  //       await increaseScore()
+  //     } catch(e) {
+  //       console.error(e)
+  //   } 
+  // }
+  // return;
+  //   }
+// 
+// tried use effect to watch for props of event.verifyNumber to change and run but wasnt working
+  // useEffect(() => {
+  //  addKindlyPoints()
+  //   }, [event.verifyNumber])
+  
+  //     // TODO: ADD_KINDLY_POINTS mutation runs here
+  //     console.log('this is a function');
+  // };
 
-  // no dependencies means this runs on every render to verify events
-  useEffect(() => { isVerified() });
 
   // check if date of event is behind the current date and return boolean
   const eventPassed = () => { return Date.now() > event.date };

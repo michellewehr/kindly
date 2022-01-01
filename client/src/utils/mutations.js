@@ -334,3 +334,25 @@ export const ADD_VERIFICATION = gql`mutation Mutation($eventId: ID!) {
   }
 }
 `;
+
+export const INCREASE_KINDLY_SCORE = gql`
+mutation increaseKindlyScore {
+  increaseKindlyScore {
+    _id
+    firstName
+    lastName
+    email
+    location
+    profilePicture
+    connections {
+      _id
+    }
+    events {
+      _id
+    }
+    goodDeeds {
+      _id
+    }
+    kindlyScore
+  }
+}`;
