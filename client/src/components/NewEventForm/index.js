@@ -22,7 +22,7 @@ export default function NewEvent({onEventSubmit}) {
         const { events } = cache.readQuery({ query: QUERY_EVENTS });
         cache.writeQuery({
           query: QUERY_EVENTS,
-          data: { events: [addEvent, ...events] },
+          data: { events: [createEvent, ...events] },
         });
       } catch (e) {
         console.error(e);

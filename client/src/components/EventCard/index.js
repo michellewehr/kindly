@@ -266,8 +266,8 @@ export default function EventCard({ event, me }) {
           </div>
         </div>
       </div>
-      {addComment && <CommentForm onSubmit={() => setViewComments(true)} key={event._id} eventId={event._id} />}
-      {viewComments && <CommentsList comments={event.comments} eventId={event._id} key={event.comments} />}
+      {addComment && <CommentForm onSubmit={() => setViewComments(true)} eventId={event._id}/>}
+      {viewComments && <CommentsList comments={event.comments} eventId={event._id}  />}
     </div>
   );
 }
