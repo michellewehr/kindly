@@ -3,7 +3,7 @@ import { useState } from "react";
 import { CREATE_GOOD_DEED } from "../../utils/mutations";
 import { QUERY_GOOD_DEEDS, QUERY_ME } from "../../utils/queries";
 
-export default function NewGoodDeed() {
+export default function NewGoodDeed({onDeedSubmit}) {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -58,6 +58,7 @@ export default function NewGoodDeed() {
     } catch (e) {
       console.error(e);
     }
+    onDeedSubmit();
   };
 
   return (
