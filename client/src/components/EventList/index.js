@@ -10,9 +10,9 @@ export default function EventList({ events, me }) {
   const userMeData = me || {};
   console.log(userMeData, 'logged in user id line 10');
 
-  if (!events.length) {
-    return <div>No events found</div>;
-  }
+  // if (!events.length) {
+  //   return <div>No events found</div>;
+  // }
 
   return (
     <div className="flex flex-wrap justify-center">

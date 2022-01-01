@@ -7,22 +7,18 @@ import { QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 import { ADD_CONNECTION } from "../utils/mutations";
 
-export default function Profile() {
+export default function Profile(me) {
   const { loading, data } = useQuery(QUERY_ME);
 
   const myData = data?.me || {};
-  console.log(myData, 'line 14 profile')
-  const events = myData?.events || [];
+  const myEvents = myData?.events || [];
   const myGoodDeeds = myData?.goodDeeds || [];
-  // const myFriends = myData?.friends || [];
 
- const [renderEvents, toggleEvents] = useState(true);
+  const [renderEvents, toggleEvents] = useState(true);
 
- function toggleEventsDisplay() {
-   toggleEvents(!renderEvents);
- }
-  console.log(myData, "me");
-  console.log(myGoodDeeds, "good deeds");
+  function toggleEventsDisplay() {
+    toggleEvents(!renderEvents);
+  }
 
   const [addConnection, { error }] = useMutation(ADD_CONNECTION);
 
@@ -36,7 +32,7 @@ export default function Profile() {
     } catch (e) {
       console.error(e);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen">
@@ -72,8 +68,11 @@ export default function Profile() {
                       </h2>
                       <button
                         className="p-1 -ml-4 text-gray-400 focus:outline-none"
-                        aria-label="Connect with me" onClick={handleAddConnection}
-                      >Connect with me</button>
+                        aria-label="Connect with me"
+                        onClick={handleAddConnection}
+                      >
+                        Connect with me
+                      </button>
                       <div className="ml-3 h-7 flex items-center">
                         <button
                           type="button"
@@ -153,9 +152,51 @@ export default function Profile() {
                               )}
                             </div>
                             {renderEvents ? (
-                              <EventList  />
+                              <div className="w-9/12 mx-auto mb-2 text-center rounded bg-sky-100">
+                                <h2 className="mb-1 underline">
+                                  Upcoming Registered Events
+                                </h2>
+                                {/* div for each event */}
+                                {myEvents.map((event) => (
+                                  <a
+                                    key={event._id}
+                                    className="bg-sky-100"
+                                    href=""
+                                  >
+                                    <div className="px-1 text-left">
+                                      <h3 className="bg-cyan-600 hover:bg-orange-300">
+                                        {event.title}
+                                      </h3>
+                                      <p>{event.location}</p>
+                                      <p>
+                                        {event.date} at {event.startTime} -{" "}
+                                        {event.endTime}{" "}
+                                      </p>
+                                    </div>
+                                  </a>
+                                ))}
+                              </div>
                             ) : (
-                              <GoodDeedList />
+                              <div className="w-9/12 mx-auto mb-2 text-center rounded bg-sky-100">
+                                <h2 className="mb-1 underline">Good Deads</h2>
+                                {/* div for good deeds */}
+                                {myGoodDeeds.map((goodDeed) => (
+                                  <a
+                                    key={goodDeed._id}
+                                    className="bg-sky-100"
+                                    href=""
+                                  >
+                                    <div className="px-1 text-left">
+                                      <h3 className="bg-cyan-600 hover:bg-orange-300">
+                                        {goodDeed.title}
+                                      </h3>
+                                      <p>{goodDeed.location}</p>
+                                      <p>{goodDeed.date}</p>
+                                    </div>
+                                  </a>
+                                ))}
+                                {/* end of div for good deeds */}
+                              </div>
                             )}
                           </dt>
                           <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:ml-6 sm:col-span-2"></dd>
