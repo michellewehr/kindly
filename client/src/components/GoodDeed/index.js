@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import CommentForm from "../CommentForm";
 import CommentsList from "../CommentsList";
 import Auth from '../../utils/auth';
-import { ADD_GOOD_DEED_LIKE, CANCEL_GOOD_DEED, JOIN_GOOD_DEED, LEAVE_GOOD_DEED } from '../../utils/mutations';
+import { ADD_GOOD_DEED_LIKE, CANCEL_GOOD_DEED, JOIN_GOOD_DEED, LEAVE_GOOD_DEED, INCREASE_KINDLY_SCORE } from '../../utils/mutations';
 import { checkLikesCount } from '../../utils/likesCountFormatter'
 
 export default function GoodDeed({ goodDeedData, me }) {
@@ -14,13 +14,22 @@ export default function GoodDeed({ goodDeedData, me }) {
   const [joinGoodDeed] = useMutation(JOIN_GOOD_DEED);
   const [leaveGoodDeed] = useMutation(LEAVE_GOOD_DEED);
   const [isLiked, setLiked] = useState(false);
+  const [increaseScore] = useMutation(INCREASE_KINDLY_SCORE);
+  // const [showPotentialPoints, setShowPotentialPoints] = useState(true);
 
   const goodDeed = goodDeedData || {};
 
   const hostId = goodDeed.host._id;
   const myId = me._id;
-  const helper = goodDeed.helper
+  const helper = goodDeed.helper;
 
+  async function addKindlyPoints() {
+    try{
+      await increaseScore()
+    } catch(e) {
+      console.error(e)
+    }
+  }
 
   const onJoin = async (e) => {
     e.preventDefault();
@@ -30,7 +39,7 @@ export default function GoodDeed({ goodDeedData, me }) {
     } catch (e) {
       console.error(e);
     }
-    checkAttendance();
+    addKindlyPoints();
   };
 
   const onLeave = async (e) => {
@@ -73,6 +82,7 @@ export default function GoodDeed({ goodDeedData, me }) {
       const helperFirstName = helper.firstName
       const helperLastName = helper.lastName
       console.log(helperId);
+      // setShowPotentialPoints(false);
       //check to see if i am the helper and if so i can leave good deed
       if (helperId === myId) {
         return (
@@ -133,8 +143,19 @@ export default function GoodDeed({ goodDeedData, me }) {
             </div>
             <div className="top-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
               {/* //!we need to be able to add this to the users total on */}
-              verification Kindly Points: <b>+5</b>
+              Kindly Points: <b>+10</b>
             </div>
+            {/* wanted to be dynamic and "+10 points then change it when those points are added to "you earned 10 for this deed' */}
+           {/* {showPotentialPoints ?  <div className="top-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
+              {/* //!we need to be able to add this to the users total on */}
+              {/* Kindly Points: <b>+10</b> */}
+            {/* </div> :<div className="top-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0"> */}
+              {/* //!we need to be able to add this to the users total on */}
+              {/* You earned <b>10</b> Kindly Points by being kind! <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"> */}
+  {/* <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z" clipRule="evenodd" /> */}
+{/* </svg> */}
+            {/* </div>  }  */} 
+            {/* end of wanting dynamic potential points */}
             <div className="pb-4 cursor-pointer text-normal hover:text-cyan-700 text-cyan-900">
               {/* //! get good deed host */}
               <span className="pb-1">{goodDeed.host.firstName} {goodDeed.host.lastName}</span>
