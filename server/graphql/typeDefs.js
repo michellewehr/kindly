@@ -77,7 +77,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
+    createUser(firstName: String!, lastName: String!, email: String!, password: String!, location: String!): Auth
     login(email: String!, password: String!): Auth
     createEvent( title: String!, location: String!, description: String!, date: String!, startTime: String!, endTime: String!, url: String!, image: String!): Event
     createGoodDeed(title: String!, deedText: String!, date: String!, location: String!): GoodDeed
@@ -95,6 +95,7 @@ const typeDefs = gql`
     addGoodDeedLike(goodDeedId: ID!): GoodDeed
     removeComment(commentId: ID!, eventId: ID, goodDeedId: ID): Event
     addToVerifyNumber(eventId: ID!): Event
+    increaseKindlyScore: User
   }
 `
 module.exports = typeDefs

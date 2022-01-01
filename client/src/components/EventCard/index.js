@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import CommentsList from "../CommentsList";
 import { useState, useEffect } from "react";
 import Auth from '../../utils/auth';
-import { CANCEL_EVENT, JOIN_EVENT, LEAVE_EVENT, ADD_EVENT_LIKE, ADD_VERIFICATION } from "../../utils/mutations";
+import { CANCEL_EVENT, JOIN_EVENT, LEAVE_EVENT, ADD_EVENT_LIKE, ADD_VERIFICATION, INCREASE_KINDLY_SCORE } from "../../utils/mutations";
 // import { QUERY_ME } from "../../utils/queries";
 import { useMutation } from "@apollo/client";
 import { checkLikesCount } from '../../utils/likesCountFormatter'
@@ -18,25 +18,34 @@ export default function EventCard({ event, me }) {
   const [cancelEvent] = useMutation(CANCEL_EVENT);
   const [isLiked, setLiked] = useState(false);
   // const [count, setCount] = useState(0);
+  const [increaseScore] = useMutation(INCREASE_KINDLY_SCORE);
   const [addVerification, { loading, error }] = useMutation(ADD_VERIFICATION)
-  // console.log(event.likes);
-
-  // console.log(event.verifyNumber, 'verified')
-  const attendees = event.attendees;
-  // console.log(attendees, 'attendees');
-  const hostId = event.host._id
-
   const [addLike] = useMutation(ADD_EVENT_LIKE);
+  
+  //declare state of event false verified and run updateVerify to update to true when conditions are met
+  // const [isVerified, updateVerify] = useState(false);
 
-  // check if event passes verification requirements and distribute kindly points
-  const isVerified = () => {
-    if (eventPassed() && isHalfOfAttendees())
-      // TODO: ADD_KINDLY_POINTS mutation runs here
-      console.log('this is a function');
-  };
+  const hostId = event.host._id
+  const attendees = event.attendees;
 
-  // no dependencies means this runs on every render to verify events
-  useEffect(() => { isVerified() });
+  //if event is verified over half the length of attendees-- set isVerified to true
+  // if(event.verifyNumber >= attendees.length /2) {
+  //   updateVerify(true);
+  // }
+
+  //when event is verified-- add points to all attendees/ host kindly score 
+  // useEffect(() => {
+  //   addKindlyPoints()
+  // }, [isVerified])
+
+  async function addKindlyPoints() {
+      try{
+        await increaseScore()
+      } catch(e) {
+        console.error(e)
+      }
+    }
+// 
 
   // check if date of event is behind the current date and return boolean
   const eventPassed = () => { return Date.now() > event.date };
@@ -75,7 +84,7 @@ export default function EventCard({ event, me }) {
     } catch (e) {
       console.error(e);
     }
-    checkAttendance();
+    addKindlyPoints();
   };
 
   const onLeave = async (e) => {
