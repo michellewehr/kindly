@@ -189,7 +189,7 @@ export default function GoodDeed({ goodDeedData, me }) {
         </div>
 
       </div>
-      {addComment && <CommentForm key={goodDeed._id} goodDeedId={goodDeed._id} />}
+      {addComment && <CommentForm key={goodDeed._id} goodDeedId={goodDeed._id} onSubmit={() => setViewComments(true)} />}
       {viewComments && <CommentsList comments={goodDeed.comments} goodDeedId={goodDeed._id} key={goodDeed._id} />}
 
     </div>
