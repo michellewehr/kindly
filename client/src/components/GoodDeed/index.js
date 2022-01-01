@@ -64,7 +64,7 @@ export default function GoodDeed({ goodDeedData, me }) {
         </div>
       )
     };
-    //check to see if there is helper 
+    //check to see if there is helper
     if (helper) {
       const helperId = helper._id
       const helperFirstName = helper.firstName
@@ -172,7 +172,7 @@ export default function GoodDeed({ goodDeedData, me }) {
             {/* be kind button */}
             {/* <div className="bottom-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
               <button className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-                Be Kind 
+                Be Kind
                 {/* //! need to add helper after signup */}
             {/* </button> */}
             {/* </div> */}
@@ -182,8 +182,8 @@ export default function GoodDeed({ goodDeedData, me }) {
         </div>
 
       </div>
-      {addComment && <CommentForm key={goodDeed._id} goodDeedId={goodDeed._id} />}
-      {viewComments && <CommentsList comments={goodDeed.comments} goodDeedId={goodDeed._id} key={goodDeed._id} />}
+      {addComment && <CommentForm  goodDeedId={goodDeed._id} />}
+      {viewComments && <CommentsList comments={goodDeed.comments} goodDeedId={goodDeed._id} />}
 
     </div>
   );
