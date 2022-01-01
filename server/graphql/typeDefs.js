@@ -95,7 +95,7 @@ const typeDefs = gql`
     addGoodDeedLike(goodDeedId: ID!): GoodDeed
     removeComment(commentId: ID!, eventId: ID, goodDeedId: ID): Event
     addToVerifyNumber(eventId: ID!): Event
-    increaseKindlyScore(userId: ID!): User
+    increaseKindlyScore: User
   }
 `
 module.exports = typeDefs

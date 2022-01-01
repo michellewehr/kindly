@@ -297,7 +297,8 @@ mutation removeComment($commentId: ID!, $eventId: ID, $goodDeedId: ID, ) {
   }
 }`;
 
-export const ADD_VERIFICATION = gql`mutation Mutation($eventId: ID!) {
+export const ADD_VERIFICATION = gql`
+mutation Mutation($eventId: ID!) {
   addToVerifyNumber(eventId: $eventId) {
     _id
     host {
@@ -336,23 +337,20 @@ export const ADD_VERIFICATION = gql`mutation Mutation($eventId: ID!) {
 `;
 
 export const INCREASE_KINDLY_SCORE = gql`
-mutation increaseKindlyScore {
+mutation IncreaseKindlyScore {
   increaseKindlyScore {
     _id
-    firstName
-    lastName
-    email
-    location
-    profilePicture
-    connections {
+   kindlyScore
+    goodDeeds {
       _id
     }
     events {
       _id
     }
-    goodDeeds {
-      _id
-    }
-    kindlyScore
+    profilePicture
+    location
+    email
+    lastName
+    firstName
   }
 }`;

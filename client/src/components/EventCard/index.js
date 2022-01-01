@@ -16,45 +16,32 @@ export default function EventCard({ event, me }) {
   const [cancelEvent] = useMutation(CANCEL_EVENT);
   const [increaseScore] = useMutation(INCREASE_KINDLY_SCORE);
   const [addVerification, { loading, error }] = useMutation(ADD_VERIFICATION)
-
-  // const [count, setCount] = useState(0);
-  // console.log(event.likes);
-
-  const verifyNum = event.verifyNumber;
-  const attendees = event.attendees;
-  // console.log(attendees, 'attendees');
-  const hostId = event.host._id
-
   const [addLike] = useMutation(ADD_EVENT_LIKE);
-
-  //create an array of just attendee ids 
-  const attendeeIdArr = [];
-  for(let i = 0; i < attendees.length; i++) {
-    attendeeIdArr.push(attendees[i]._id);
-  }
-  // check if event passes verification requirements and distribute kindly points
-  // async function addKindlyPoints() {
-  //   //check to see if i'm host or attendee
-  //   if((attendeeIdArr.includes(me._id) || hostId === me._id) && event.verifyNumber >= attendees.length /2) {
-  //     // check to see if event is verified
-  //     try{
-  //       await increaseScore()
-  //     } catch(e) {
-  //       console.error(e)
-  //   } 
-  // }
-  // return;
-  //   }
-// 
-// tried use effect to watch for props of event.verifyNumber to change and run but wasnt working
-  // useEffect(() => {
-  //  addKindlyPoints()
-  //   }, [event.verifyNumber])
   
-  //     // TODO: ADD_KINDLY_POINTS mutation runs here
-  //     console.log('this is a function');
-  // };
+  //declare state of event false verified and run updateVerify to update to true when conditions are met
+  // const [isVerified, updateVerify] = useState(false);
 
+  const hostId = event.host._id
+  const attendees = event.attendees;
+
+  //if event is verified over half the length of attendees-- set isVerified to true
+  // if(event.verifyNumber >= attendees.length /2) {
+  //   updateVerify(true);
+  // }
+
+  //when event is verified-- add points to all attendees/ host kindly score 
+  // useEffect(() => {
+  //   addKindlyPoints()
+  // }, [isVerified])
+
+  async function addKindlyPoints() {
+      try{
+        await increaseScore()
+      } catch(e) {
+        console.error(e)
+      }
+    }
+// 
 
   // check if date of event is behind the current date and return boolean
   const eventPassed = () => { return Date.now() > event.date };
@@ -69,6 +56,7 @@ export default function EventCard({ event, me }) {
     } catch (e) {
       console.error(e);
     }
+   addKindlyPoints();
   }
 
   const onLike = async (e) => {
