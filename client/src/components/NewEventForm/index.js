@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useMutation } from '@apollo/client'
 
 
-export default function NewEvent() {
+export default function NewEvent({onEventSubmit}) {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -22,7 +22,7 @@ export default function NewEvent() {
         const { events } = cache.readQuery({ query: QUERY_EVENTS });
         cache.writeQuery({
           query: QUERY_EVENTS,
-          data: { events: [addEvent, ...events] },
+          data: { events: [createEvent, ...events] },
         });
       } catch (e) {
         console.error(e);
@@ -60,6 +60,7 @@ export default function NewEvent() {
     } catch (e) {
       console.error(e);
     }
+    onEventSubmit();
   };
 
   return (

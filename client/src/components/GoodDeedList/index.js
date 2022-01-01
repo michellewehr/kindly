@@ -33,7 +33,7 @@ export default function GoodDeedList({me}) {
           )}
           {goodDeedData.map((goodDeed) => (
             <GoodDeed
-              key={goodDeed._id}
+              key={goodDeed.title}
               goodDeedData={goodDeed}
               me={userMeData}
             // host={goodDeed.host}

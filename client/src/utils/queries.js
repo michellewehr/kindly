@@ -224,11 +224,13 @@ export const QUERY_EVENTS = gql`
     url
     image
       comments {
+      createdAt
       _id
       commentText
         replies {
         _id
         replyBody
+        createdAt
       }
         author {
         _id
@@ -310,6 +312,7 @@ export const QUERY_GOOD_DEEDS = gql`
     location
     comments {
       _id
+      createdAt
       author {
         _id
         firstName
@@ -318,6 +321,7 @@ export const QUERY_GOOD_DEEDS = gql`
       commentText
       likes
       replies {
+        createdAt
         _id
         replyBody
         author {

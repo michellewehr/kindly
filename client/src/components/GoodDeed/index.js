@@ -3,7 +3,8 @@ import { useMutation } from "@apollo/client";
 import CommentForm from "../CommentForm";
 import CommentsList from "../CommentsList";
 import Auth from '../../utils/auth';
-import { ADD_GOOD_DEED_LIKE, ADD_VERIFICATION, CANCEL_GOOD_DEED, JOIN_GOOD_DEED, LEAVE_GOOD_DEED } from '../../utils/mutations';
+import { ADD_GOOD_DEED_LIKE, CANCEL_GOOD_DEED, JOIN_GOOD_DEED, LEAVE_GOOD_DEED, INCREASE_KINDLY_SCORE } from '../../utils/mutations';
+import { checkLikesCount } from '../../utils/likesCountFormatter'
 
 export default function GoodDeed({ goodDeedData, me }) {
   const [viewComments, setViewComments] = useState(false);
@@ -12,32 +13,23 @@ export default function GoodDeed({ goodDeedData, me }) {
   const [cancelGoodDeed] = useMutation(CANCEL_GOOD_DEED);
   const [joinGoodDeed] = useMutation(JOIN_GOOD_DEED);
   const [leaveGoodDeed] = useMutation(LEAVE_GOOD_DEED);
-  const [addVerification, { loading, error }] = useMutation(ADD_VERIFICATION)
+  const [isLiked, setLiked] = useState(false);
+  const [increaseScore] = useMutation(INCREASE_KINDLY_SCORE);
+  // const [showPotentialPoints, setShowPotentialPoints] = useState(true);
+
   const goodDeed = goodDeedData || {};
 
   const hostId = goodDeed.host._id;
   const myId = me._id;
-  const helper = goodDeed.helper
+  const helper = goodDeed.helper;
 
-  const goodDeedPassed = () => { return Date.now() > goodDeed.date };
-
-  const isVerified = () => {
-    if (goodDeedPassed())
-      // TODO: ADD_KINDLY_POINTS mutation runs here
-      console.log('this is a function');
-  };
-
-  useEffect(() => { isVerified() });
-
-  const onVerify = async (e) => {
-    e.preventDefault();
-    const goodDeedId = goodDeed._id;
+  async function addKindlyPoints() {
     try {
-      await addVerification({ variables: { goodDeedId } });
+      await increaseScore()
     } catch (e) {
-      console.error(e);
+      console.error(e)
     }
-  };
+  }
 
   const onJoin = async (e) => {
     e.preventDefault();
@@ -47,7 +39,7 @@ export default function GoodDeed({ goodDeedData, me }) {
     } catch (e) {
       console.error(e);
     }
-    checkAttendance();
+    addKindlyPoints();
   };
 
   const onLeave = async (e) => {
@@ -81,20 +73,16 @@ export default function GoodDeed({ goodDeedData, me }) {
             className="absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
             Cancel Good Deed
           </button>
-          {goodDeedPassed() &&
-            <button onClick={onVerify}
-              className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-              Verify Event
-            </button>}
         </div>
       )
     };
-    //check to see if there is helper 
+    //check to see if there is helper
     if (helper) {
       const helperId = helper._id
       const helperFirstName = helper.firstName
       const helperLastName = helper.lastName
       console.log(helperId);
+      // setShowPotentialPoints(false);
       //check to see if i am the helper and if so i can leave good deed
       if (helperId === myId) {
         return (
@@ -103,11 +91,7 @@ export default function GoodDeed({ goodDeedData, me }) {
               className="absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
               Leave Good Deed
             </button>
-            {goodDeedPassed() &&
-              <button onClick={onVerify}
-                className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-                Verify Event
-              </button>}
+
           </div>
         )
       }
@@ -139,6 +123,7 @@ export default function GoodDeed({ goodDeedData, me }) {
     } catch (e) {
       console.error(e);
     }
+    setLiked(true);
   }
   // only in profile
   // if (!goodDeeds.length) {
@@ -159,8 +144,19 @@ export default function GoodDeed({ goodDeedData, me }) {
             </div>
             <div className="top-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
               {/* //!we need to be able to add this to the users total on */}
-              verification Kindly Points: <b>+5</b>
+              Kindly Points: <b>+10</b>
             </div>
+            {/* wanted to be dynamic and "+10 points then change it when those points are added to "you earned 10 for this deed' */}
+            {/* {showPotentialPoints ?  <div className="top-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
+              {/* //!we need to be able to add this to the users total on */}
+            {/* Kindly Points: <b>+10</b> */}
+            {/* </div> :<div className="top-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0"> */}
+            {/* //!we need to be able to add this to the users total on */}
+            {/* You earned <b>10</b> Kindly Points by being kind! <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor"> */}
+            {/* <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-.464 5.535a1 1 0 10-1.415-1.414 3 3 0 01-4.242 0 1 1 0 00-1.415 1.414 5 5 0 007.072 0z" clipRule="evenodd" /> */}
+            {/* </svg> */}
+            {/* </div>  }  */}
+            {/* end of wanting dynamic potential points */}
             <div className="pb-4 cursor-pointer text-normal hover:text-cyan-700 text-cyan-900">
               {/* //! get good deed host */}
               <span className="pb-1">{goodDeed.host.firstName} {goodDeed.host.lastName}</span>
@@ -193,16 +189,20 @@ export default function GoodDeed({ goodDeedData, me }) {
                 <button onClick={() => { setAddComment(true) }}>Add Comment</button>}
             </div>
             {/* likes start */}
-            {Auth.loggedIn() && <button className='inline-block text-sky-700 ' onClick={onLike}>
+            {Auth.loggedIn() && !isLiked ? <button className='inline-block text-sky-700 ' onClick={onLike}>
               <svg xmlns="http://www.w3.org/2000/svg" className="inline w-8 h-8 text-yellow" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
-              </svg> <span className="text-cyan-800">This Good Deed has {goodDeed.likes} likes!</span>
-            </button>}
+              </svg></button> : <span className="inline-block text-orange-500">
+              <svg xmlns="http://www.w3.org/2000/svg" className="inline-block w-8 h-8 text-yellow" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+              </svg>
+            </span>}
+            {Auth.loggedIn() && <span className="text-cyan-800">{checkLikesCount(goodDeed.likes, 'good deed')}</span>}
             {/* likes end */}
             {/* be kind button */}
             {/* <div className="bottom-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
               <button className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
-                Be Kind 
+                Be Kind
                 {/* //! need to add helper after signup */}
             {/* </button> */}
             {/* </div> */}
@@ -212,8 +212,8 @@ export default function GoodDeed({ goodDeedData, me }) {
         </div>
 
       </div>
-      {addComment && <CommentForm key={goodDeed._id} goodDeedId={goodDeed._id} />}
-      {viewComments && <CommentsList comments={goodDeed.comments} goodDeedId={goodDeed._id} key={goodDeed._id} />}
+      {addComment && <CommentForm goodDeedId={goodDeed._id} onSubmit={() => setViewComments(true)} />}
+      {viewComments && <CommentsList comments={goodDeed.comments} goodDeedId={goodDeed._id} />}
 
     </div>
   );

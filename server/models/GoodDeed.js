@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const dateFormat = require('../utils/dateFormat');
+const dateFormatter = require('../utils/dateFormat');
 // const commentSchema = require('./Comment');
 
 const goodDeedSchema = new Schema(
@@ -19,7 +19,8 @@ const goodDeedSchema = new Schema(
     },
     date: {
       type: Date,
-      required: true
+      required: true,
+      get: timestamp => dateFormatter(timestamp, { dateSuffix: false, monthLength: 'Long' })
     },
     deedText: {
       type: String,

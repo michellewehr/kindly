@@ -6,13 +6,13 @@ import Comment from '../Comment';
 
 export default function EventList({ events, me }) {
   const [eventModalOpen, setEventModalOpen] = useState(false);
-  // console.log(events, 'line 11 '
+  console.log(events, 'line 11 ')
   const userMeData = me || {};
   console.log(userMeData, 'logged in user id line 10');
 
-  if (!events.length) {
-    return <div>No events found</div>;
-  }
+  // if (!events.length) {
+  //   return <div>No events found</div>;
+  // }
 
   return (
     <div className="flex flex-wrap justify-center">
@@ -29,7 +29,10 @@ export default function EventList({ events, me }) {
         )}
         {events &&
           events.map((event) => (
-            < div key={event._id}>
+            < div
+
+            key={event.title}
+            >
           <EventCard
             event={event}
             me={userMeData}
@@ -41,10 +44,3 @@ export default function EventList({ events, me }) {
     </div>
   );
 }
-
-
-
-
-
-
-
