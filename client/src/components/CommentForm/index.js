@@ -19,14 +19,18 @@ export default function CommentForm({ eventId, goodDeedId, onSubmit }) {
       } catch (e) {
         console.error(e);
       }
-
-      const { me } = cache.readQuery({ query: QUERY_ME });
-      cache.writeQuery({
-        query: QUERY_ME,
-        data: { me: { ...me, comments: [addComment, ...me.comments, addComment] } },
-      });
     },
   });
+
+
+//* code for users comments if we want/need it ( need to add comments/replies to me query)
+  //     const { me } = cache.readQuery({ query: QUERY_ME });
+  //     cache.writeQuery({
+  //       query: QUERY_ME,
+  //       data: { me: { ...me, comments: [addComment, ...me.comments, addComment] } },
+  //     });
+  //   },
+  // });
 
   // update state based on form input changes
   const handleChange = (event) => {
@@ -36,14 +40,16 @@ export default function CommentForm({ eventId, goodDeedId, onSubmit }) {
     }
   };
 
+
   // submit form
   const handleSubmit = async (event) => {
     event.preventDefault();
     // console.log(commentText, 'comment text');
     try {
       await addComment({
-        variables: { commentText, eventId, goodDeedId },
+        variables: { commentText, eventId, goodDeedId }
       });
+
 
       // clear form value
       setCommentText("");
@@ -53,6 +59,7 @@ export default function CommentForm({ eventId, goodDeedId, onSubmit }) {
     }
     onSubmit();
   };
+
 
   return (
     <form onSubmit={handleSubmit}>
@@ -85,4 +92,5 @@ export default function CommentForm({ eventId, goodDeedId, onSubmit }) {
       </div>
     </form>
   );
-}
+};
+

@@ -378,3 +378,28 @@ export const QUERY_GOOD_DEED = gql`
     }
   }
 } `;
+
+export const QUERY_COMMENTS = gql`
+{
+comments {
+      _id
+         author {
+        _id
+        firstName
+        lastName
+      }
+      commentText
+      createdAt
+      likes
+         replies {
+        _id
+        replyBody
+        createdAt
+            author {
+          _id
+          firstName
+          lastName
+        }
+      }
+    }
+}`;
