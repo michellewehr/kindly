@@ -13,6 +13,8 @@ export default function GoodDeed({ goodDeedData, me }) {
   const [cancelGoodDeed] = useMutation(CANCEL_GOOD_DEED);
   const [joinGoodDeed] = useMutation(JOIN_GOOD_DEED);
   const [leaveGoodDeed] = useMutation(LEAVE_GOOD_DEED);
+  const [isLiked, setLiked] = useState(false);
+
   const goodDeed = goodDeedData || {};
 
   const hostId = goodDeed.host._id;
@@ -110,6 +112,7 @@ export default function GoodDeed({ goodDeedData, me }) {
     } catch (e) {
       console.error(e);
     }
+    setLiked(true);
   }
   // only in profile
   // if (!goodDeeds.length) {
@@ -164,11 +167,15 @@ export default function GoodDeed({ goodDeedData, me }) {
                 <button onClick={() => { setAddComment(true) }}>Add Comment</button>}
             </div>
             {/* likes start */}
-            {Auth.loggedIn() && <button className='inline-block text-sky-700 ' onClick={onLike}>
-              <svg xmlns="http://www.w3.org/2000/svg" className="inline w-8 h-8 text-yellow" viewBox="0 0 20 20" fill="currentColor">
+            {Auth.loggedIn() && !isLiked ? <button className='inline-block text-sky-700 ' onClick={onLike}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="inline w-8 h-8 text-yellow" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+              </svg></button>: <span className="inline-block text-orange-500">
+                <svg xmlns="http://www.w3.org/2000/svg" className="inline-block w-8 h-8 text-yellow" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
-              </svg> <span className="text-cyan-800">{checkLikesCount(goodDeed.likes, 'good deed')}</span>
-            </button>}
+                </svg>
+              </span>}
+              <span className="text-cyan-800">{checkLikesCount(goodDeed.likes, 'good deed')}</span>
             {/* likes end */}
             {/* be kind button */}
             {/* <div className="bottom-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
@@ -183,7 +190,7 @@ export default function GoodDeed({ goodDeedData, me }) {
         </div>
 
       </div>
-      {addComment && <CommentForm key={goodDeed._id} goodDeedId={goodDeed._id} />}
+      {addComment && <CommentForm key={goodDeed._id} goodDeedId={goodDeed._id} onSubmit={() => setViewComments(true)} />}
       {viewComments && <CommentsList comments={goodDeed.comments} goodDeedId={goodDeed._id} key={goodDeed._id} />}
 
     </div>

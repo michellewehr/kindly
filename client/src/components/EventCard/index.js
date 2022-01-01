@@ -16,6 +16,7 @@ export default function EventCard({ event, me }) {
   const [joinEvent] = useMutation(JOIN_EVENT);
   const [leaveEvent] = useMutation(LEAVE_EVENT);
   const [cancelEvent] = useMutation(CANCEL_EVENT);
+  const [isLiked, setLiked] = useState(false);
   // const [count, setCount] = useState(0);
   const [addVerification, { loading, error }] = useMutation(ADD_VERIFICATION)
   // console.log(event.likes);
@@ -60,6 +61,7 @@ export default function EventCard({ event, me }) {
     } catch (e) {
       console.error(e);
     }
+    setLiked(true);
   }
 
 
@@ -166,12 +168,16 @@ export default function EventCard({ event, me }) {
             src={event.image}
             alt="Alt tag"
           />
-          {Auth.loggedIn() && <button className='inline-block text-sky-700 ' onClick={onLike}>
+          {Auth.loggedIn() && !isLiked ? <button className='inline-block text-sky-700 ' onClick={onLike}>
             <svg xmlns="http://www.w3.org/2000/svg" className="inline w-8 h-8 text-yellow" viewBox="0 0 20 20" fill="currentColor">
               <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
-            </svg> <span className="text-cyan-800">{checkLikesCount(event.likes, 'event')}</span>
-          </button>}
-        </div>
+              </svg></button>: <span className="inline-block text-orange-500">
+                <svg xmlns="http://www.w3.org/2000/svg" className="inline-block w-8 h-8 text-yellow" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                </svg>
+              </span>}
+              <span className="text-cyan-800">{checkLikesCount(event.likes, 'event')}</span>
+                      </div>
         <div className="flex flex-row flex-wrap w-full px-3 md:w-2/3">
           <div className="relative w-full pt-3 font-semibold text-left text-gray-700 md:pt-0">
             <div className="flex flex-row pb-1 text-2xl leading-tight text-amber-500">
@@ -251,7 +257,7 @@ export default function EventCard({ event, me }) {
           </div>
         </div>
       </div>
-      {addComment && <CommentForm key={event._id} eventId={event._id} />}
+      {addComment && <CommentForm onSubmit={() => setViewComments(true)} key={event._id} eventId={event._id} />}
       {viewComments && <CommentsList comments={event.comments} eventId={event._id} key={event.comments} />}
     </div>
   );
