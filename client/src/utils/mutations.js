@@ -15,17 +15,20 @@ export const LOGIN = gql`
 `;
 
 export const CREATE_USER = gql`
-  mutation createUser($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
-    createUser(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
-      user {
-        _id
-        firstName
-        lastName
-        email
-      }
-      token
+mutation CreateUser($firstName: String!, $lastName: String!, $email: String!, $password: String!, $location: String!) {
+  createUser(firstName: $firstName, lastName: $lastName, email: $email, password: $password, location: $location) {
+    user {
+      _id
+      firstName
+      lastName
+      email
+      location
+      profilePicture
+      kindlyScore
     }
+    token
   }
+}
 `;
 
 export const CREATE_EVENT = gql`
@@ -294,7 +297,8 @@ mutation removeComment($commentId: ID!, $eventId: ID, $goodDeedId: ID, ) {
   }
 }`;
 
-export const ADD_VERIFICATION = gql`mutation Mutation($eventId: ID!) {
+export const ADD_VERIFICATION = gql`
+mutation Mutation($eventId: ID!) {
   addToVerifyNumber(eventId: $eventId) {
     _id
     host {
@@ -331,3 +335,22 @@ export const ADD_VERIFICATION = gql`mutation Mutation($eventId: ID!) {
   }
 }
 `;
+
+export const INCREASE_KINDLY_SCORE = gql`
+mutation IncreaseKindlyScore {
+  increaseKindlyScore {
+    _id
+   kindlyScore
+    goodDeeds {
+      _id
+    }
+    events {
+      _id
+    }
+    profilePicture
+    location
+    email
+    lastName
+    firstName
+  }
+}`;

@@ -4,9 +4,11 @@ import { Link } from "react-router-dom";
 import CommentsList from "../CommentsList";
 import { useState, useEffect } from "react";
 import Auth from '../../utils/auth';
-import { CANCEL_EVENT, JOIN_EVENT, LEAVE_EVENT, ADD_EVENT_LIKE, ADD_VERIFICATION } from "../../utils/mutations";
+import { CANCEL_EVENT, JOIN_EVENT, LEAVE_EVENT, ADD_EVENT_LIKE, ADD_VERIFICATION, INCREASE_KINDLY_SCORE } from "../../utils/mutations";
 // import { QUERY_ME } from "../../utils/queries";
 import { useMutation } from "@apollo/client";
+import { checkLikesCount } from '../../utils/likesCountFormatter'
+
 
 export default function EventCard({ event, me }) {
   const [viewComments, setViewComments] = useState(false);
@@ -14,26 +16,36 @@ export default function EventCard({ event, me }) {
   const [joinEvent] = useMutation(JOIN_EVENT);
   const [leaveEvent] = useMutation(LEAVE_EVENT);
   const [cancelEvent] = useMutation(CANCEL_EVENT);
+  const [isLiked, setLiked] = useState(false);
   // const [count, setCount] = useState(0);
+  const [increaseScore] = useMutation(INCREASE_KINDLY_SCORE);
   const [addVerification, { loading, error }] = useMutation(ADD_VERIFICATION)
-  // console.log(event.likes);
-
-  // console.log(event.verifyNumber, 'verified')
-  const attendees = event.attendees;
-  // console.log(attendees, 'attendees');
-  const hostId = event.host._id
-
   const [addLike] = useMutation(ADD_EVENT_LIKE);
+  
+  //declare state of event false verified and run updateVerify to update to true when conditions are met
+  // const [isVerified, updateVerify] = useState(false);
 
-  // check if event passes verification requirements and distribute kindly points
-  const isVerified = () => {
-    if (eventPassed() && isHalfOfAttendees())
-      // TODO: ADD_KINDLY_POINTS mutation runs here
-      console.log('this is a function');
-  };
+  const hostId = event.host._id
+  const attendees = event.attendees;
 
-  // no dependencies means this runs on every render to verify events
-  useEffect(() => { isVerified() });
+  //if event is verified over half the length of attendees-- set isVerified to true
+  // if(event.verifyNumber >= attendees.length /2) {
+  //   updateVerify(true);
+  // }
+
+  //when event is verified-- add points to all attendees/ host kindly score 
+  // useEffect(() => {
+  //   addKindlyPoints()
+  // }, [isVerified])
+
+  async function addKindlyPoints() {
+      try{
+        await increaseScore()
+      } catch(e) {
+        console.error(e)
+      }
+    }
+// 
 
   // check if date of event is behind the current date and return boolean
   const eventPassed = () => { return Date.now() > event.date };
@@ -58,7 +70,10 @@ export default function EventCard({ event, me }) {
     } catch (e) {
       console.error(e);
     }
+    setLiked(true);
   }
+
+
 
 
   const onJoin = async (e) => {
@@ -69,7 +84,7 @@ export default function EventCard({ event, me }) {
     } catch (e) {
       console.error(e);
     }
-    checkAttendance();
+    addKindlyPoints();
   };
 
   const onLeave = async (e) => {
@@ -162,12 +177,16 @@ export default function EventCard({ event, me }) {
             src={event.image}
             alt="Alt tag"
           />
-          {Auth.loggedIn() && <button className='inline-block text-sky-700 ' onClick={onLike}>
+          {Auth.loggedIn() && !isLiked ? <button className='inline-block text-sky-700 ' onClick={onLike}>
             <svg xmlns="http://www.w3.org/2000/svg" className="inline w-8 h-8 text-yellow" viewBox="0 0 20 20" fill="currentColor">
               <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
-            </svg> <span className="text-cyan-800">This event has {event.likes} likes!</span>
-          </button>}
-        </div>
+              </svg></button>: Auth.loggedIn() && <span className="inline-block text-orange-500">
+                <svg xmlns="http://www.w3.org/2000/svg" className="inline-block w-8 h-8 text-yellow" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                </svg>
+              </span>}
+              {Auth.loggedIn() && <span className="text-cyan-800">{checkLikesCount(event.likes, 'event')}</span> }
+                      </div>
         <div className="flex flex-row flex-wrap w-full px-3 md:w-2/3">
           <div className="relative w-full pt-3 font-semibold text-left text-gray-700 md:pt-0">
             <div className="flex flex-row pb-1 text-2xl leading-tight text-amber-500">
@@ -247,10 +266,8 @@ export default function EventCard({ event, me }) {
           </div>
         </div>
       </div>
-      {addComment && <CommentForm 
-      //  eventId={event._id}
-        />}
-      {viewComments && <CommentsList comments={event.comments} eventId={event._id} />}
+      {addComment && <CommentForm onSubmit={() => setViewComments(true)} eventId={event._id}/>}
+      {viewComments && <CommentsList comments={event.comments} eventId={event._id}  />}
     </div>
   );
 }

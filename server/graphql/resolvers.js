@@ -186,9 +186,6 @@ const resolvers = {
         }
       } throw new AuthenticationError('You need to be logged in!');
     },
-
-
-
     //add reply to comment
     addReply: async (parent, { commentId, replyBody }, context) => {
       console.log(context.user);
@@ -393,6 +390,17 @@ const resolvers = {
         return updatedEvent;
       }
       throw new AuthenticationError('need logged in!');
+    }, 
+    increaseKindlyScore: async (parent, args, context) => {
+      if(context.user) {
+        const updatedUser = await User.findByIdAndUpdate(
+          { _id: context.user._id},
+          {$inc: {kindlyScore: +10}},
+          {new: true}
+        )
+        return updatedUser;
+      }
+      throw new AuthenticationError('log in!');
     }
   }
 };

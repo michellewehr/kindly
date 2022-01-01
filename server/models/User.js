@@ -54,7 +54,8 @@ const userSchema = new Schema(
       }
     ],
     kindlyScore: {
-      type: Number
+      type: Number,
+      default: 0
     }
   },
   {
