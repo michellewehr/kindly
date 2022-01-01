@@ -56,7 +56,6 @@ export default function EventCard({ event, me }) {
     } catch (e) {
       console.error(e);
     }
-   addKindlyPoints();
   }
 
   const onLike = async (e) => {
@@ -78,7 +77,7 @@ export default function EventCard({ event, me }) {
     } catch (e) {
       console.error(e);
     }
-    checkAttendance();
+    addKindlyPoints();
   };
 
   const onLeave = async (e) => {
