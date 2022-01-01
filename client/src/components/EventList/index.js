@@ -44,10 +44,3 @@ export default function EventList({ events, me }) {
     </div>
   );
 }
-
-
-
-
-
-
-
