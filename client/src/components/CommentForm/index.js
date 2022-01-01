@@ -1,35 +1,32 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_COMMENT } from "../../utils/mutations";
+import { QUERY_COMMENTS, QUERY_ME } from "../../utils/queries";
+
 // import { QUERY_COMMENTS, QUERY_ME } from "../../utils/queries";
 
 export default function CommentForm({ eventId, goodDeedId, onSubmit }) {
-  // console.log(goodDeedId, 'good deed id');
   const [commentText, setCommentText] = useState("");
-  // const [characterCount, setCharacterCount] = useState(0);
-  const [addComment] = useMutation(ADD_COMMENT);
-  // const [addComment, { error }] = useMutation(ADD_COMMENT, {
-  //   update(cache, { data: { addComment } }) {
-  //     try {
-  //       // update comment array's cache
-  //       // could potentially not exist yet, so wrap in a try/catch
-  //       const { comments } = cache.readQuery({ query: QUERY_COMMENTS });
-  //       cache.writeQuery({
-  //         query: QUERY_COMMENTS,
-  //         data: { comments: [addComment, ...comments] },
-  //       });
-  //     } catch (e) {
-  //       console.error(e);
-  //     }
+  const [addComment, { error }] = useMutation(ADD_COMMENT, {
 
-  //     // update me object's cache
-  //     const { me } = cache.readQuery({ query: QUERY_ME });
-  //     cache.writeQuery({
-  //       query: QUERY_ME,
-  //       data: { me: { ...me, comments: [...me.comments, addComment] } },
-  //     });
-  //   },
-  // });
+    update(cache, { data: { addComment } }) {
+      try {
+        const { comments } = cache.readQuery({ query: QUERY_COMMENTS });
+        cache.writeQuery({
+          query: QUERY_COMMENTS,
+          data: { comments: [addComment, ...comments] },
+        });
+      } catch (e) {
+        console.error(e);
+      }
+
+      const { me } = cache.readQuery({ query: QUERY_ME });
+      cache.writeQuery({
+        query: QUERY_ME,
+        data: { me: { ...me, comments: [addComment, ...me.comments, addComment] } },
+      });
+    },
+  });
 
   // update state based on form input changes
   const handleChange = (event) => {
