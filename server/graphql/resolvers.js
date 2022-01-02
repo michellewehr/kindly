@@ -29,7 +29,11 @@ const resolvers = {
 
     // find user by id
     user: async (parent, { _id }) => {
-      return await User.findOne({ _id }).select('-__v -password');
+      return await User.findOne({ _id }) .select('-__v -password')
+      .populate('connections')
+      .populate('events').populate({ path: 'events', populate: 'host' })
+      .populate('goodDeeds').populate({ path: 'goodDeeds', populate: 'host' })
+
     },
 
     // ** EVENTS

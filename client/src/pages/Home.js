@@ -13,6 +13,7 @@ import Loading from "../components/Loading";
 export default function Home() {
   const { loading, data } = useQuery(QUERY_EVENTS);
   const { data: userData } = useQuery(QUERY_ME);
+
   const events = data?.events || [];
 
   const loggedIn = Auth.loggedIn();
