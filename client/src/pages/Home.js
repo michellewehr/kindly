@@ -7,14 +7,17 @@ import GoodDeedList from "../components/GoodDeedList";
 import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { QUERY_EVENTS, QUERY_ME } from '../utils/queries';
+import Loading from "../components/Loading";
 
 
 export default function Home() {
   const { loading, data } = useQuery(QUERY_EVENTS);
   const { data: userData } = useQuery(QUERY_ME);
+
   const events = data?.events || [];
 
   const loggedIn = Auth.loggedIn();
+
 
   const [renderEvents, toggleEvents] = useState(true);
 
@@ -41,7 +44,7 @@ export default function Home() {
           events={events}
           me={userData?.me}
           host={userData?.me}
-        /> : <GoodDeedList me={userData?.me}/>}
+        /> : <GoodDeedList me={userData?.me} />}
       </div>
     </div>
   );

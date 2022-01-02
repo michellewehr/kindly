@@ -41,25 +41,26 @@ const dateFormatter = (timestamp, { monthLength = 'short', dateSuffix = true } =
 
   const dayOfMonth = dateSuffix
     ? addDateSuffix(dateObj.getDate())
-    : dateObj.getDate();
+    : ("0" + dateObj.getDate()).slice(-2);
 
   const year = dateObj.getFullYear();
-  let hour =
-    dateObj.getHours() > 12
-      ? Math.floor(dateObj.getHours() / 2)
-      : dateObj.getHours();
+  // let hour =
+  //   dateObj.getHours() > 12
+  //     ? Math.floor(dateObj.getHours() / 2)
+  //     : dateObj.getHours();
 
-  // if hour is 0 (12:00am), change it to 12
-  if (hour === 0) {
-    hour = 12;
-  }
+  // // if hour is 0 (12:00am), change it to 12
+  // if (hour === 0) {
+  //   hour = 12;
+  // }
 
-  const minutes = dateObj.getMinutes();
+  // const minutes = dateObj.getMinutes();
 
   // set `am` or `pm`
-  const periodOfDay = dateObj.getHours() >= 12 ? 'pm' : 'am';
+  // const periodOfDay = dateObj.getHours() >= 12 ? 'pm' : 'am';
 
-  const formattedTimeStamp = `${formattedMonth} ${dayOfMonth}, ${year} at ${hour}:${minutes} ${periodOfDay}`;
+  // const formattedTimeStamp = `${formattedMonth} ${dayOfMonth}, ${year} at ${hour}:${minutes} ${periodOfDay}`;
+  const formattedTimeStamp = `${formattedMonth} ${dayOfMonth}, ${year}`;
 
   return formattedTimeStamp;
 };

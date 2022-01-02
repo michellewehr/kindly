@@ -18,7 +18,7 @@ export default function ReplyList({ replies }) {
                 <Link
                   to={`/profile/${reply.author}`}
                   style={{ fontWeight: 700 }}
-                >Get Author on get created at{reply.createdAt}
+                >{reply.author.firstName} on get created at{reply.createdAt}
                 </Link>
               
             </div>
