@@ -198,7 +198,7 @@ export default function GoodDeed({ goodDeedData, me }) {
             <div>
               {Auth.loggedIn() &&
               !viewComments &&
-              goodDeed.comments.length > 1 ? (
+              goodDeed.comments.length >= 1 ? (
                 <button
                   onClick={() => {
                     setViewComments(true);
@@ -208,7 +208,7 @@ export default function GoodDeed({ goodDeedData, me }) {
                 </button>
               ) : (
                 Auth.loggedIn() &&
-                goodDeed.comments.length > 1 && (
+                goodDeed.comments.length >= 1 && (
                   <button
                     onClick={() => {
                       setViewComments(false);

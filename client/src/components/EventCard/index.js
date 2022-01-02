@@ -290,7 +290,9 @@ export default function EventCard({ event, me }) {
             </div>
             {/* button div for viewing comments/ hiding comments */}
             <div>
-              {Auth.loggedIn() && !viewComments && event.comments.length > 1 ? (
+              {Auth.loggedIn() &&
+              !viewComments &&
+              event.comments.length >= 1 ? (
                 <button
                   onClick={() => {
                     setViewComments(true);
@@ -300,7 +302,7 @@ export default function EventCard({ event, me }) {
                 </button>
               ) : (
                 Auth.loggedIn() &&
-                event.comments.length > 1 && (
+                event.comments.length >= 1 && (
                   <button
                     onClick={() => {
                       setViewComments(false);
