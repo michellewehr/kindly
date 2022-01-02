@@ -114,7 +114,6 @@ export default function EventCard({ event, me }) {
   };
 
   const checkAttendance = () => {
-    console.log(attendees.length, "length");
     // check if current user is host
     if (hostId === me._id) {
       return (
@@ -126,7 +125,7 @@ export default function EventCard({ event, me }) {
             Cancel Event
           </button>
           {/* if verify number in db more than half attendees, event verified */}
-          {isHalfOfAttendees && eventPassed && (
+          {isHalfOfAttendees() && eventPassed() && (
             <button
               onClick={onVerify}
               className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
@@ -151,7 +150,7 @@ export default function EventCard({ event, me }) {
             >
               Leave Event
             </button>
-            {event.verifyNumber < attendees.length / 2 && eventPassed && (
+            {isHalfOfAttendees && eventPassed && (
               <button
                 onClick={onVerify}
                 className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"

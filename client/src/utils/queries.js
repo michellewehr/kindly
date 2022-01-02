@@ -361,4 +361,33 @@ export const QUERY_GOOD_DEED = gql`
       }
     }
   }
+<<<<<<< HEAD
 `;
+=======
+} `;
+
+export const QUERY_COMMENTS = gql`
+{
+comments {
+      _id
+         author {
+        _id
+        firstName
+        lastName
+      }
+      commentText
+      createdAt
+      likes
+         replies {
+        _id
+        replyBody
+        createdAt
+            author {
+          _id
+          firstName
+          lastName
+        }
+      }
+    }
+}`;
+>>>>>>> 68d9d50a5288ac80df7fc87328056c4f3644d6c3
