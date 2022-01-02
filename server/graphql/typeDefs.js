@@ -1,5 +1,4 @@
-const { gql } = require('apollo-server-express');
-
+const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
   type User {
@@ -16,7 +15,7 @@ const typeDefs = gql`
   }
 
   type Auth {
-    user: User,
+    user: User
     token: ID!
   }
 
@@ -71,16 +70,36 @@ const typeDefs = gql`
     users: [User]
     user(_id: ID!): User
     events: [Event]
-    event(_id: ID, hostId: ID, attendeeId: ID): Event
+    event(_id: ID): Event
     goodDeeds: [GoodDeed]
     goodDeed(_id: ID, hostId: ID, attendeeId: ID): GoodDeed
   }
 
   type Mutation {
-    createUser(firstName: String!, lastName: String!, email: String!, password: String!, location: String!): Auth
+    createUser(
+      firstName: String!
+      lastName: String!
+      email: String!
+      password: String!
+      location: String!
+    ): Auth
     login(email: String!, password: String!): Auth
-    createEvent( title: String!, location: String!, description: String!, date: String!, startTime: String!, endTime: String!, url: String!, image: String!): Event
-    createGoodDeed(title: String!, deedText: String!, date: String!, location: String!): GoodDeed
+    createEvent(
+      title: String!
+      location: String!
+      description: String!
+      date: String!
+      startTime: String!
+      endTime: String!
+      url: String!
+      image: String!
+    ): Event
+    createGoodDeed(
+      title: String!
+      deedText: String!
+      date: String!
+      location: String!
+    ): GoodDeed
     addConnection(connectionId: ID!): User
     removeConnection(connectionId: ID!): User
     addComment(eventId: ID, goodDeedId: ID, commentText: String!): Event
@@ -97,5 +116,5 @@ const typeDefs = gql`
     addToVerifyNumber(eventId: ID!): Event
     increaseKindlyScore: User
   }
-`
-module.exports = typeDefs
+`;
+module.exports = typeDefs;
