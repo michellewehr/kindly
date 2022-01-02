@@ -12,6 +12,7 @@ export default function UserProfile(props) {
   const user = data?.user || {};
   //   console.log(userEvents, "user events");
   const userGoodDeeds = user.goodDeeds;
+
   // console.log(userGoodDeeds, 'good deeds user')
   // console.log(user, 'user data')
   return (
@@ -20,37 +21,37 @@ export default function UserProfile(props) {
         <div className="flex flex-col bg-white shadow-xl"></div>
         {/* Main */}
         <div className="">
-          <div className="flex items-center mx-auto justify-around	">
-            <div className="w-1/6 mx-auto">
+          <div className="flex items-end mx-auto w-1/3	">
+            <div className=" mx-auto w-1/2 m-3">
               <img
                 className="antialiased rounded-lg shadow-lg"
                 src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
               />
             </div>
 
-            <div className="mt-3 flex-col">
-              <h3 className="font-bold text-4xl text-gray-900 sm:text-4xl mb-3">
-                {user.firstName} {user.lastName}
-              </h3>
-
-              <div className="">
-                <p className="px-6 mx-auto mb-2 bg-orange-300 rounded w-max">
-                  {user.location}
-                </p>
-              </div>
-
-              <div className="flex flex-row mx-auto pt-1">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5  inline-block m-1"
-                  viewBox="0 0 20 20"
-                  fill="orange"
-                >
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-                <p className=" text-gray-900 ml-1">
-                  Kindly Score: {user.kindlyScore}
-                </p>
+            <div className="flex mx-auto mb-3">
+              <div className="mt-3 flex-col mx-auto text-center">
+                <h3 className="font-bold text-4xl text-gray-900 sm:text-4xl mb-3">
+                  {user.firstName} {user.lastName}
+                </h3>
+                <div className="">
+                  <p className="px-6 mx-auto mb-2 bg-orange-300 rounded w-max">
+                    {user.location}
+                  </p>
+                </div>
+                <div className="flex flex-row pt-1 mx-auto text-center space-around">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-5 h-5  inline-block m-1 items-end"
+                    viewBox="0 0 20 20"
+                    fill="orange"
+                  >
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  <p className=" ext-gray-900 ml-1 items-start">
+                    Kindly Score: {user.kindlyScore}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
