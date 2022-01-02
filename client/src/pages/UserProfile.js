@@ -107,7 +107,7 @@ export default function UserProfile(props) {
                     </div>
                     <div className="flex">
                       <p className="w-2/3">
-                        <b>Description: </b> {event.desciption}
+                        <b>Description: </b> {event.description}
                       </p>
                       <p className="w-1/3">
                         <b>Location: </b> {event.location}
