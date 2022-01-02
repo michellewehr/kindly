@@ -67,7 +67,7 @@ export default function Sidebar() {
         </div>
         <div className="w-5/6 mx-auto mb-8 text-center bg-sky-100 border-4 border-orange-300 rounded-lg p-1 max-h-96 overflow-auto">
           {/* div for each event */}
-          {myEvents.map(event => (
+          {myEvents.length ? myEvents.map(event => (
             <a key={event._id} className="bg-sky-100" href="#">
               <div className="p-1 text-left my-4 rounded-lg bg-sky-200 hover:bg-sky-300">
                 <h3 className="bg-cyan-600 text-white text-center bold rounded-lg text-md font-bold">{event.title}</h3>
@@ -76,7 +76,7 @@ export default function Sidebar() {
                 <p className="text-sky-900"><b>Time: </b>{event.startTime} - {event.endTime} </p>
               </div>
             </a>
-          ))}
+          )) : <div className="p-2">You have no upcoming events</div>}
         </div>
         {/* End of upcoming events */}
         <div className="w-5/6 mx-auto mb-2 text-center bg-sky-100 border-4 border-orange-300 rounded-lg p-1 max-h-96">
@@ -85,7 +85,7 @@ export default function Sidebar() {
         <div className="w-5/6 mx-auto mb-2 text-center bg-sky-100 border-4 border-orange-300 rounded-lg p-1 max-h-96 overflow-auto">
           {/* <h2 className="mb-1 underline bg-orange-300 py-2 rounded-lg">Good Deads</h2> */}
           {/* div for good deeds */}
-          {myGoodDeeds.map(goodDeed => (
+          {myGoodDeeds.length ? myGoodDeeds.map(goodDeed => (
             <a key={goodDeed._id} className="bg-sky-100" href="#">
               <div className="p-1 text-left my-4 rounded-lg bg-sky-200 hover:bg-sky-300">
                 <h3 className="bg-cyan-600 text-white text-center bold rounded-lg text-md font-bold">{goodDeed.title}</h3>
@@ -93,7 +93,7 @@ export default function Sidebar() {
                 <p className="text-sky-900"><b>Date: </b>{goodDeed.date}</p>
               </div>
             </a>
-          ))}
+          )) : <div className="p-2">You have no upcoming Good Deeds</div>}
           {/* end of div for good deeds */}
         </div>
         {/* div for my postings */}
