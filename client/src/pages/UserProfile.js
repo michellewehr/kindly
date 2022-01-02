@@ -158,7 +158,7 @@ export default function UserProfile(props) {
                       </div>
                     </div>
                     <div className="pb-4 cursor-pointer text-normal hover:text-cyan-700 text-cyan-900">
-                      <Link to="">
+                      <Link to={`/profile/${goodDeed.host._id}`}>
                         {goodDeed.host.firstName} {goodDeed.host.lastName}
                       </Link>
                     </div>
