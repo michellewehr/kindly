@@ -211,7 +211,7 @@ export default function EventCard({ event, me }) {
             </div>
             <div className="pb-1 text-normal text-cyan-900">
               <span className="">
-                <b>Location:</b>{event.location}
+                <b>Location:</b> {event.location}
               </span>
             </div>
             <div className="pb-1 text-normal text-cyan-900">
