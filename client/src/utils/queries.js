@@ -361,16 +361,13 @@ export const QUERY_GOOD_DEED = gql`
       }
     }
   }
-<<<<<<< HEAD
 `;
-=======
-} `;
 
 export const QUERY_COMMENTS = gql`
-{
-comments {
+  {
+    comments {
       _id
-         author {
+      author {
         _id
         firstName
         lastName
@@ -378,16 +375,16 @@ comments {
       commentText
       createdAt
       likes
-         replies {
+      replies {
         _id
         replyBody
         createdAt
-            author {
+        author {
           _id
           firstName
           lastName
         }
       }
     }
-}`;
->>>>>>> 68d9d50a5288ac80df7fc87328056c4f3644d6c3
+  }
+`;
