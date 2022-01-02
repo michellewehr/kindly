@@ -12,6 +12,7 @@ import { QUERY_EVENTS, QUERY_ME } from '../utils/queries';
 export default function Home() {
   const { loading, data } = useQuery(QUERY_EVENTS);
   const { data: userData } = useQuery(QUERY_ME);
+
   const events = data?.events || [];
 
   const loggedIn = Auth.loggedIn();
