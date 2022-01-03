@@ -84,7 +84,7 @@ export default function Sidebar() {
             <a key={goodDeed._id} className="bg-sky-100" href="">
               <div className="px-1 text-left">
                 <h3 className="bg-cyan-600 hover:bg-orange-300">
-                  {goodDeed.title}
+                  <Link to={`/gooddeed/${goodDeed._id}`}>{goodDeed.title}</Link>
                 </h3>
                 <p>{goodDeed.location}</p>
                 <p>{goodDeed.date}</p>

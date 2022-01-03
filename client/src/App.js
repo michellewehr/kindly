@@ -17,6 +17,7 @@ import Footer from "./components/Footer";
 import UserProfile from "./pages/UserProfile";
 import EventLink from "./components/EventLink";
 import { Provider } from "react-redux";
+import GoodDeedLink from "./components/GoodDeedLink";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:3001/graphql",
@@ -53,6 +54,7 @@ function App() {
                 <Route exact path="/myprofile" element={<Profile />} />
                 <Route exact path="/profile/:id" element={<UserProfile />} />
                 <Route exact path="/event/:id" element={<EventLink />} />
+                <Route exact path="/gooddeed/:id" element={<GoodDeedLink />} />
               </Routes>
             </div>
             <Footer />

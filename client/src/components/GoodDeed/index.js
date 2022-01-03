@@ -153,7 +153,7 @@ export default function GoodDeed({ goodDeedData, me }) {
         <div className="relative flex flex-row flex-wrap w-full px-3 md:w-2/3">
           <div className="relative w-full pt-3 font-semibold text-gray-700 md:pt-0">
             <div className="flex flex-row pb-1 text-2xl leading-tight text-amber-500">
-              {goodDeed.title}
+              <Link to={`/gooddeed/${goodDeed._id}`}>{goodDeed.title}</Link>
             </div>
             <div className="top-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
               {/* //!we need to be able to add this to the users total on */}

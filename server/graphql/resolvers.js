@@ -90,7 +90,7 @@ const resolvers = {
         .select("-__v");
     },
 
-    goodDeed: async () => {
+    goodDeed: async (parent, { _id }) => {
       return await GoodDeed.findOne({ _id })
         .populate("host")
         .populate("helper")

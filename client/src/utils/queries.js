@@ -316,27 +316,22 @@ export const QUERY_GOOD_DEEDS = gql`
 `;
 
 export const QUERY_GOOD_DEED = gql`
-  {
-    goodDeeds {
+  query GoodDeed($id: ID) {
+    goodDeed(_id: $id) {
       _id
       host {
         _id
         firstName
         lastName
-        kindlyScore
       }
       title
       helper {
         _id
-        firstName
-        lastName
-        kindlyScore
       }
       date
       deedText
       location
-      createdAt
-      likes
+
       comments {
         _id
         author {
@@ -345,19 +340,16 @@ export const QUERY_GOOD_DEED = gql`
           lastName
         }
         commentText
-        createdAt
         likes
         replies {
           _id
           author {
             _id
-            firstName
-            lastName
           }
           replyBody
-          createdAt
         }
       }
+      likes
     }
   }
 `;

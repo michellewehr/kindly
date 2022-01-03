@@ -72,7 +72,7 @@ const typeDefs = gql`
     events: [Event]
     event(_id: ID): Event
     goodDeeds: [GoodDeed]
-    goodDeed(_id: ID, hostId: ID, attendeeId: ID): GoodDeed
+    goodDeed(_id: ID): GoodDeed
   }
 
   type Mutation {
