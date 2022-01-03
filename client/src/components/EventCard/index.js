@@ -266,8 +266,7 @@ export default function EventCard({ event, me }) {
             </div>
             <div className="pb-1 text-normal text-cyan-900">
               <span className="">
-                <b>Location:</b>
-                {event.location}
+                <b>Location:</b> {event.location}
               </span>
             </div>
             <div className="pb-1 text-normal text-cyan-900">
@@ -290,8 +289,8 @@ export default function EventCard({ event, me }) {
             {/* button div for viewing comments/ hiding comments */}
             <div>
               {Auth.loggedIn() &&
-              !viewComments &&
-              event.comments.length >= 1 ? (
+                !viewComments &&
+                event.comments.length >= 1 ? (
                 <button
                   onClick={() => {
                     setViewComments(true);
