@@ -38,7 +38,6 @@ const resolvers = {
         .populate("connections")
         .populate("events")
         .populate({ path: "events", populate: "host" })
-        .populate({ path: "events", populate: "comments" })
         .populate("goodDeeds")
         .populate({ path: "goodDeeds", populate: "host" });
     },

@@ -29,6 +29,9 @@ export const QUERY_ME = gql`
         endTime
         url
         image
+        attendees {
+          _id
+        }
       }
       goodDeeds {
         _id
@@ -97,7 +100,7 @@ export const QUERY_USERS = gql`
 `;
 
 export const QUERY_USER = gql`
-  query User($id: ID!) {
+  query Query($id: ID!) {
     user(_id: $id) {
       _id
       firstName
@@ -105,34 +108,6 @@ export const QUERY_USER = gql`
       email
       location
       profilePicture
-      kindlyScore
-      goodDeeds {
-        _id
-        host {
-          _id
-          firstName
-          lastName
-        }
-        title
-        date
-        deedText
-        location
-        comments {
-          _id
-          author {
-            _id
-            firstName
-            lastName
-          }
-          commentText
-          createdAt
-          likes
-          replies {
-            _id
-          }
-        }
-        likes
-      }
       connections {
         _id
         firstName
@@ -141,9 +116,9 @@ export const QUERY_USER = gql`
       events {
         _id
         host {
-          _id
-          firstName
           lastName
+          firstName
+          _id
         }
         title
         attendees {
@@ -151,34 +126,37 @@ export const QUERY_USER = gql`
         }
         location
         description
-        date
         startTime
+        date
         endTime
         url
         image
         comments {
           _id
-          author {
-            _id
-            firstName
-            lastName
-          }
-          commentText
-          createdAt
-          likes
-          replies {
-            _id
-            author {
-              lastName
-              firstName
-              _id
-            }
-            replyBody
-            createdAt
-          }
         }
         likes
         verifyNumber
+      }
+      goodDeeds {
+        _id
+        host {
+          _id
+          firstName
+          lastName
+        }
+        title
+        helper {
+          _id
+          firstName
+          lastName
+        }
+        date
+        deedText
+        location
+        comments {
+          _id
+        }
+        likes
       }
     }
   }
