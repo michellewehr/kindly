@@ -30,7 +30,7 @@ export default function EventCard({ event, me }) {
 
   //declare state of event false verified and run updateVerify to update to true when conditions are met
   // const [isVerified, updateVerify] = useState(false);
-
+  console.log(`/event/${event._id}`, "eventId");
   const hostId = event.host._id;
   const attendees = event.attendees;
 
@@ -226,7 +226,7 @@ export default function EventCard({ event, me }) {
         <div className="flex flex-row flex-wrap w-full px-3 md:w-2/3">
           <div className="relative w-full pt-3 font-semibold text-left text-gray-700 md:pt-0">
             <div className="flex flex-row pb-1 text-2xl leading-tight text-amber-500">
-              <span>{event.title}</span>
+              <Link to={`/event/${event._id}`}>{event.title}</Link>
               {/* verified check start */}
               {attendees.length > 1 &&
                 event.verifyNumber >= attendees.length / 2 && (

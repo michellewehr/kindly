@@ -60,7 +60,7 @@ export default function UserProfile(props) {
           {/* beginining of event/good deed section*/}
           <div className="flex">
             {/* events */}
-            <div className="w-1/2 m-2 flex-col">
+            <div className="w-1/2 m-2 md-w-full flex-col">
               <h2>Events (completed or upcoming)</h2>
               {/* for each event */}
               {user.events &&
@@ -145,11 +145,11 @@ export default function UserProfile(props) {
               {/* end of for each event */}
             </div>
             {/* good deeds */}
-            <div className="w-1/2 m-2 flex-col">
+            <div className="w-1/2 m-2 flex-col md-w-full sm-w-full">
               <h2>Good Deeds (upcoming or completed)</h2>
               {userGoodDeeds &&
                 userGoodDeeds.map((goodDeed) => (
-                  <div className="flex-col p-3 mt-2 antialiased bg-white rounded-lg shadow-lg  relative">
+                  <div className="flex-col p-3 mt-2 antialiased bg-white rounded-lg shadow-lg relative">
                     <div className="flex-row">
                       <div className="pb-1 text-2xl text-amber-500">
                         <span>{goodDeed.title}</span>
