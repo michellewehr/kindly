@@ -102,7 +102,8 @@ const typeDefs = gql`
     ): GoodDeed
     addConnection(connectionId: ID!): User
     removeConnection(connectionId: ID!): User
-    addComment(eventId: ID, goodDeedId: ID, commentText: String!): Event
+    addEventComment(eventId: ID, commentText: String!): Event
+    addGoodDeedComment(goodDeedId: ID, commentText: String!): GoodDeed
     addReply(commentId: ID!, replyBody: String!): Comment
     joinEvent(eventId: ID!): Event
     leaveEvent(eventId: ID!): Event

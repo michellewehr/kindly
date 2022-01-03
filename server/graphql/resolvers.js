@@ -212,7 +212,7 @@ const resolvers = {
     },
 
     // add comment to event or a good deed
-    addComment: async (parent, args, context) => {
+    addEventComment: async (parent, args, context) => {
       console.log(args.eventId);
       console.log(args.commentText);
       console.log(context.user);
@@ -226,31 +226,50 @@ const resolvers = {
         // const params = args.eventId ? { args.eventId, args.commentText } : { args.goodDeedId, args.commentText };
 
         // if params are event-oriented, update the event, otherwise update the good deed
-        if (args.eventId) {
-          const updatedEvent = await Event.findByIdAndUpdate(
-            { _id: args.eventId },
-            { $push: { comments: comment } },
-            { new: true }
-          )
-            .populate("comments")
-            .populate({ path: "comments", populate: "author" });
-          return updatedEvent;
-        } else if (args.goodDeedId) {
-          const updatedGoodDeed = await GoodDeed.findByIdAndUpdate(
-            { _id: args.goodDeedId },
-            { $push: { comments: comment } },
-            { new: true }
-          ).populate("helper");
-          return updatedGoodDeed.populate({
-            path: "comments",
-            populate: "author",
-          });
-        } else {
-          throw new Error("Something went wrong!");
-        }
+        const updatedEvent = await Event.findByIdAndUpdate(
+          { _id: args.eventId },
+          { $push: { comments: comment } },
+          { new: true }
+        )
+          .populate("host")
+          .populate("attendees")
+          .populate("comments")
+          .populate({ path: "comments", populate: "author" })
+          .select("-__v");
+        return updatedEvent;
       }
       throw new AuthenticationError("You need to be logged in!");
     },
+
+    addGoodDeedComment: async (parent, args, context) => {
+      console.log(args.eventId);
+      console.log(args.commentText);
+      console.log(context.user);
+      if (context.user) {
+        const comment = await Comment.create({
+          ...args,
+          author: context.user._id,
+        });
+        console.log(comment);
+        // check and set params for either event or good deed
+        // const params = args.eventId ? { args.eventId, args.commentText } : { args.goodDeedId, args.commentText };
+
+        // if params are event-oriented, update the event, otherwise update the good deed
+        const updatedGoodDeed = await GoodDeed.findByIdAndUpdate(
+          { _id: args.goodDeedId },
+          { $push: { comments: comment } },
+          { new: true }
+        )
+          .populate("host")
+          .populate("helper")
+          .populate("comments")
+          .populate({ path: "comments", populate: "author" })
+          .select("-__v");
+        return updatedGoodDeed;
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
+
     //add reply to comment
     addReply: async (parent, { commentId, replyBody }, context) => {
       console.log(context.user);
