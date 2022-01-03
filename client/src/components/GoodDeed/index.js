@@ -150,7 +150,7 @@ export default function GoodDeed({ goodDeedData, me }) {
   return (
     <div className="w-full goodDeed">
       <div className="flex flex-row flex-wrap w-full p-3 mt-2 antialiased bg-white rounded-lg shadow-lg">
-        <div className="relative flex flex-row flex-wrap w-full px-3 md:w-2/3">
+        <div className="relative flex flex-row flex-wrap w-full px-3">
           <div className="relative w-full pt-3 font-semibold text-gray-700 md:pt-0">
             <div className="flex flex-row pb-1 text-2xl leading-tight text-amber-500">
               <Link to={`/gooddeed/${goodDeed._id}`}>{goodDeed.title}</Link>
@@ -197,8 +197,8 @@ export default function GoodDeed({ goodDeedData, me }) {
 
             <div>
               {Auth.loggedIn() &&
-              !viewComments &&
-              goodDeed.comments.length >= 1 ? (
+                !viewComments &&
+                goodDeed.comments.length >= 1 ? (
                 <button
                   onClick={() => {
                     setViewComments(true);
