@@ -16,7 +16,6 @@ import {
 // import { QUERY_ME } from "../../utils/queries";
 import { useMutation } from "@apollo/client";
 import { checkLikesCount } from "../../utils/likesCountFormatter";
-import { QUERY_EVENTS } from "../../utils/queries";
 
 export default function EventCard({ event, me }) {
   const [viewComments, setViewComments] = useState(false);
@@ -35,7 +34,7 @@ export default function EventCard({ event, me }) {
   const attendees = event.attendees;
 
   //declare array to get all attendees and host ids
-  const userArr = [hostId];
+  const userArr = [hostId, me._id];
   //push all attendee ids to that array with host id already in it
   for (let i = 0; i < event.verify.length; i++) {
     userArr.push(event.verify[i]._id);
@@ -63,13 +62,6 @@ export default function EventCard({ event, me }) {
     }
   }
 
-  async function nowAddPoints() {
-    console.log(checkUserVerify(), "check user verify");
-    if (checkUserVerify() && isVerified()) {
-      addKindlyPoints();
-    }
-  }
-
   function butt() {
     if (event.verify.length > attendees.length / 2) {
       return true;
@@ -78,19 +70,11 @@ export default function EventCard({ event, me }) {
   }
 
   async function isVerified() {
-    console.log(butt());
+    if (butt()) {
+      addKindlyPoints();
+    }
     // if (event.verify.length > attendees.length / 2) {
 
-    const arrUsersVerified = [];
-    for (let i = 0; i < event.verify.length; i++) {
-      arrUsersVerified.push(event.verify[i].user._id);
-    }
-    if (arrUsersVerified.includes(me._id)) {
-      console.log("i verified");
-      //try and add points
-      console.log(true);
-    }
-    console.log(false);
     //   return true;
     // }
     // return false;
@@ -273,7 +257,7 @@ export default function EventCard({ event, me }) {
             <div className="flex flex-row pb-1 text-2xl leading-tight text-amber-500">
               <Link to={`/event/${event._id}`}>{event.title}</Link>
               {/* verified check start */}
-              {/* {!isVerified() && (
+              {butt() && (
                 <div className="inline-block group">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -291,7 +275,7 @@ export default function EventCard({ event, me }) {
                     Event Verified
                   </p>
                 </div>
-              )} */}
+              )}
               {/* verified check end */}
             </div>
             <div className="top-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
