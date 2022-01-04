@@ -14,7 +14,7 @@ export default function Nav() {
     <div>
       <nav className="flex items-center justify-between flex-wrap bg-sky-100	 p-6">
         <div className="flex items-center flex-shrink-0 text-white mr-6">
-          <NavLink to="home">
+          <NavLink to="/">
             <img
               className="fill-current h-18 w-10 mr-2"
               width="54"
