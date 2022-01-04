@@ -69,7 +69,8 @@ export default function EventCard({ event, me }) {
     return false;
   }
 
-  async function isVerified() {
+  function isVerified() {
+    console.log(butt(), "butt");
     if (butt()) {
       addKindlyPoints();
     }
@@ -100,7 +101,8 @@ export default function EventCard({ event, me }) {
     } catch (e) {
       console.error(e);
     }
-    await isVerified();
+    isVerified();
+    console.log("running is verified");
   };
 
   const onLike = async (e) => {
