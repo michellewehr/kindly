@@ -282,7 +282,6 @@ export const ADD_EVENT_COMMENT = gql`
       }
       image
       likes
-      verifyNumber
     }
   }
 `;
