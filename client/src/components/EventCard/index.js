@@ -27,6 +27,13 @@ export default function EventCard({ event, me }) {
   const [increaseScore] = useMutation(INCREASE_KINDLY_SCORE);
   const [addVerification, { loading, error }] = useMutation(ADD_VERIFICATION);
   const [addLike] = useMutation(ADD_EVENT_LIKE);
+  const [verifyClicked, setVerifyClicked] = useState(false);
+
+  //declare variable to hold event.verifyNumber and add to state
+  // const initialStatePoints = event.verifyNumber;
+  // const [initialStatePoints, increaseStatePoints] = useState(
+  //   event.verifyNumber
+  // );
 
   //declare state of event false verified and run updateVerify to update to true when conditions are met
   // const [isVerified, updateVerify] = useState(false);
@@ -41,17 +48,29 @@ export default function EventCard({ event, me }) {
 
   //when event is verified-- add points to all attendees/ host kindly score
   // useEffect(() => {
-  //   addKindlyPoints()
-  // }, [isVerified])
+  //   if (initialStatePoints > attendees.length / 2) {
+  //     addKindlyPoints();
+  //   }
+  // }, [event.verifyNumber]);
+
+  //declare arraay to get all attendees and host ids
+  const userArr = [hostId];
+  //push all attendee ids to that array with host id already in it
+  for (let i = 0; i < attendees.length; i++) {
+    userArr.push(attendees[i]._id);
+  }
+
+  console.log(attendees.length, "attendees length");
+  console.log(userArr, "user arr");
 
   async function addKindlyPoints() {
     try {
-      await increaseScore();
+      await increaseScore({ variables: { arr: userArr } });
+      window.alert("adding kindly points");
     } catch (e) {
       console.error(e);
     }
   }
-  //
 
   // check if date of event is behind the current date and return boolean
   const eventPassed = () => {
@@ -67,9 +86,13 @@ export default function EventCard({ event, me }) {
     const eventId = event._id;
     try {
       await addVerification({ variables: { eventId } });
+      if (event.verifyNumber >= attendees.length / 2) {
+        addKindlyPoints();
+      }
     } catch (e) {
       console.error(e);
     }
+    setVerifyClicked(true);
   };
 
   const onLike = async (e) => {
@@ -125,7 +148,7 @@ export default function EventCard({ event, me }) {
             Cancel Event
           </button>
           {/* if verify number in db more than half attendees, event verified */}
-          {isHalfOfAttendees() && eventPassed() && (
+          {isHalfOfAttendees() && eventPassed() && !verifyClicked && (
             <button
               onClick={onVerify}
               className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
@@ -150,7 +173,7 @@ export default function EventCard({ event, me }) {
             >
               Leave Event
             </button>
-            {isHalfOfAttendees && eventPassed && (
+            {isHalfOfAttendees && eventPassed && !verifyClicked && (
               <button
                 onClick={onVerify}
                 className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
@@ -289,8 +312,8 @@ export default function EventCard({ event, me }) {
             {/* button div for viewing comments/ hiding comments */}
             <div>
               {Auth.loggedIn() &&
-                !viewComments &&
-                event.comments.length >= 1 ? (
+              !viewComments &&
+              event.comments.length >= 1 ? (
                 <button
                   onClick={() => {
                     setViewComments(true);

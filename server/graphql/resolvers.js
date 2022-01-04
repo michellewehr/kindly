@@ -487,15 +487,26 @@ const resolvers = {
     },
     increaseKindlyScore: async (parent, args, context) => {
       if (context.user) {
-        const updatedUser = await User.findByIdAndUpdate(
-          { _id: context.user._id },
+        await User.updateMany(
+          { _id: { $in: args.arr } },
           { $inc: { kindlyScore: +10 } },
           { new: true }
         );
-        return updatedUser;
+        return User.find({});
       }
       throw new AuthenticationError("log in!");
     },
+    // increaseKindlyScore: async (parent, args, context) => {
+    //   if (context.user) {
+    //     await User.updateMany(
+    //       { _id: { $in: args.arr } },
+    //       { $inc: { kindlyScore: +10 } },
+    //       { new: true }
+    //     );
+    //     return User.find({});
+    //   }
+    //   throw new AuthenticationError(“need to log in!“);
+    // },
   },
 };
 

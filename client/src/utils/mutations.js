@@ -448,21 +448,12 @@ export const ADD_VERIFICATION = gql`
 `;
 
 export const INCREASE_KINDLY_SCORE = gql`
-  mutation IncreaseKindlyScore {
-    increaseKindlyScore {
+  mutation increaseKindlyScore($arr: [ID]) {
+    increaseKindlyScore(arr: $arr) {
       _id
-      kindlyScore
-      goodDeeds {
-        _id
-      }
-      events {
-        _id
-      }
-      profilePicture
-      location
-      email
-      lastName
       firstName
+      lastName
+      kindlyScore
     }
   }
 `;
