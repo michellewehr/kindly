@@ -408,41 +408,60 @@ export const REMOVE_COMMENT = gql`
   }
 `;
 
+// export const ADD_VERIFICATION = gql`
+//   mutation Mutation($eventId: ID!) {
+//     addToVerifyNumber(eventId: $eventId) {
+//       _id
+//       host {
+//         _id
+//       }
+//       title
+//       attendees {
+//         _id
+//       }
+//       location
+//       description
+//       date
+//       startTime
+//       endTime
+//       url
+//       image
+//       comments {
+//         _id
+//         author {
+//           _id
+//         }
+//         commentText
+//         likes
+//         replies {
+//           _id
+//           author {
+//             _id
+//           }
+//           replyBody
+//         }
+//       }
+//       likes
+//       verifyNumber
+//     }
+//   }
+// `;
+
 export const ADD_VERIFICATION = gql`
-  mutation Mutation($eventId: ID!) {
+  mutation addToVerifyNumber($eventId: ID!) {
     addToVerifyNumber(eventId: $eventId) {
       _id
-      host {
-        _id
-      }
       title
-      attendees {
+      verify {
         _id
-      }
-      location
-      description
-      date
-      startTime
-      endTime
-      url
-      image
-      comments {
-        _id
-        author {
+        event {
           _id
         }
-        commentText
-        likes
-        replies {
+        verifyNumber
+        user {
           _id
-          author {
-            _id
-          }
-          replyBody
         }
       }
-      likes
-      verifyNumber
     }
   }
 `;

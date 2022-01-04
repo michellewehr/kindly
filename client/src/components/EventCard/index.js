@@ -2,7 +2,7 @@
 import CommentForm from "../CommentForm";
 import { Link } from "react-router-dom";
 import CommentsList from "../CommentsList";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Auth from "../../utils/auth";
 import {
   CANCEL_EVENT,
@@ -27,7 +27,6 @@ export default function EventCard({ event, me }) {
   const [increaseScore] = useMutation(INCREASE_KINDLY_SCORE);
   const [addVerification, { loading, error }] = useMutation(ADD_VERIFICATION);
   const [addLike] = useMutation(ADD_EVENT_LIKE);
-  const [verifyClicked, setVerifyClicked] = useState(false);
 
   //declare variable to hold event.verifyNumber and add to state
   // const initialStatePoints = event.verifyNumber;
@@ -37,7 +36,6 @@ export default function EventCard({ event, me }) {
 
   //declare state of event false verified and run updateVerify to update to true when conditions are met
   // const [isVerified, updateVerify] = useState(false);
-  console.log(`/event/${event._id}`, "eventId");
   const hostId = event.host._id;
   const attendees = event.attendees;
 
@@ -53,15 +51,19 @@ export default function EventCard({ event, me }) {
   //   }
   // }, [event.verifyNumber]);
 
-  //declare arraay to get all attendees and host ids
+  //declare array to get all attendees and host ids
   const userArr = [hostId];
   //push all attendee ids to that array with host id already in it
-  for (let i = 0; i < attendees.length; i++) {
-    userArr.push(attendees[i]._id);
+  for (let i = 0; i < event.verify.length; i++) {
+    userArr.push(event.verify[i]._id);
   }
 
-  console.log(attendees.length, "attendees length");
-  console.log(userArr, "user arr");
+  function isVerified() {
+    if (event.verify.length > attendees.length / 2) {
+      return true;
+    }
+    return false;
+  }
 
   async function addKindlyPoints() {
     try {
@@ -72,27 +74,50 @@ export default function EventCard({ event, me }) {
     }
   }
 
+  console.log(event.verify, "verify");
+  console.log(event.verify.length, "length number");
+
+  function checkUserVerify() {
+    const arrUsersVerified = [];
+    for (let i = 0; i < event.verify.length; i++) {
+      arrUsersVerified.push(event.verify[i].user._id);
+    }
+    if (arrUsersVerified.includes(me._id)) {
+      console.log("i verified");
+      //try and add points
+      return true;
+    }
+    return false;
+  }
+
   // check if date of event is behind the current date and return boolean
   const eventPassed = () => {
     return Date.now() > event.date;
   };
   // check if more than half of attendees have verified event
   const isHalfOfAttendees = () => {
-    return event.verifyNumber < attendees.length / 2;
+    return event.verify.length < attendees.length / 2;
   };
+
+  function actuallyAddPoints(eventId) {
+    console.log(eventId);
+    console.log(isVerified(), "is verified");
+    console.log(checkUserVerify(), "user verify");
+  }
 
   const onVerify = async (e) => {
     e.preventDefault();
     const eventId = event._id;
     try {
       await addVerification({ variables: { eventId } });
-      if (event.verifyNumber >= attendees.length / 2) {
-        addKindlyPoints();
-      }
     } catch (e) {
       console.error(e);
     }
-    setVerifyClicked(true);
+    try {
+      await actuallyAddPoints(eventId);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const onLike = async (e) => {
@@ -114,7 +139,6 @@ export default function EventCard({ event, me }) {
     } catch (e) {
       console.error(e);
     }
-    addKindlyPoints();
   };
 
   const onLeave = async (e) => {
@@ -148,7 +172,7 @@ export default function EventCard({ event, me }) {
             Cancel Event
           </button>
           {/* if verify number in db more than half attendees, event verified */}
-          {isHalfOfAttendees() && eventPassed() && !verifyClicked && (
+          {isHalfOfAttendees() && eventPassed() && !checkUserVerify() && (
             <button
               onClick={onVerify}
               className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
@@ -163,7 +187,6 @@ export default function EventCard({ event, me }) {
     // check if user is attendee
     for (let i = 0; i < attendees.length; i++) {
       if (attendees[i]._id === me._id) {
-        // console.log('match!');
         return (
           <div>
             <button
@@ -173,7 +196,7 @@ export default function EventCard({ event, me }) {
             >
               Leave Event
             </button>
-            {isHalfOfAttendees && eventPassed && !verifyClicked && (
+            {isHalfOfAttendees && eventPassed && !checkUserVerify() && (
               <button
                 onClick={onVerify}
                 className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
@@ -205,6 +228,9 @@ export default function EventCard({ event, me }) {
   //     </div>
   //   )
   // }
+  function finallyAddPoints() {
+    addKindlyPoints();
+  }
 
   return (
     <div className="eventCard">
@@ -251,26 +277,25 @@ export default function EventCard({ event, me }) {
             <div className="flex flex-row pb-1 text-2xl leading-tight text-amber-500">
               <Link to={`/event/${event._id}`}>{event.title}</Link>
               {/* verified check start */}
-              {attendees.length > 1 &&
-                event.verifyNumber >= attendees.length / 2 && (
-                  <div className="inline-block group">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="inline-block w-5 h-5 mx-4"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    <p className="invisible inline-block text-sm group-hover:visible">
-                      Event Verified
-                    </p>
-                  </div>
-                )}
+              {isVerified() && (
+                <div className="inline-block group">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="inline-block w-5 h-5 mx-4"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <p className="invisible inline-block text-sm group-hover:visible">
+                    Event Verified
+                  </p>
+                </div>
+              )}
               {/* verified check end */}
             </div>
             <div className="top-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">

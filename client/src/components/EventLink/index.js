@@ -79,7 +79,7 @@ export default function EventLink() {
                           <Link to={`/event/${event._id}`}>{event.title}</Link>
                           {/* verified check start */}
                           {event.attendees.length > 1 &&
-                            event.verifyNumber >=
+                            event.verify.length >=
                               event.attendees.length / 2 && (
                               <div className="inline-block group">
                                 <svg

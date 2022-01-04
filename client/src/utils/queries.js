@@ -135,7 +135,16 @@ export const QUERY_USER = gql`
           _id
         }
         likes
-        verifyNumber
+        verify {
+          _id
+          user {
+            _id
+          }
+          event {
+            _id
+          }
+          verifyNumber
+        }
       }
       goodDeeds {
         _id
@@ -181,7 +190,16 @@ export const QUERY_EVENTS = gql`
       description
       date
       startTime
-      verifyNumber
+      verify {
+        _id
+        user {
+          _id
+        }
+        event {
+          _id
+        }
+        verifyNumber
+      }
       endTime
       url
       image
@@ -248,7 +266,16 @@ export const QUERY_EVENT = gql`
         createdAt
       }
       likes
-      verifyNumber
+      verify {
+        _id
+        user {
+          _id
+        }
+        event {
+          _id
+        }
+        verifyNumber
+      }
     }
   }
 `;
