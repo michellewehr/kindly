@@ -20,7 +20,7 @@ export default function Sidebar() {
 
   return (
     <div className="sidebar">
-      <div className="flex flex-col w-full bg-cyan-700 rounded-lg py-6">
+      <div className="flex flex-col w-96 bg-cyan-700 rounded-lg py-6">
         {/* div for the profile picture and name */}
         <div className="flex content-center ">
           <div className="w-2/3 py-4 mx-auto">
