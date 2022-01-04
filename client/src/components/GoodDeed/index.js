@@ -76,7 +76,7 @@ export default function GoodDeed({ goodDeedData, me }) {
         <div>
           <button
             onClick={onCancel}
-            className="absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
+            className="md:absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
           >
             Cancel Good Deed
           </button>
@@ -97,7 +97,7 @@ export default function GoodDeed({ goodDeedData, me }) {
             <button
               className="pr-3"
               onClick={onLeave}
-              className="absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
+              className="md:absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
             >
               Leave Good Deed
             </button>
@@ -108,7 +108,7 @@ export default function GoodDeed({ goodDeedData, me }) {
         <div>
           <h4
             className="pr-3"
-            className="absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
+            className="md:absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
           >
             {helperFirstName} {helperLastName} is already helping!
           </h4>
@@ -120,7 +120,7 @@ export default function GoodDeed({ goodDeedData, me }) {
       <button
         className="pr-3"
         onClick={onJoin}
-        className="absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
+        className="md:absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
       >
         Be Kind & Help {goodDeed.host.firstName} {goodDeed.host.lastName}
       </button>
