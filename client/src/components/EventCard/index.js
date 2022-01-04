@@ -11,10 +11,12 @@ import {
   ADD_EVENT_LIKE,
   ADD_VERIFICATION,
   INCREASE_KINDLY_SCORE,
+  SET_VERIFY,
 } from "../../utils/mutations";
 // import { QUERY_ME } from "../../utils/queries";
 import { useMutation } from "@apollo/client";
 import { checkLikesCount } from "../../utils/likesCountFormatter";
+import { QUERY_EVENTS } from "../../utils/queries";
 
 export default function EventCard({ event, me }) {
   const [viewComments, setViewComments] = useState(false);
@@ -25,31 +27,12 @@ export default function EventCard({ event, me }) {
   const [isLiked, setLiked] = useState(false);
   // const [count, setCount] = useState(0);
   const [increaseScore] = useMutation(INCREASE_KINDLY_SCORE);
-  const [addVerification, { loading, error }] = useMutation(ADD_VERIFICATION);
+  // const [addVerification, { loading, error }] = useMutation(ADD_VERIFICATION);
   const [addLike] = useMutation(ADD_EVENT_LIKE);
+  const [addVerification] = useMutation(ADD_VERIFICATION);
 
-  //declare variable to hold event.verifyNumber and add to state
-  // const initialStatePoints = event.verifyNumber;
-  // const [initialStatePoints, increaseStatePoints] = useState(
-  //   event.verifyNumber
-  // );
-
-  //declare state of event false verified and run updateVerify to update to true when conditions are met
-  // const [isVerified, updateVerify] = useState(false);
   const hostId = event.host._id;
   const attendees = event.attendees;
-
-  //if event is verified over half the length of attendees-- set isVerified to true
-  // if(event.verifyNumber >= attendees.length /2) {
-  //   updateVerify(true);
-  // }
-
-  //when event is verified-- add points to all attendees/ host kindly score
-  // useEffect(() => {
-  //   if (initialStatePoints > attendees.length / 2) {
-  //     addKindlyPoints();
-  //   }
-  // }, [event.verifyNumber]);
 
   //declare array to get all attendees and host ids
   const userArr = [hostId];
@@ -57,25 +40,6 @@ export default function EventCard({ event, me }) {
   for (let i = 0; i < event.verify.length; i++) {
     userArr.push(event.verify[i]._id);
   }
-
-  function isVerified() {
-    if (event.verify.length > attendees.length / 2) {
-      return true;
-    }
-    return false;
-  }
-
-  async function addKindlyPoints() {
-    try {
-      await increaseScore({ variables: { arr: userArr } });
-      window.alert("adding kindly points");
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
-  console.log(event.verify, "verify");
-  console.log(event.verify.length, "length number");
 
   function checkUserVerify() {
     const arrUsersVerified = [];
@@ -90,6 +54,48 @@ export default function EventCard({ event, me }) {
     return false;
   }
 
+  async function addKindlyPoints() {
+    try {
+      await increaseScore({ variables: { arr: userArr } });
+      window.alert("adding kindly points");
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async function nowAddPoints() {
+    console.log(checkUserVerify(), "check user verify");
+    if (checkUserVerify() && isVerified()) {
+      addKindlyPoints();
+    }
+  }
+
+  function butt() {
+    if (event.verify.length > attendees.length / 2) {
+      return true;
+    }
+    return false;
+  }
+
+  async function isVerified() {
+    console.log(butt());
+    // if (event.verify.length > attendees.length / 2) {
+
+    const arrUsersVerified = [];
+    for (let i = 0; i < event.verify.length; i++) {
+      arrUsersVerified.push(event.verify[i].user._id);
+    }
+    if (arrUsersVerified.includes(me._id)) {
+      console.log("i verified");
+      //try and add points
+      console.log(true);
+    }
+    console.log(false);
+    //   return true;
+    // }
+    // return false;
+  }
+
   // check if date of event is behind the current date and return boolean
   const eventPassed = () => {
     return Date.now() > event.date;
@@ -99,13 +105,10 @@ export default function EventCard({ event, me }) {
     return event.verify.length < attendees.length / 2;
   };
 
-  function actuallyAddPoints(eventId) {
-    console.log(eventId);
-    console.log(isVerified(), "is verified");
-    console.log(checkUserVerify(), "user verify");
-  }
+  //trying this
 
   const onVerify = async (e) => {
+    console.log(event.verify.length, "before");
     e.preventDefault();
     const eventId = event._id;
     try {
@@ -113,11 +116,7 @@ export default function EventCard({ event, me }) {
     } catch (e) {
       console.error(e);
     }
-    try {
-      await actuallyAddPoints(eventId);
-    } catch (e) {
-      console.error(e);
-    }
+    await isVerified();
   };
 
   const onLike = async (e) => {
@@ -228,9 +227,6 @@ export default function EventCard({ event, me }) {
   //     </div>
   //   )
   // }
-  function finallyAddPoints() {
-    addKindlyPoints();
-  }
 
   return (
     <div className="eventCard">
@@ -277,7 +273,7 @@ export default function EventCard({ event, me }) {
             <div className="flex flex-row pb-1 text-2xl leading-tight text-amber-500">
               <Link to={`/event/${event._id}`}>{event.title}</Link>
               {/* verified check start */}
-              {isVerified() && (
+              {/* {!isVerified() && (
                 <div className="inline-block group">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -295,7 +291,7 @@ export default function EventCard({ event, me }) {
                     Event Verified
                   </p>
                 </div>
-              )}
+              )} */}
               {/* verified check end */}
             </div>
             <div className="top-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">

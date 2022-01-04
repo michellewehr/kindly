@@ -512,17 +512,16 @@ const resolvers = {
       }
       throw new AuthenticationError("log in!");
     },
-    // increaseKindlyScore: async (parent, args, context) => {
-    //   if (context.user) {
-    //     await User.updateMany(
-    //       { _id: { $in: args.arr } },
-    //       { $inc: { kindlyScore: +10 } },
-    //       { new: true }
-    //     );
-    //     return User.find({});
-    //   }
-    //   throw new AuthenticationError(“need to log in!“);
-    // },
+    setVerify: async (parent, args, context) => {
+      if (context.user) {
+        return await Event.findByIdAndUpdate(
+          { _id: args.eventId },
+          { $set: { isVerified: true } },
+          { new: true }
+        ).populate("verify");
+      }
+      throw new AuthenticationError("log in!");
+    },
   },
 };
 

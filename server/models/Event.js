@@ -67,6 +67,10 @@ const eventSchema = new Schema(
         ref: "Verify",
       },
     ],
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     toJSON: {

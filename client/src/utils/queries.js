@@ -189,6 +189,7 @@ export const QUERY_EVENTS = gql`
       location
       description
       date
+      isVerified
       startTime
       verify {
         _id
@@ -238,6 +239,7 @@ export const QUERY_EVENT = gql`
         lastName
       }
       location
+      isVerified
       description
       date
       startTime

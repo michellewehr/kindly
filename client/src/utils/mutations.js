@@ -452,6 +452,7 @@ export const ADD_VERIFICATION = gql`
     addToVerifyNumber(eventId: $eventId) {
       _id
       title
+      isVerified
       verify {
         _id
         event {
@@ -473,6 +474,27 @@ export const INCREASE_KINDLY_SCORE = gql`
       firstName
       lastName
       kindlyScore
+    }
+  }
+`;
+
+export const SET_VERIFY = gql`
+  mutation SetVerify($eventId: ID!) {
+    setVerify(eventId: $eventId) {
+      _id
+      title
+      isVerified
+      _id
+      verify {
+        _id
+        event {
+          _id
+        }
+        verifyNumber
+        user {
+          _id
+        }
+      }
     }
   }
 `;
