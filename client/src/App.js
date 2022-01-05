@@ -11,12 +11,10 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Nav from "./components/Nav";
-import store from "./utils/store";
 import Profile from "./pages/Profile";
 import Footer from "./components/Footer";
 import UserProfile from "./pages/UserProfile";
 import EventLink from "./components/EventLink";
-import { Provider } from "react-redux";
 import GoodDeedLink from "./components/GoodDeedLink";
 
 const httpLink = createHttpLink({
@@ -35,7 +33,6 @@ const authLink = setContext((_, { headers }) => {
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  // uri: 'http://localhost:3001/graphql',
   cache: new InMemoryCache(),
 });
 
@@ -44,21 +41,19 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div className="relative h-100">
-          <Provider store={store}>
-            <Nav />
-            <div className="min-h-full">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route exact path="/login" element={<Login />} />
-                <Route exact path="/signup" element={<Signup />} />
-                <Route exact path="/myprofile" element={<Profile />} />
-                <Route exact path="/profile/:id" element={<UserProfile />} />
-                <Route exact path="/event/:id" element={<EventLink />} />
-                <Route exact path="/gooddeed/:id" element={<GoodDeedLink />} />
-              </Routes>
-            </div>
-            <Footer />
-          </Provider>
+          <Nav />
+          <div className="min-h-full">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route exact path="/login" element={<Login />} />
+              <Route exact path="/signup" element={<Signup />} />
+              <Route exact path="/myprofile" element={<Profile />} />
+              <Route exact path="/profile/:id" element={<UserProfile />} />
+              <Route exact path="/event/:id" element={<EventLink />} />
+              <Route exact path="/gooddeed/:id" element={<GoodDeedLink />} />
+            </Routes>
+          </div>
+          <Footer />
         </div>
       </Router>
     </ApolloProvider>

@@ -9,7 +9,6 @@ db.once("open", async () => {
   await GoodDeed.deleteMany({});
   await Comment.deleteMany({});
 
-  // // create user data
   const userData = [];
 
   for (let i = 0; i < 10; i += 1) {
