@@ -1,15 +1,15 @@
-const faker = require('faker');
+const faker = require("faker");
 
-const db = require('../config/connection');
-const { User, Event, GoodDeed, Comment } = require('../models');
+const db = require("../config/connection");
+const { User, Event, GoodDeed, Comment } = require("../models");
 
-db.once('open', async () => {
+db.once("open", async () => {
   await User.deleteMany({});
   await Event.deleteMany({});
   await GoodDeed.deleteMany({});
   await Comment.deleteMany({});
 
-  // create user data
+  // // create user data
   const userData = [];
 
   for (let i = 0; i < 10; i += 1) {
@@ -19,10 +19,19 @@ db.once('open', async () => {
     const password = faker.internet.password();
     const username = faker.internet.userName();
     const location = faker.address.city();
-    const points = faker.datatype.number(100)
+    const points = faker.datatype.number(100);
     const profilePicture = faker.image.image();
 
-    userData.push({ firstName, lastName, email, password, username, location, points, profilePicture });
+    userData.push({
+      firstName,
+      lastName,
+      email,
+      password,
+      username,
+      location,
+      points,
+      profilePicture,
+    });
   }
 
   await User.collection.insertMany(userData);
@@ -39,7 +48,10 @@ db.once('open', async () => {
       connectionId = userData[randomUserIndex];
     }
 
-    await User.updateOne({ _id: userId }, { $addToSet: { connections: connectionId } });
+    await User.updateOne(
+      { _id: userId },
+      { $addToSet: { connections: connectionId } }
+    );
   }
 
   //create events
@@ -66,18 +78,28 @@ db.once('open', async () => {
     const location = faker.address.city();
     const description = faker.lorem.words(Math.round(Math.random() * 30) + 1);
     const date = faker.date.soon();
-    const startTime = '12:00';
-    const endTime = '2:00';
+    const startTime = "12:00";
+    const endTime = "2:00";
     const likes = faker.datatype.number(20);
     const url = faker.internet.url();
     const image = faker.image.image();
 
-    eventData.push({ host, title, attendees, location, description, date, startTime, endTime, likes, url, image });
-
+    eventData.push({
+      host,
+      title,
+      attendees,
+      location,
+      description,
+      date,
+      startTime,
+      endTime,
+      likes,
+      url,
+      image,
+    });
   }
 
   await Event.collection.insertMany(eventData);
-
 
   for (let i = 0; i < eventData.length; i++) {
     const eventId = eventData[i]._id;
@@ -90,7 +112,10 @@ db.once('open', async () => {
     const att = eventData[i].attendees;
     for (let i = 0; i < att.length; i++) {
       const userAtt = att[i];
-      await User.updateOne({ _id: userAtt }, { $addToSet: { events: eventId } })
+      await User.updateOne(
+        { _id: userAtt },
+        { $addToSet: { events: eventId } }
+      );
     }
   }
 
@@ -117,24 +142,37 @@ db.once('open', async () => {
     const deedText = faker.lorem.words(Math.round(Math.random() * 30) + 1);
     const likes = faker.datatype.number(20);
 
-    goodDeedData.push({ host, title, helpers, location, deedText, likes, date });
+    goodDeedData.push({
+      host,
+      title,
+      helpers,
+      location,
+      deedText,
+      likes,
+      date,
+    });
   }
 
   await GoodDeed.collection.insertMany(goodDeedData);
-
 
   for (let i = 0; i < goodDeedData.length; i++) {
     const goodDeedId = goodDeedData[i]._id;
     const hostId = goodDeedData[i].host;
     //add good deeds to user host
 
-    await User.updateOne({ _id: hostId }, { $addToSet: { events: goodDeedId } });
+    await User.updateOne(
+      { _id: hostId },
+      { $addToSet: { events: goodDeedId } }
+    );
 
     //add good deed to helper user
     const att = goodDeedData[i].helpers;
     for (let i = 0; i < att.length; i++) {
       const userHelper = att[i];
-      await User.updateOne({ _id: userHelper }, { $addToSet: { goodDeeds: goodDeedId } })
+      await User.updateOne(
+        { _id: userHelper },
+        { $addToSet: { goodDeeds: goodDeedId } }
+      );
     }
   }
 
@@ -151,13 +189,17 @@ db.once('open', async () => {
     const randomIndexEvents = Math.floor(Math.random() * eventData.length);
     const eventId = eventData[randomIndexEvents]._id;
 
-    const createdComment = await Comment.create({ commentText, username, likes });
+    const createdComment = await Comment.create({
+      commentText,
+      username,
+      likes,
+    });
 
     //add to event model
     await Event.updateOne(
       { _id: eventId },
       { $push: { comments: createdComment._id } }
-    )
+    );
     commentData.push(createdComment);
   }
   // TODO: seed comments for good deeds
@@ -171,12 +213,16 @@ db.once('open', async () => {
     const randomIndexDeeds = Math.floor(Math.random() * goodDeedData.length);
 
     const goodDeedId = goodDeedData[randomIndexDeeds]._id;
-    const createDeedComments = await Comment.create({ commentText, username, likes });
+    const createDeedComments = await Comment.create({
+      commentText,
+      username,
+      likes,
+    });
 
     await GoodDeed.updateOne(
       { _id: goodDeedId },
       { $push: { comments: createDeedComments._id } }
-    )
+    );
 
     commentData.push(createDeedComments);
   }
@@ -198,6 +244,6 @@ db.once('open', async () => {
     );
   }
 
-  console.log('all done!');
+  console.log("all done!");
   process.exit(0);
 });

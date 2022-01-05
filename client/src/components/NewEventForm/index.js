@@ -1,10 +1,10 @@
 import { CREATE_EVENT } from "../../utils/mutations";
 import { QUERY_EVENTS, QUERY_ME } from "../../utils/queries";
-import { useState } from 'react';
-import { useMutation } from '@apollo/client'
+import { useState } from "react";
+import { useMutation } from "@apollo/client";
+// import { SuccessModal } from "../SuccessModal";
 
-
-export default function NewEvent({onEventSubmit}) {
+export default function NewEvent({ onEventSubmit }) {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -37,7 +37,6 @@ export default function NewEvent({onEventSubmit}) {
   });
   // update state based on form input changes
   const handleChange = (e) => {
-
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -45,18 +44,19 @@ export default function NewEvent({onEventSubmit}) {
     e.preventDefault();
     try {
       await addEvent({
-      variables: { ...formData } });
+        variables: { ...formData },
+      });
       // console.log(data);
-    setFormData({
-      title: "",
-      description: "",
-      location: "",
-      date: "",
-      startTime: "",
-      endTime: "",
-      url: "",
-      image: "",
-    });
+      setFormData({
+        title: "",
+        description: "",
+        location: "",
+        date: "",
+        startTime: "",
+        endTime: "",
+        url: "",
+        image: "",
+      });
     } catch (e) {
       console.error(e);
     }
@@ -205,6 +205,9 @@ export default function NewEvent({onEventSubmit}) {
               className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
               id="grid-image"
               type="text"
+              defaultValue={
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwu0wWo1ihMgv3T-w1qYj0r9QY87E9iq4ZDA&usqp=CAU"
+              }
               placeholder=""
               name="image"
               value={formData.image}
@@ -222,5 +225,4 @@ export default function NewEvent({onEventSubmit}) {
       </form>
     </div>
   );
-};
-
+}

@@ -1,4 +1,4 @@
-const { User, Event, Comment, GoodDeed } = require("../models");
+const { User, Event, Comment, GoodDeed, Verify } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken, authMiddleware } = require("../utils/auth");
 
@@ -28,7 +28,8 @@ const resolvers = {
         .select("-__v -password")
         .populate("connections")
         .populate("events")
-        .populate("goodDeeds");
+        .populate("goodDeeds")
+        .populate({ path: "events", populate: "verify" });
     },
 
     // find user by id
@@ -52,6 +53,7 @@ const resolvers = {
         .populate("attendees")
         .populate("comments")
         .populate({ path: "comments", populate: "author" })
+        .populate("verify")
         .select("-__v");
     },
 
@@ -74,6 +76,7 @@ const resolvers = {
         .populate("attendees")
         .populate("comments")
         .populate({ path: "comments", populate: "author" })
+        .populate("verify")
         .select("-__v");
       return searchedEvent;
     },
@@ -476,23 +479,46 @@ const resolvers = {
 
     addToVerifyNumber: async (parent, args, context) => {
       if (context.user) {
+        const createdVerify = await Verify.create({
+          event: args.eventId,
+          user: context.user._id,
+          verifyNumber: 1,
+        });
+
         const updatedEvent = await Event.findByIdAndUpdate(
           { _id: args.eventId },
-          { $inc: { verifyNumber: +1 } },
+          {
+            $push: {
+              verify: createdVerify,
+            },
+          },
           { new: true }
-        );
+        ).populate("verify");
+        // .populate({ path: "verify", populate: "verifyNumber" })
+        // .populate({ path: "verify", populate: "user" });
+
         return updatedEvent;
       }
       throw new AuthenticationError("need logged in!");
     },
     increaseKindlyScore: async (parent, args, context) => {
       if (context.user) {
-        const updatedUser = await User.findByIdAndUpdate(
-          { _id: context.user._id },
+        await User.updateMany(
+          { _id: { $in: args.arr } },
           { $inc: { kindlyScore: +10 } },
           { new: true }
         );
-        return updatedUser;
+        return User.find({});
+      }
+      throw new AuthenticationError("log in!");
+    },
+    setVerify: async (parent, args, context) => {
+      if (context.user) {
+        return await Event.findByIdAndUpdate(
+          { _id: args.eventId },
+          { $set: { isVerified: true } },
+          { new: true }
+        ).populate("verify");
       }
       throw new AuthenticationError("log in!");
     },

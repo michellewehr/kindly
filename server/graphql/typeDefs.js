@@ -33,7 +33,8 @@ const typeDefs = gql`
     image: String
     comments: [Comment]
     likes: Int
-    verifyNumber: Int
+    verify: [Verify]
+    isVerified: Boolean
   }
 
   type GoodDeed {
@@ -63,6 +64,13 @@ const typeDefs = gql`
     author: User
     replyBody: String
     createdAt: String
+  }
+
+  type Verify {
+    _id: ID
+    event: Event
+    verifyNumber: Int
+    user: User
   }
 
   type Query {
@@ -115,7 +123,9 @@ const typeDefs = gql`
     addGoodDeedLike(goodDeedId: ID!): GoodDeed
     removeComment(commentId: ID!, eventId: ID, goodDeedId: ID): Event
     addToVerifyNumber(eventId: ID!): Event
-    increaseKindlyScore: User
+    increaseKindlyScore(arr: [ID]): [User]
+    setVerify(eventId: ID!): Event
   }
 `;
+
 module.exports = typeDefs;

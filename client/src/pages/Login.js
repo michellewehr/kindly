@@ -37,7 +37,7 @@ export default function Login() {
 
   return (
     <div>
-      <div className="w-screen h-screen bg-cover bg-no-repeat bg-[url('https://images.unsplash.com/photo-1593113616828-6f22bca04804?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80')]">
+      <div className="w-screen h-screen bg-cover bg-no-repeat bg-[url('https://images.unsplash.com/photo-1593113616828-6f22bca04804?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80')] grid place-content-center">
         <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700 mx-auto">
           <form className="space-y-6" action="#" onSubmit={handleFormSubmit}>
             <div className="text-xl font-medium text-gray-900 dark:text-white flex flex-row">
@@ -83,7 +83,7 @@ export default function Login() {
             </div>
             <button
               type="submit"
-              className="w-full text-black hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-sky-100 dark:hover:bg-sky-700"
+              className="w-full text-black hover:bg-blue-200 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-sky-100 dark:hover:bg-sky-700"
             >
               Log In
             </button>

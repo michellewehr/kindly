@@ -282,7 +282,6 @@ export const ADD_EVENT_COMMENT = gql`
       }
       image
       likes
-      verifyNumber
     }
   }
 `;
@@ -408,61 +407,93 @@ export const REMOVE_COMMENT = gql`
   }
 `;
 
+// export const ADD_VERIFICATION = gql`
+//   mutation Mutation($eventId: ID!) {
+//     addToVerifyNumber(eventId: $eventId) {
+//       _id
+//       host {
+//         _id
+//       }
+//       title
+//       attendees {
+//         _id
+//       }
+//       location
+//       description
+//       date
+//       startTime
+//       endTime
+//       url
+//       image
+//       comments {
+//         _id
+//         author {
+//           _id
+//         }
+//         commentText
+//         likes
+//         replies {
+//           _id
+//           author {
+//             _id
+//           }
+//           replyBody
+//         }
+//       }
+//       likes
+//       verifyNumber
+//     }
+//   }
+// `;
+
 export const ADD_VERIFICATION = gql`
-  mutation Mutation($eventId: ID!) {
+  mutation addToVerifyNumber($eventId: ID!) {
     addToVerifyNumber(eventId: $eventId) {
       _id
-      host {
-        _id
-      }
       title
-      attendees {
+      isVerified
+      verify {
         _id
-      }
-      location
-      description
-      date
-      startTime
-      endTime
-      url
-      image
-      comments {
-        _id
-        author {
+        event {
           _id
         }
-        commentText
-        likes
-        replies {
+        verifyNumber
+        user {
           _id
-          author {
-            _id
-          }
-          replyBody
         }
       }
-      likes
-      verifyNumber
     }
   }
 `;
 
 export const INCREASE_KINDLY_SCORE = gql`
-  mutation IncreaseKindlyScore {
-    increaseKindlyScore {
+  mutation increaseKindlyScore($arr: [ID]) {
+    increaseKindlyScore(arr: $arr) {
       _id
-      kindlyScore
-      goodDeeds {
-        _id
-      }
-      events {
-        _id
-      }
-      profilePicture
-      location
-      email
-      lastName
       firstName
+      lastName
+      kindlyScore
+    }
+  }
+`;
+
+export const SET_VERIFY = gql`
+  mutation SetVerify($eventId: ID!) {
+    setVerify(eventId: $eventId) {
+      _id
+      title
+      isVerified
+      _id
+      verify {
+        _id
+        event {
+          _id
+        }
+        verifyNumber
+        user {
+          _id
+        }
+      }
     }
   }
 `;

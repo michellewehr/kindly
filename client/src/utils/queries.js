@@ -135,7 +135,16 @@ export const QUERY_USER = gql`
           _id
         }
         likes
-        verifyNumber
+        verify {
+          _id
+          user {
+            _id
+          }
+          event {
+            _id
+          }
+          verifyNumber
+        }
       }
       goodDeeds {
         _id
@@ -180,14 +189,25 @@ export const QUERY_EVENTS = gql`
       location
       description
       date
+      isVerified
       startTime
-      verifyNumber
+      verify {
+        _id
+        user {
+          _id
+        }
+        event {
+          _id
+        }
+        verifyNumber
+      }
       endTime
       url
       image
       comments {
         _id
         commentText
+        createdAt
         replies {
           _id
           replyBody
@@ -220,6 +240,7 @@ export const QUERY_EVENT = gql`
         lastName
       }
       location
+      isVerified
       description
       date
       startTime
@@ -248,7 +269,16 @@ export const QUERY_EVENT = gql`
         createdAt
       }
       likes
-      verifyNumber
+      verify {
+        _id
+        user {
+          _id
+        }
+        event {
+          _id
+        }
+        verifyNumber
+      }
     }
   }
 `;

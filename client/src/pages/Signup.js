@@ -42,7 +42,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="w-screen h-screen bg-cover bg-no-repeat bg-[url('https://www.charities.org/sites/default/files/styles/large/public/volunteers18-5b2fe1c9a474be0036f6a7b2.jpg?itok=HeETal1T')]">
+    <div className="w-screen h-screen bg-cover bg-no-repeat bg-[url('https://www.charities.org/sites/default/files/styles/large/public/volunteers18-5b2fe1c9a474be0036f6a7b2.jpg?itok=HeETal1T')] grid place-content-center">
       <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-md p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700 mx-auto">
         <form className="space-y-6" action="#" onSubmit={handleFormSubmit}>
           <div className="text-xl font-medium text-gray-900 dark:text-white flex flex-row">
@@ -139,7 +139,7 @@ export default function Signup() {
           </div>
           <button
             type="submit"
-            className="w-full text-black hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-sky-100 dark:hover:bg-sky-700"
+            className="w-full text-black hover:bg-blue-200 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-sky-100 dark:hover:bg-sky-700"
           >
             Sign Up
           </button>
