@@ -2,6 +2,7 @@
 import CommentForm from "../CommentForm";
 import { Link } from "react-router-dom";
 import CommentsList from "../CommentsList";
+import JoinSuccessModal from "../JoinEventModal";
 import { useState, useEffect } from "react";
 import Auth from "../../utils/auth";
 import {
@@ -29,6 +30,7 @@ export default function EventCard({ event, me }) {
   // const [addVerification, { loading, error }] = useMutation(ADD_VERIFICATION);
   const [addLike] = useMutation(ADD_EVENT_LIKE);
   const [addVerification] = useMutation(ADD_VERIFICATION);
+  const [showJoinSuccess, setShowJoinSuccess] = useState(false);
 
   const hostId = event.host._id;
   const attendees = event.attendees;
@@ -127,6 +129,7 @@ export default function EventCard({ event, me }) {
     } catch (e) {
       console.error(e);
     }
+    setShowJoinSuccess(true);
   };
 
   const onLeave = async (e) => {
@@ -388,7 +391,7 @@ export default function EventCard({ event, me }) {
         />
       )}
       {viewComments && (
-        <CommentsList comments={event.comments} eventId={event._id} />
+        <CommentsList comments={event.comments} eventId={event._id} me={me} />
       )}
     </div>
   );

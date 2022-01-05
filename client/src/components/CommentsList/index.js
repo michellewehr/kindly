@@ -1,6 +1,6 @@
-import Comment from '../Comment';
+import Comment from "../Comment";
 
-export default function CommentsList({ comments, eventId, goodDeedId }) {
+export default function CommentsList({ comments, eventId, goodDeedId, me }) {
   //  console.log(comments)
   return (
     <div>
@@ -9,13 +9,14 @@ export default function CommentsList({ comments, eventId, goodDeedId }) {
           comment={comment}
           eventId={eventId}
           goodDeedId={goodDeedId}
-        // _id={comment._id}
-        // commentText={comment.commentText}
-        // likes={comment.likes}
-        // replies={comment.replies}
-        // author={comment.author}
+          me={me}
+          // _id={comment._id}
+          // commentText={comment.commentText}
+          // likes={comment.likes}
+          // replies={comment.replies}
+          // author={comment.author}
         />
       ))}
     </div>
-  )
+  );
 }
