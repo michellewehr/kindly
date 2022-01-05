@@ -3,11 +3,11 @@ import Loading from "../Loading";
 export default function SuccessModal({ message, closeSuccess }) {
   // <!-- This example requires Tailwind CSS v2.0+ -->
   return (
-    <div class="rounded-md bg-green-50 p-4">
+    <div class="rounded-md bg-slate-200 p-4">
       <div class="flex">
         <div class="flex-shrink-0">
           {/* <!-- Heroicon name: solid/check-circle --> */}
-          <svg
+          {/* <svg
             class="h-5 w-5 text-green-400"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -19,16 +19,16 @@ export default function SuccessModal({ message, closeSuccess }) {
               d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
               clip-rule="evenodd"
             />
-          </svg>
+          </svg> */}
         </div>
         <div class="ml-3">
-          <p class="text-sm font-medium text-green-800">{message}</p>
+          <p class="text-sm font-medium text-black">{message}</p>
         </div>
         <div class="ml-auto pl-3">
           <div class="-mx-1.5 -my-1.5">
             <button
               type="button"
-              class="inline-flex bg-green-50 rounded-md p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-50 focus:ring-green-600"
+              class="inline-flex bg-slate-100 rounded-md p-1.5 text-black-500 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-50 focus:ring-slate-600"
               onClick={closeSuccess}
             >
               <span class="sr-only">Dismiss</span>
