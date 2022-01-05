@@ -32,6 +32,10 @@ export default function EventCard({ event, me }) {
 
   const hostId = event.host._id;
   const attendees = event.attendees;
+  const kindlyAttendees = [hostId];
+  for (let i = 0; i < attendees.length; i++) {
+    kindlyAttendees.push(attendees[i]._id);
+  }
 
   //declare array to get all attendees and host ids
   const userArr = [hostId, me._id];
@@ -53,9 +57,11 @@ export default function EventCard({ event, me }) {
     return false;
   }
 
+  console.log(kindlyAttendees, "kind attendees");
+
   async function addKindlyPoints() {
     try {
-      await increaseScore({ variables: { arr: userArr } });
+      await increaseScore({ variables: { arr: kindlyAttendees } });
       window.alert("adding kindly points");
     } catch (e) {
       console.error(e);

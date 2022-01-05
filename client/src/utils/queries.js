@@ -207,6 +207,7 @@ export const QUERY_EVENTS = gql`
       comments {
         _id
         commentText
+        createdAt
         replies {
           _id
           replyBody
