@@ -11,7 +11,7 @@ export default function Comment({ comment, eventId, goodDeedId }) {
   const [viewReplies, setViewReplies] = useState(false);
   const [addReply, setAddReply] = useState(false);
   // const [removeComment] = useMutation(REMOVE_COMMENT);
-  const commentAuthor = `${comment.author.firstName} ${comment.author.lastName}`;
+  // const commentAuthor = `${comment.author.firstName} ${comment.author.lastName}`;
 
   //cache for delete comment
   const [removeComment, { error }] = useMutation(REMOVE_COMMENT, {
@@ -63,7 +63,8 @@ export default function Comment({ comment, eventId, goodDeedId }) {
           <div className="flex flex-wrap py-8 md:flex-nowrap">
             <div className="flex flex-col flex-shrink-0 mb-6 md:w-64 md:mb-0">
               <span className="font-semibold text-gray-700 title-font">
-                {commentAuthor}
+                {/* {commentAuthor} */}
+                {/* {comment.author._id} */}
                 {/* Author */}
                 {/* this is where we would call the imported user name concat function */}
               </span>

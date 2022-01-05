@@ -93,11 +93,11 @@ export default function GoodDeedLink() {
                             <b>Date:</b> {goodDeed.date}
                           </span>
                         </div>
-                        <div className="pb-1 text-normal text-cyan-900">
+                        {/* <div className="pb-1 text-normal text-cyan-900">
                           <span className="">
                             <b>Time:</b> Get Time
                           </span>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>

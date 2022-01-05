@@ -2,7 +2,7 @@
 import CommentForm from "../CommentForm";
 import { Link } from "react-router-dom";
 import CommentsList from "../CommentsList";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Auth from "../../utils/auth";
 import {
   CANCEL_EVENT,
@@ -63,17 +63,21 @@ export default function EventCard({ event, me }) {
   }
 
   function butt() {
-    if (event.verify.length > attendees.length / 2) {
+    if (attendees.length === 0) {
+      return false;
+    } else if (event.verify.length >= Math.ceil(attendees.length / 2)) {
       return true;
     }
     return false;
   }
 
   function isVerified() {
-    console.log(butt(), "butt");
-    if (butt()) {
+    console.log("butt");
+    if (event.verify.length + 1 >= Math.ceil(attendees.length / 2)) {
+      console.log("after if statement");
       addKindlyPoints();
     }
+    console.log("after kindly points");
     // if (event.verify.length > attendees.length / 2) {
 
     //   return true;
@@ -101,6 +105,7 @@ export default function EventCard({ event, me }) {
     } catch (e) {
       console.error(e);
     }
+    console.log(event.verify.length, "after");
     isVerified();
     console.log("running is verified");
   };
