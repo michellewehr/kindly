@@ -62,7 +62,7 @@ export default function EventCard({ event, me }) {
     }
   }
 
-  function butt() {
+  function checkVerify() {
     if (attendees.length === 0) {
       return false;
     } else if (event.verify.length >= Math.ceil(attendees.length / 2)) {
@@ -72,17 +72,11 @@ export default function EventCard({ event, me }) {
   }
 
   function isVerified() {
-    console.log("butt");
     if (event.verify.length + 1 >= Math.ceil(attendees.length / 2)) {
       console.log("after if statement");
       addKindlyPoints();
     }
     console.log("after kindly points");
-    // if (event.verify.length > attendees.length / 2) {
-
-    //   return true;
-    // }
-    // return false;
   }
 
   // check if date of event is behind the current date and return boolean
@@ -93,8 +87,6 @@ export default function EventCard({ event, me }) {
   const isHalfOfAttendees = () => {
     return event.verify.length < attendees.length / 2;
   };
-
-  //trying this
 
   const onVerify = async (e) => {
     console.log(event.verify.length, "before");
@@ -264,7 +256,7 @@ export default function EventCard({ event, me }) {
             <div className="flex flex-row pb-1 text-2xl leading-tight text-amber-500">
               <Link to={`/event/${event._id}`}>{event.title}</Link>
               {/* verified check start */}
-              {butt() && (
+              {checkVerify() && (
                 <div className="inline-block group">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
