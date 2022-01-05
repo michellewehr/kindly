@@ -1,29 +1,23 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { Link } from "react-router-dom";
 import { LOGIN } from "../utils/mutations";
 import Auth from "../utils/auth";
-
 import logo from "../assets/images/logo.png";
 
 export default function Login() {
   const [formState, setFormState] = useState({ email: "", password: "" });
   const [login, { error }] = useMutation(LOGIN);
 
-  // update state based on form input changes
   const handleChange = (event) => {
     const { name, value } = event.target;
-
     setFormState({
       ...formState,
       [name]: value,
     });
   };
 
-  // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
     try {
       const { data } = await login({
         variables: { ...formState },
@@ -44,16 +38,16 @@ export default function Login() {
               <img
                 className='fill-current h-12 w-14 mr-2" width="54" height="54" viewBox="0 0 54 54'
                 src={logo}
+                alt="Kindly logo"
               />
               <h2 className="text-4xl pl-2">Kindly Log In</h2>
             </div>
             <div>
-              <label
-                for="email"
-                className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
-              >
+
+              <label for="email" className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">
                 Email
               </label>
+
               <input
                 type="email"
                 name="email"
@@ -64,11 +58,9 @@ export default function Login() {
                 onChange={handleChange}
               />
             </div>
+
             <div>
-              <label
-                for="password"
-                className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
-              >
+              <label for="password" className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">
                 Password
               </label>
               <input
@@ -89,10 +81,7 @@ export default function Login() {
             </button>
             <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
               Not registered?{" "}
-              <a
-                href="/signup"
-                className="text-blue-700 hover:underline dark:text-sky-700"
-              >
+              <a href="/signup" className="text-blue-700 hover:underline dark:text-sky-700" >
                 Create account
               </a>
             </div>
@@ -101,4 +90,4 @@ export default function Login() {
       </div>
     </div>
   );
-}
+};
