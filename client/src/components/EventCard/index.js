@@ -212,6 +212,10 @@ export default function EventCard({ event, me }) {
     );
   };
 
+  function onSubmit() {
+    setViewComments(true);
+    setAddComment(false);
+  }
   // if (!events.length) {
   //   return (
   //     <div>
@@ -374,12 +378,7 @@ export default function EventCard({ event, me }) {
           </div>
         </div>
       </div>
-      {addComment && (
-        <CommentForm
-          onSubmit={() => setViewComments(true)}
-          eventId={event._id}
-        />
-      )}
+      {addComment && <CommentForm onSubmit={onSubmit} eventId={event._id} />}
       {viewComments && (
         <CommentsList comments={event.comments} eventId={event._id} me={me} />
       )}

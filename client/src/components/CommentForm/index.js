@@ -105,10 +105,10 @@ export default function CommentForm({ eventId, goodDeedId, onSubmit }) {
                 onChange={handleChange}
               />
 
-              <div className="pt-3 text-sm text-left text-amber-500">
+              <div className="pt-3 text-sm text-left">
                 <button
                   type="submit"
-                  className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
+                  className="px-4 py-2 mt-1 font-bold text-black rounded bg-sky-100 hover:bg-orange-300"
                 >
                   Post Comment
                 </button>
