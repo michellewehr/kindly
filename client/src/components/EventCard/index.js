@@ -158,7 +158,7 @@ export default function EventCard({ event, me }) {
         <div>
           <button
             onClick={onCancel}
-            className="px-4 py-2 mx-3 mt-1 mr-3 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
+            className="px-4 py-2 mx-3 mt-1 mr-3 font-bold text-black rounded bg-sky-100 hover:bg-orange-300"
           >
             Cancel Event
           </button>
@@ -166,7 +166,7 @@ export default function EventCard({ event, me }) {
           {isHalfOfAttendees() && eventPassed() && !checkUserVerify() && (
             <button
               onClick={onVerify}
-              className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
+              className="px-4 py-2 mt-1 font-bold text-black rounded bg-sky-100 hover:bg-orange-300"
             >
               Verify Event
             </button>
@@ -183,14 +183,14 @@ export default function EventCard({ event, me }) {
             <button
               className="pr-3"
               onClick={onLeave}
-              className="px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
+              className="px-4 py-2 mx-3 mt-1 font-bold text-black rounded bg-sky-100 hover:bg-orange-300"
             >
               Leave Event
             </button>
             {isHalfOfAttendees && eventPassed && !checkUserVerify() && (
               <button
                 onClick={onVerify}
-                className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
+                className="px-4 py-2 mt-1 font-bold text-black rounded bg-sky-100 hover:bg-orange-300"
               >
                 Verify Event
               </button>
@@ -204,7 +204,7 @@ export default function EventCard({ event, me }) {
         <button
           className="pr-3"
           onClick={onJoin}
-          className="px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
+          className="px-4 py-2 mx-3 mt-1 font-bold rounded bg-sky-100 hover:bg-orange-300"
         >
           Be Kind & Attend Event
         </button>
@@ -223,14 +223,14 @@ export default function EventCard({ event, me }) {
   return (
     <div className="eventCard">
       <div className="flex flex-row flex-wrap w-full p-3 mt-2 antialiased bg-white rounded-lg shadow-lg">
-        <div className="w-full md:w-1/3">
+        <div className="w-full md:w-1/3 mt-2">
           <img
             className="antialiased rounded-lg shadow-lg xl"
             src={event.image}
             alt="Alt tag"
           />
           {Auth.loggedIn() && !isLiked ? (
-            <button className="inline-block text-sky-700 " onClick={onLike}>
+            <button className="inline-block text-slate-400 " onClick={onLike}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="inline w-8 h-8 text-yellow"
@@ -242,7 +242,7 @@ export default function EventCard({ event, me }) {
             </button>
           ) : (
             Auth.loggedIn() && (
-              <span className="inline-block text-orange-500">
+              <span className="inline-block text-orange-400">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="inline-block w-8 h-8 text-yellow"
@@ -255,7 +255,7 @@ export default function EventCard({ event, me }) {
             )
           )}
           {Auth.loggedIn() && (
-            <span className="text-cyan-800">
+            <span className="text-slate-700">
               {checkLikesCount(event.likes, "event")}
             </span>
           )}
@@ -289,38 +289,28 @@ export default function EventCard({ event, me }) {
             <div className="top-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
               Kindly Points: <b>+10</b>
             </div>
-            <div className="pb-4 cursor-pointer text-normal hover:text-cyan-700 text-cyan-900">
+            <div className="pb-4 cursor-pointer text-normal hover:text-cyan-700 text-black">
               <Link to={`/profile/${event.host._id}`}>
                 {event.host.firstName} {event.host.lastName}
               </Link>{" "}
             </div>
+            <div className="pb-1 text-normal text-black">
+              <span className="">
+                {event.date} from {event.startTime} to {event.endTime} in{" "}
+                {event.location}
+              </span>
+            </div>
 
-            <div className="pb-1 text-normal text-cyan-900">
-              <span className="">
-                <b>Description:</b> {event.description}
-              </span>
+            <div className="pb-1 text-normal text-black">
+              <span className="">{event.description}</span>
             </div>
-            <div className="pb-1 text-normal text-cyan-900">
-              <span className="">
-                <b>Location:</b> {event.location}
-              </span>
-            </div>
-            <div className="pb-1 text-normal text-cyan-900">
-              <span className="">
-                <b>Date:</b> {event.date}
-              </span>
-            </div>
-            <div className="pb-1 text-normal text-cyan-900">
-              <span className="">
-                <b>Time:</b> {event.startTime + " - " + event.endTime}
-              </span>
-            </div>
-            <div className="pb-1 text-normal text-cyan-900 hover:text-orange-300">
-              <a href={event.url}>
+
+            <div className="pb-1 text-normal text-black hover:text-orange-400">
+              <Link to={event.url} target="_blank">
                 <span className="">
                   <i>Event Website</i>
                 </span>
-              </a>
+              </Link>
             </div>
             {/* button div for viewing comments/ hiding comments */}
             <div>

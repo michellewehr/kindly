@@ -58,35 +58,37 @@ export default function Sidebar() {
         {/* end of points */}
         {/* location */}
         <div className="mb-7">
-          <p className="px-6 mx-auto mb-2 text-center bg-green-400 rounded-lg w-max">
+          <p className="px-6 mx-auto mb-2 text-center bg-sky-100 rounded-lg w-max">
             {myData.location}
           </p>
         </div>
         {/* end of location */}
 
         {/* Upcoming Events */}
-        <div className="w-5/6 mx-auto mb-2 text-center bg-sky-100 border-4 border-orange-300 rounded-lg p-1 max-h-96">
-          <h2 className="mb-1 underline bg-orange-300 py-2 rounded-lg text-xl font-bold">
+        <div className="w-5/6 mx-auto mb-2 text-center  rounded-lg p-1 max-h-96">
+          <h2 className="mb-1 underline  py-2 rounded-lg text-xl font-bold">
             Your Upcoming Events
           </h2>
         </div>
-        <div className="w-5/6 mx-auto mb-8 text-center bg-sky-100 border-4 border-orange-300 rounded-lg p-1 max-h-96 overflow-auto">
+        <div className="w-5/6 mx-auto mb-8 text-center bg-white border-4 border-orange-300 rounded-lg p-1 max-h-96 overflow-auto">
           {/* div for each event */}
           {myEvents.length ? (
             myEvents.map((event) => (
               <a key={event._id} className="bg-sky-100" href="#">
-                <div className="p-1 text-left my-4 rounded-lg bg-sky-200 hover:bg-sky-300">
-                  <h3 className="bg-cyan-600 text-white text-center bold rounded-lg text-md font-bold">
-                    <Link to={`/event/${event._id}`}>{event.title}</Link>
-                  </h3>
-                  <p className="text-sky-900">
+                <div className="p-1 text-left my-4 rounded-lg">
+                  <Link to={`/event/${event._id}`}>
+                    <h3 className="bg-sky-100 hover:bg-sky-200 text-black text-center rounded-lg text-md font-bold">
+                      {event.title}
+                    </h3>
+                  </Link>
+                  <p className="text-black">
                     <b>Location:</b> {event.location}
                   </p>
-                  <p className="text-sky-900">
+                  <p className="text-black">
                     <b>Date: </b>
                     {event.date}
                   </p>
-                  <p className="text-sky-900">
+                  <p className="text-black">
                     <b>Time: </b>
                     {event.startTime} - {event.endTime}{" "}
                   </p>
@@ -98,28 +100,27 @@ export default function Sidebar() {
           )}
         </div>
         {/* End of upcoming events */}
-        <div className="w-5/6 mx-auto mb-2 text-center bg-sky-100 border-4 border-orange-300 rounded-lg p-1 max-h-96">
-          <h2 className="mb-1 underline bg-orange-300 py-2 rounded-lg text-xl font-bold">
+        <div className="w-5/6 mx-auto mb-2 text-center  rounded-lg p-1 max-h-96">
+          <h2 className="mb-1 underline py-2 rounded-lg text-xl font-bold">
             Your Upcoming Good Deeds
           </h2>
         </div>
-        <div className="w-5/6 mx-auto mb-2 text-center bg-sky-100 border-4 border-orange-300 rounded-lg p-1 max-h-96 overflow-auto">
+        <div className="w-5/6 mx-auto mb-2 text-center border-4 border-orange-300 rounded-lg p-1 max-h-96 overflow-auto">
           {/* <h2 className="mb-1 underline bg-orange-300 py-2 rounded-lg">Good Deads</h2> */}
           {/* div for good deeds */}
           {myGoodDeeds.length ? (
             myGoodDeeds.map((goodDeed) => (
               <a key={goodDeed._id} className="bg-sky-100" href="#">
-                <div className="p-1 text-left my-4 rounded-lg bg-sky-200 hover:bg-sky-300">
-                  <h3 className="bg-cyan-600 text-white text-center bold rounded-lg text-md font-bold">
-                    {" "}
-                    <Link to={`/gooddeed/${goodDeed._id}`}>
+                <div className="p-1 text-left my-4 rounded-lg">
+                  <Link to={`/gooddeed/${goodDeed._id}`}>
+                    <h3 className="bg-sky-100 hover:bg-sky-200 text-black text-center bold rounded-lg text-md font-bold">
                       {goodDeed.title}
-                    </Link>
-                  </h3>
-                  <p className="text-sky-900">
+                    </h3>
+                  </Link>
+                  <p className="text-black">
                     <b>Location:</b> {goodDeed.location}
                   </p>
-                  <p className="text-sky-900">
+                  <p className="text-black">
                     <b>Date: </b>
                     {goodDeed.date}
                   </p>

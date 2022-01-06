@@ -101,34 +101,33 @@ export default function EventLink() {
                             )}
                           {/* verified check end */}
                         </div>
-                        <div className="pb-4 cursor-pointer text-normal hover:text-cyan-700 text-cyan-900">
+                        <div className="pb-4 cursor-pointer text-normal hover:text-slate-700 text-black">
                           <Link to={`/profile/${event.host._id}`}>
                             {event.host.firstName} {event.host.lastName}
                           </Link>{" "}
                         </div>
-                        <div className="pb-1 text-normal text-cyan-900">
-                          <span className="">
-                            <b>Description:</b> {event.description}
-                          </span>
-                        </div>
-                        <div className="pb-1 text-normal text-cyan-900">
+                        <div className="pb-1 text-normal text-black">
                           <span className="">
                             <b>Location:</b>
                             {event.location}
                           </span>
                         </div>
-                        <div className="pb-1 text-normal text-cyan-900">
+                        <div className="pb-1 text-normal text-black">
                           <span className="">
                             <b>Date:</b> {event.date}
                           </span>
                         </div>
-                        <div className="pb-1 text-normal text-cyan-900">
+                        <div className="pb-1 text-normal text-black">
+                          <span className="">{event.description}</span>
+                        </div>
+
+                        <div className="pb-1 text-normal text-black">
                           <span className="">
                             <b>Time:</b>{" "}
                             {event.startTime + " - " + event.endTime}
                           </span>
                         </div>
-                        <div className="pb-1 text-normal text-cyan-900 hover:text-orange-300">
+                        <div className="pb-1 text-normal text-black hover:text-orange-300">
                           <a href={event.url}>
                             <span className="">
                               <i>Event Website</i>

@@ -39,7 +39,7 @@ export default function EventList({ events, me }) {
                   onClick={() => {
                     setEventModalOpen(true);
                   }}
-                  className="absolute right-0 h-16 px-4 py-2 mt-1 mr-2 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
+                  className="absolute right-0 h-16 px-4 py-2 mt-1 mr-2 font-bold text-black rounded bg-sky-100 hover:bg-orange-300"
                 >
                   Create Event
                 </button>
