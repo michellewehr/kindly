@@ -5,6 +5,5 @@ export default function Loading() {
         <h2 className="text-white text-xl animate-bounce">Loading...</h2>
       </div>
     </section>
-  )
-
-}
+  );
+};

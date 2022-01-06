@@ -46,7 +46,6 @@ export default function NewEvent({ onEventSubmit }) {
       await addEvent({
         variables: { ...formData },
       });
-      // console.log(data);
       setFormData({
         title: "",
         description: "",
@@ -225,4 +224,4 @@ export default function NewEvent({ onEventSubmit }) {
       </form>
     </div>
   );
-}
+};

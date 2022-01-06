@@ -1,4 +1,3 @@
-import FriendsList from "../FriendsList";
 import { QUERY_ME } from "../../utils/queries";
 import { useQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
@@ -11,37 +10,33 @@ export default function Sidebar() {
   const myData = data?.me || {};
   const myEvents = myData?.events || [];
   const myGoodDeeds = myData?.goodDeeds || [];
-  // console.log(myData, 'me')
-  // console.log(myGoodDeeds, 'good deeds')
 
   if (loading) {
     return <Loading />;
-  }
+  };
 
   return (
     <div className="sidebar hidden lg:flex">
       <div className="flex flex-col w-96 bg-cyan-700 rounded-lg py-6">
+
         {/* div for the profile picture and name */}
         <div className="flex content-center ">
           <div className="w-2/3 py-4 mx-auto">
             <img
               className="antialiased rounded-lg shadow-lg"
               src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+              alt="Profile picture"
             />
           </div>
         </div>
-        {/* end of profile pic */}
-        {/* div for name */}
+
         <h2 className="p-1 text-2xl text-center text-black">
-          <Link
-            to="myprofile"
-            className="bg-orange-300 rounded-lg py-0.5 px-4 hover:bg-orange-400 my-6"
-          >
+          <Link to="myprofile" className="bg-orange-300 rounded-lg py-0.5 px-4 hover:bg-orange-400 my-6" >
             {myData.firstName} {myData.lastName}
           </Link>
         </h2>
-        {/* div for name end */}
-        {/* points */}
+
+        {/* kindly points */}
         <div className="flex flex-row mx-auto ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +50,7 @@ export default function Sidebar() {
             {checkKindlyPoints(myData.kindlyScore)}
           </p>
         </div>
-        {/* end of points */}
+
         {/* location */}
         <div className="mb-7">
           <p className="px-6 mx-auto mb-2 text-center bg-green-400 rounded-lg w-max">
@@ -64,7 +59,7 @@ export default function Sidebar() {
         </div>
         {/* end of location */}
 
-        {/* Upcoming Events */}
+        {/* upcoming Events */}
         <div className="w-5/6 mx-auto mb-2 text-center bg-sky-100 border-4 border-orange-300 rounded-lg p-1 max-h-96">
           <h2 className="mb-1 underline bg-orange-300 py-2 rounded-lg text-xl font-bold">
             Your Upcoming Events
@@ -95,7 +90,7 @@ export default function Sidebar() {
             ))
           ) : (
             <div className="p-2">You have no upcoming events</div>
-          )}
+          )};
         </div>
         {/* End of upcoming events */}
         <div className="w-5/6 mx-auto mb-2 text-center bg-sky-100 border-4 border-orange-300 rounded-lg p-1 max-h-96">
@@ -129,20 +124,16 @@ export default function Sidebar() {
           ) : (
             <div className="p-2">You have no upcoming Good Deeds</div>
           )}
-          {/* end of div for good deeds */}
         </div>
-        {/* div for my postings */}
-        {/* end of div for my postings */}
-        {/* view my profile */}
-        {/* <a href="">
+        <a href="">
           <p className="py-5 text-xl text-center text-sky-100 hover:text-orange-300">
             <Link to='myprofile'>
               View My Full Profile
             </Link>
           </p>
-        </a> */}
+        </a>
         {/* end of view my profile */}
       </div>
     </div>
   );
-}
+};

@@ -1,24 +1,22 @@
 import GoodDeed from "../GoodDeed";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { QUERY_GOOD_DEEDS } from '../../utils/queries'
 import { useQuery } from "@apollo/client";
 import Auth from '../../utils/auth';
 import GoodDeedModal from "../GoodDeedModal";
 import Loading from '../Loading';
 
-export default function GoodDeedList({me}) {
+export default function GoodDeedList({ me }) {
   const { loading, data } = useQuery(QUERY_GOOD_DEEDS)
   const [goodDeedModalOpen, setGoodDeedModalOpen] = useState(false);
   const goodDeedData = data?.goodDeeds || [];
   const userMeData = me || {};
-  console.log(goodDeedData, 'list good deed data')
-  // console.log(goodDeedData)
-  if (loading) return <Loading />;
 
+  if (loading) return <Loading />;
 
   return (
     <div>
-      {goodDeedModalOpen && <GoodDeedModal onClose={() => { setGoodDeedModalOpen(false) }} />}
+      {goodDeedModalOpen && <GoodDeedModal onClose={() => { setGoodDeedModalOpen(false) }} />};
 
       {loading ? (
         <div>Loading...</div>
@@ -43,9 +41,9 @@ export default function GoodDeedList({me}) {
             // deedText={goodDeed.deedText}
             // helper={goodDeed.helper}
             />
-          ))}
+          ))};
         </div>
-      )}
+      )};
     </div>
-  )
-}
+  );
+};

@@ -1,5 +1,4 @@
 const express = require('express');
-// const helmet = require('helmet')
 
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
@@ -7,9 +6,6 @@ const { typeDefs, resolvers } = require('./graphql');
 const db = require('./config/connection');
 const PORT = process.env.PORT || 3001;
 const app = express();
-
-// Use Helmet
-// app.use(helmet());
 
 const { authMiddleware } = require('./utils/auth');
 const startServer = async () => {

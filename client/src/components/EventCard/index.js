@@ -1,8 +1,8 @@
 // import { createSourceEventStream } from "graphql"
 import CommentForm from "../CommentForm";
-import { Link } from "react-router-dom";
 import CommentsList from "../CommentsList";
-import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 import Auth from "../../utils/auth";
 import {
   CANCEL_EVENT,

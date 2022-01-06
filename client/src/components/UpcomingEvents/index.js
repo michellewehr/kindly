@@ -6,14 +6,12 @@ export default function UpcomingEvents() {
         {/* div for each event */}
         <a className="bg-sky-100" href="">
           <div className="px-1 text-left">
-            {/* get upcoming event data */}
             <h3 className="bg-cyan-600 hover:bg-orange-300">Event Name</h3>
             <p>Location</p>
             <p>Date at Start Time- End Time</p>
           </div>
         </a>
-        {/* end of div for each event */}
       </div>
     </div>
   );
-}
+};
