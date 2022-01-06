@@ -23,7 +23,7 @@ export default function Home() {
   return (
     <div>
       <div className="text-center bg-orange-300">
-        {!Auth.loggedIn() && <Signup />}
+        {/* {!Auth.loggedIn() && <Signup />} */}
         {renderEvents ? (
           <button onClick={toggleEventsDisplay}>View Good Deeds</button>
         ) : (

@@ -20,7 +20,7 @@ export default function Sidebar() {
       <div className="flex flex-col w-96 bg-slate-100 py-6">
         {/* div for the profile picture and name */}
         <div className="flex content-center ">
-          <div className="w-2/3 py-4 mx-auto">
+          <div className="w-2/4 py-4 mx-auto">
             <img
               className="antialiased rounded-lg shadow-lg"
               src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
@@ -94,7 +94,6 @@ export default function Sidebar() {
           ) : (
             <div className="p-2">You have no upcoming events</div>
           )}
-
         </div>
         {/* End of upcoming events */}
         <div className="w-5/6 mx-auto mb-2 text-center rounded-lg p-1 max-h-96">
