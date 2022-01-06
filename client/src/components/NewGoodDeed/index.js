@@ -3,7 +3,7 @@ import { useState } from "react";
 import { CREATE_GOOD_DEED } from "../../utils/mutations";
 import { QUERY_GOOD_DEEDS, QUERY_ME } from "../../utils/queries";
 
-export default function NewGoodDeed({ onDeedSubmit }) {
+export default function NewGoodDeed({ onDeedSubmit, onSubmitMod }) {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -59,6 +59,7 @@ export default function NewGoodDeed({ onDeedSubmit }) {
       console.error(e);
     }
     onDeedSubmit();
+    onSubmitMod();
   };
 
   return (
@@ -71,7 +72,7 @@ export default function NewGoodDeed({ onDeedSubmit }) {
                 Name of Good Deed:
               </label>
               <input
-                className="w-full p-3 text-sm rounded-lg shadow-lg"
+                className="w-full p-3 text-sm rounded-lg shadow-lg text-black"
                 type="text"
                 name="title"
                 placeholder="Good Deed Title"
@@ -82,7 +83,7 @@ export default function NewGoodDeed({ onDeedSubmit }) {
                 Description:
               </label>
               <textarea
-                className="w-full p-3 text-sm rounded-lg shadow-lg"
+                className="w-full p-3 text-sm rounded-lg shadow-lg text-black"
                 type="text"
                 name="deedText"
                 placeholder="Description of Good Deed"
@@ -93,17 +94,17 @@ export default function NewGoodDeed({ onDeedSubmit }) {
                 Date:
               </label>
               <input
-                className="w-full p-3 text-sm rounded-lg shadow-lg"
+                className="w-full p-3 text-sm rounded-lg shadow-lg text-black"
                 type="date"
                 name="date"
                 value={formData.date}
                 onChange={handleChange}
               />
-              <label className="text-sm text-black" for="loaction">
+              <label className="text-sm text-black" for="location">
                 Location:
               </label>
               <input
-                className="w-full p-3 text-sm rounded-lg shadow-lg"
+                className="w-full p-3 text-sm rounded-lg shadow-lg text-black"
                 type="text"
                 name="location"
                 placeholder="Good Deed Location"
@@ -111,7 +112,7 @@ export default function NewGoodDeed({ onDeedSubmit }) {
                 onChange={handleChange}
               />
               <button
-                className="w-full p-3 rounded-lg shadow-lg"
+                className="w-full p-3 rounded-lg shadow-lg text-black"
                 type="submit"
                 value="Submit"
               >
@@ -123,4 +124,4 @@ export default function NewGoodDeed({ onDeedSubmit }) {
       </div>
     </div>
   );
-};
+}

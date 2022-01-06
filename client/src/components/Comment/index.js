@@ -5,8 +5,7 @@ import { QUERY_COMMENTS } from "../../utils/queries";
 import ReplyList from "../ReplyList";
 import ReplyForm from "../ReplyForm";
 
-export default function Comment({ comment, eventId, goodDeedId }) {
-
+export default function Comment({ comment, eventId, goodDeedId, me }) {
   const [viewReplies, setViewReplies] = useState(false);
   const [addReply, setAddReply] = useState(false);
 
@@ -47,65 +46,80 @@ export default function Comment({ comment, eventId, goodDeedId }) {
                 <span className="mt-1 text-sm text-gray-500">
                   {comment.createdAt}
                 </span>
-              )};
+              )}
+              ;
             </div>
             <div className="md:flex-grow">
               <p className="leading-relaxed">{comment.commentText}</p>
             </div>
-
-            <div className="group">
-              <button onClick={onDelete}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-6 h-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-              <p className="invisible group-hover:block group-hover:visible">
-                Delete Comment
-              </p>
-            </div>
-
+            {/* delete comment button  */}
+            {comment.author._id === me._id && (
+              <div className="group">
+                <button onClick={onDelete}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-6 h-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+                <p className="invisible group-hover:block group-hover:visible">
+                  Delete Comment
+                </p>
+              </div>
+            )}
           </div>
 
           <div>
             {!viewReplies && comment.replies.length >= 1 && (
-              <button onClick={() => { setViewReplies(true); }}>
+              <button
+                onClick={() => {
+                  setViewReplies(true);
+                }}
+              >
                 View Replies
               </button>
-            )};
-
+            )}
+            ;
             {viewReplies && comment.replies.length >= 1 && (
-              <button onClick={() => { setViewReplies(false); }} >
+              <button
+                onClick={() => {
+                  setViewReplies(false);
+                }}
+              >
                 Hide Replies
               </button>
-            )};
+            )}
+            ;
           </div>
 
           <div>
-            <button onClick={() => { setAddReply(true); }}>
+            <button
+              onClick={() => {
+                setAddReply(true);
+              }}
+            >
               Add Reply
             </button>
           </div>
         </div>
-
       </div>
 
       <div>{addReply && <ReplyForm commentId={comment._id} />}</div>
       <div>
         {comment.replies.length >= 1 && viewReplies && (
           <ReplyList replies={comment.replies} />
-        )};
+        )}
+        ;
       </div>
     </section>
   );
-};
+}

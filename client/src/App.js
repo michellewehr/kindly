@@ -16,6 +16,7 @@ import Footer from "./components/Footer";
 import UserProfile from "./pages/UserProfile";
 import EventLink from "./components/EventLink";
 import GoodDeedLink from "./components/GoodDeedLink";
+import Landing from "./pages/Landing";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:3001/graphql",
@@ -58,6 +59,6 @@ function App() {
       </Router>
     </ApolloProvider>
   );
-};
+}
 
 export default App;

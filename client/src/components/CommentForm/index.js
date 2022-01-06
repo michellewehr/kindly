@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { ADD_EVENT_COMMENT, ADD_GOOD_DEED_COMMENT } from "../../utils/mutations";
+import {
+  ADD_EVENT_COMMENT,
+  ADD_GOOD_DEED_COMMENT,
+} from "../../utils/mutations";
 import { QUERY_COMMENTS } from "../../utils/queries";
 
 export default function CommentForm({ eventId, goodDeedId, onSubmit }) {
@@ -37,7 +40,7 @@ export default function CommentForm({ eventId, goodDeedId, onSubmit }) {
   const handleChange = (event) => {
     if (event.target.value.length <= 280) {
       setCommentText(event.target.value);
-    };
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -50,7 +53,7 @@ export default function CommentForm({ eventId, goodDeedId, onSubmit }) {
         setCommentText("");
       } catch (e) {
         console.error(e);
-      };
+      }
       onSubmit();
     } else if (goodDeedId) {
       try {
@@ -62,7 +65,7 @@ export default function CommentForm({ eventId, goodDeedId, onSubmit }) {
         console.error(e);
       }
       onSubmit();
-    };
+    }
   };
 
   return (
@@ -82,8 +85,11 @@ export default function CommentForm({ eventId, goodDeedId, onSubmit }) {
                 onChange={handleChange}
               />
 
-              <div className="pt-3 text-sm text-left text-amber-500">
-                <button type="submit" className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+              <div className="pt-3 text-sm text-left">
+                <button
+                  type="submit"
+                  className="px-4 py-2 mt-1 font-bold text-black rounded bg-sky-100 hover:bg-orange-300"
+                >
                   Post Comment
                 </button>
               </div>
@@ -93,4 +99,4 @@ export default function CommentForm({ eventId, goodDeedId, onSubmit }) {
       </div>
     </form>
   );
-};
+}
