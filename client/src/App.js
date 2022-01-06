@@ -18,6 +18,7 @@ import UserProfile from "./pages/UserProfile";
 import EventLink from "./components/EventLink";
 import { Provider } from "react-redux";
 import GoodDeedLink from "./components/GoodDeedLink";
+import Landing from "./pages/Landing";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:3001/graphql",
@@ -48,6 +49,7 @@ function App() {
             <Nav />
             <div className="min-h-full">
               <Routes>
+                <Route path="/landing" element={<Landing />}></Route>
                 <Route path="/" element={<Home />} />
                 <Route exact path="/login" element={<Login />} />
                 <Route exact path="/signup" element={<Signup />} />
