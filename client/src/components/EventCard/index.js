@@ -11,7 +11,6 @@ import {
   ADD_EVENT_LIKE,
   ADD_VERIFICATION,
   INCREASE_KINDLY_SCORE,
-  SET_VERIFY,
 } from "../../utils/mutations";
 // import { QUERY_ME } from "../../utils/queries";
 import { useMutation } from "@apollo/client";
@@ -29,17 +28,22 @@ export default function EventCard({ event, me }) {
   // const [addVerification, { loading, error }] = useMutation(ADD_VERIFICATION);
   const [addLike] = useMutation(ADD_EVENT_LIKE);
   const [addVerification] = useMutation(ADD_VERIFICATION);
+  const [showJoinSuccess, setShowJoinSuccess] = useState(false);
 
   const hostId = event.host._id;
   const attendees = event.attendees;
   const kindlyAttendees = [hostId];
 
   // format current date to match event date for comparison
-  const today = new Date().toLocaleString('en-us', { month: 'long', day: '2-digit', year: 'numeric' });
+  const today = new Date().toLocaleString("en-us", {
+    month: "long",
+    day: "2-digit",
+    year: "numeric",
+  });
 
   for (let i = 0; i < attendees.length; i++) {
     kindlyAttendees.push(attendees[i]._id);
-  };
+  }
 
   //declare array to get all attendees and host ids
   const userArr = [hostId, me._id];
@@ -47,7 +51,7 @@ export default function EventCard({ event, me }) {
   //push all attendee ids to that array with host id already in it
   for (let i = 0; i < event.verify.length; i++) {
     userArr.push(event.verify[i]._id);
-  };
+  }
 
   function checkUserVerify() {
     const arrUsersVerified = [];
@@ -60,7 +64,7 @@ export default function EventCard({ event, me }) {
       return true;
     }
     return false;
-  };
+  }
 
   console.log(kindlyAttendees, "kind attendees");
 
@@ -71,7 +75,7 @@ export default function EventCard({ event, me }) {
     } catch (e) {
       console.error(e);
     }
-  };
+  }
 
   function checkVerify() {
     if (attendees.length === 0) {
@@ -80,7 +84,7 @@ export default function EventCard({ event, me }) {
       return true;
     }
     return false;
-  };
+  }
 
   function isVerified() {
     if (event.verify.length + 1 >= Math.ceil(attendees.length / 2)) {
@@ -91,7 +95,9 @@ export default function EventCard({ event, me }) {
   }
 
   // check if date of event is behind the current date and return boolean
-  const eventPassed = () => { return today > event.date };
+  const eventPassed = () => {
+    return today > event.date;
+  };
   // check if more than half of attendees have verified event
   const isHalfOfAttendees = () => {
     return event.verify.length < attendees.length / 2;
@@ -130,6 +136,7 @@ export default function EventCard({ event, me }) {
     } catch (e) {
       console.error(e);
     }
+    setShowJoinSuccess(true);
   };
 
   const onLeave = async (e) => {
@@ -158,7 +165,7 @@ export default function EventCard({ event, me }) {
         <div>
           <button
             onClick={onCancel}
-            className="px-4 py-2 mx-3 mt-1 mr-3 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
+            className="px-4 py-2 mx-3 mt-1 mr-3 font-bold text-black rounded bg-sky-100 hover:bg-orange-300"
           >
             Cancel Event
           </button>
@@ -166,7 +173,7 @@ export default function EventCard({ event, me }) {
           {isHalfOfAttendees() && eventPassed() && !checkUserVerify() && (
             <button
               onClick={onVerify}
-              className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
+              className="px-4 py-2 mt-1 font-bold text-black rounded bg-sky-100 hover:bg-orange-300"
             >
               Verify Event
             </button>
@@ -183,14 +190,14 @@ export default function EventCard({ event, me }) {
             <button
               className="pr-3"
               onClick={onLeave}
-              className="px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
+              className="px-4 py-2 mx-3 mt-1 font-bold text-black rounded bg-sky-100 hover:bg-orange-300"
             >
               Leave Event
             </button>
             {isHalfOfAttendees && eventPassed && !checkUserVerify() && (
               <button
                 onClick={onVerify}
-                className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
+                className="px-4 py-2 mt-1 font-bold text-black rounded bg-sky-100 hover:bg-orange-300"
               >
                 Verify Event
               </button>
@@ -204,7 +211,7 @@ export default function EventCard({ event, me }) {
         <button
           className="pr-3"
           onClick={onJoin}
-          className="px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
+          className="px-4 py-2 mx-3 mt-1 text-black font-bold rounded bg-sky-100 hover:bg-orange-300"
         >
           Be Kind & Attend Event
         </button>
@@ -212,6 +219,10 @@ export default function EventCard({ event, me }) {
     );
   };
 
+  function onSubmit() {
+    setViewComments(true);
+    setAddComment(false);
+  }
   // if (!events.length) {
   //   return (
   //     <div>
@@ -221,16 +232,16 @@ export default function EventCard({ event, me }) {
   // }
 
   return (
-    <div className="eventCard">
+    <div className="eventCard w-3/4 mx-auto">
       <div className="flex flex-row flex-wrap w-full p-3 mt-2 antialiased bg-white rounded-lg shadow-lg">
-        <div className="w-full md:w-1/3">
+        <div className="w-full md:w-1/3 mt-2 mb-2">
           <img
             className="antialiased rounded-lg shadow-lg xl"
             src={event.image}
             alt="Alt tag"
           />
           {Auth.loggedIn() && !isLiked ? (
-            <button className="inline-block text-sky-700 " onClick={onLike}>
+            <button className="inline-block text-slate-400 " onClick={onLike}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="inline w-8 h-8 text-yellow"
@@ -242,7 +253,7 @@ export default function EventCard({ event, me }) {
             </button>
           ) : (
             Auth.loggedIn() && (
-              <span className="inline-block text-orange-500">
+              <span className="inline-block text-orange-400">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="inline-block w-8 h-8 text-yellow"
@@ -255,13 +266,13 @@ export default function EventCard({ event, me }) {
             )
           )}
           {Auth.loggedIn() && (
-            <span className="text-cyan-800">
+            <span className="text-slate-600">
               {checkLikesCount(event.likes, "event")}
             </span>
           )}
         </div>
         <div className="flex flex-row flex-wrap w-full px-3 md:w-2/3">
-          <div className="relative w-full pt-3 font-semibold text-left text-gray-700 md:pt-0">
+          <div className="xl:relative w-full pt-3 font-semibold text-left text-gray-700 md:pt-0">
             <div className="flex flex-row pb-1 text-2xl leading-tight text-amber-500">
               <Link to={`/event/${event._id}`}>{event.title}</Link>
               {/* verified check start */}
@@ -286,47 +297,37 @@ export default function EventCard({ event, me }) {
               )}
               {/* verified check end */}
             </div>
-            <div className="top-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
+            <div className="top-0 right-0 pt-3 text-sm text-amber-500 xl:absolute">
               Kindly Points: <b>+10</b>
             </div>
-            <div className="pb-4 cursor-pointer text-normal hover:text-cyan-700 text-cyan-900">
+            <div className="pb-4 cursor-pointer text-normal hover:text-cyan-700 text-black">
               <Link to={`/profile/${event.host._id}`}>
                 {event.host.firstName} {event.host.lastName}
               </Link>{" "}
             </div>
+            <div className="pb-1 text-normal text-black">
+              <span className="">
+                {event.date} from {event.startTime} to {event.endTime} in{" "}
+                {event.location}
+              </span>
+            </div>
 
-            <div className="pb-1 text-normal text-cyan-900">
-              <span className="">
-                <b>Description:</b> {event.description}
-              </span>
+            <div className="pb-1 text-normal text-black">
+              <span className="">{event.description}</span>
             </div>
-            <div className="pb-1 text-normal text-cyan-900">
-              <span className="">
-                <b>Location:</b> {event.location}
-              </span>
-            </div>
-            <div className="pb-1 text-normal text-cyan-900">
-              <span className="">
-                <b>Date:</b> {event.date}
-              </span>
-            </div>
-            <div className="pb-1 text-normal text-cyan-900">
-              <span className="">
-                <b>Time:</b> {event.startTime + " - " + event.endTime}
-              </span>
-            </div>
-            <div className="pb-1 text-normal text-cyan-900 hover:text-orange-300">
-              <a href={event.url}>
+
+            <div className="pb-1 text-normal text-black hover:text-orange-400">
+              <Link to={event.url} target="_blank">
                 <span className="">
                   <i>Event Website</i>
                 </span>
-              </a>
+              </Link>
             </div>
             {/* button div for viewing comments/ hiding comments */}
             <div>
               {Auth.loggedIn() &&
-                !viewComments &&
-                event.comments.length >= 1 ? (
+              !viewComments &&
+              event.comments.length >= 1 ? (
                 <button
                   onClick={() => {
                     setViewComments(true);
@@ -364,7 +365,7 @@ export default function EventCard({ event, me }) {
               <span className="cursor-pointer">
                 View {attendees.length} Attendees
               </span>
-              <ul className="top-0 z-10 flex-col justify-center hidden text-sm text-black bg-orange-300 rounded attendee-list group-hover:block w-max">
+              <ul className="top-0 z-10 flex-col justify-center hidden text-sm text-black bg-orange-100 rounded attendee-list group-hover:block w-max">
                 {attendees.map((attendee, index) => (
                   <li key={attendee._id} className="py-1 pl-4 pr-1">
                     <Link
@@ -378,20 +379,15 @@ export default function EventCard({ event, me }) {
               </ul>
             </div>
             {/* button depending on attendence to join/leave/cancel event*/}
-            <div className="bottom-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
+            <div className="bottom-0 right-0 pt-3 text-sm text-amber-500 xl:absolute md:pt-0 mr-0">
               {Auth.loggedIn() && <div>{checkAttendance()}</div>}
             </div>
           </div>
         </div>
       </div>
-      {addComment && (
-        <CommentForm
-          onSubmit={() => setViewComments(true)}
-          eventId={event._id}
-        />
-      )}
+      {addComment && <CommentForm onSubmit={onSubmit} eventId={event._id} />}
       {viewComments && (
-        <CommentsList comments={event.comments} eventId={event._id} />
+        <CommentsList comments={event.comments} eventId={event._id} me={me} />
       )}
     </div>
   );

@@ -17,22 +17,22 @@ export default function UserProfile(props) {
       {loading ? (
         <Loading />
       ) : (
-        <div className="w-full">
+        <div className="w-full bg-orange-100">
           <div className="mx-auto">
             <div className="flex flex-col bg-white shadow-xl"></div>
             {/* Main */}
             <div className="">
-              <div className="flex items-end mx-auto w-1/3	">
-                <div className=" mx-auto w-1/2 m-3">
+              <div className="md:flex items-end mx-auto w-1/3	">
+                <div className=" mx-auto w-1/3 m-3">
                   <img
                     className="antialiased rounded-lg shadow-lg"
                     src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                     alt="User profile picture"
                   />
                 </div>
-                <div className="flex mx-auto mb-3">
+                <div className="md:flex mx-auto mb-3">
                   <div className="mt-3 flex-col mx-auto text-center">
-                    <h3 className="font-bold text-4xl text-gray-900 sm:text-4xl mb-3">
+                    <h3 className="font-bold lg:text-4xl text-gray-900 sm:text-lg mb-3">
                       {user.firstName} {user.lastName}
                     </h3>
                     <div className="">
@@ -57,12 +57,14 @@ export default function UserProfile(props) {
                 </div>
               </div>
             </div>
-            <div className="w-11/12 mx-auto mb-2 rounded bg-sky-100">
+            <div className=" mx-auto mb-2 rounded">
               {/* beginining of event/good deed section*/}
-              <div className="flex">
+              <div className="lg:flex">
                 {/* events */}
-                <div className="w-1/2 m-2 md-w-full flex-col">
-                  <h2>Events (completed or upcoming)</h2>
+                <div className="lg:w-1/2 m-2 md:w-full flex-col ">
+                  <h2 className="text-center lg:text-lg">
+                    <b>All Events</b>
+                  </h2>
                   {/* for each event */}
                   {user.events &&
                     user.events.map((event) => (
@@ -94,7 +96,7 @@ export default function UserProfile(props) {
                             Kindly Points: 10
                           </div>
                         </div>
-                        <div className=" cursor-pointer text-normal hover:text-cyan-700 text-cyan-900">
+                        <div className=" cursor-pointer text-normal hover:text-cyan-700 text-black">
                           <Link
                             to={`/profile/${event.host._id}`}
                             style={{ fontWeight: 700 }}
@@ -141,8 +143,10 @@ export default function UserProfile(props) {
                   {/* end of for each event */}
                 </div>
                 {/* good deeds */}
-                <div className="w-1/2 m-2 flex-col md-w-full sm-w-full">
-                  <h2>Good Deeds (upcoming or completed)</h2>
+                <div className="lg:w-1/2 m-2 md:w-full flex-col">
+                  <h2 className="text-center lg:text-lg">
+                    <b>All Good Deeds</b>
+                  </h2>
                   {userGoodDeeds &&
                     userGoodDeeds.map((goodDeed) => (
                       <div className="flex-col p-3 mt-2 antialiased bg-white rounded-lg shadow-lg relative">
@@ -154,8 +158,11 @@ export default function UserProfile(props) {
                             Kindly Points: 10
                           </div>
                         </div>
-                        <div className="pb-4 cursor-pointer text-normal hover:text-cyan-700 text-cyan-900">
-                          <Link to={`/profile/${goodDeed.host._id}`}>
+                        <div className=" cursor-pointer text-normal hover:text-cyan-700 text-black">
+                          <Link
+                            to={`/profile/${goodDeed.host._id}`}
+                            style={{ fontWeight: 700 }}
+                          >
                             {goodDeed.host.firstName} {goodDeed.host.lastName}
                           </Link>
                         </div>

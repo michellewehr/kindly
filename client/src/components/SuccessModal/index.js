@@ -1,37 +1,55 @@
 import Loading from "../Loading";
 
-export function SuccessModal({ onClose }) {
-  <div
-    class="fixed z-10 inset-0 overflow-y-auto w-full"
-    aria-labelledby="modal-title"
-    role="dialog"
-    aria-modal="true"
-  >
-    <div class="flex items-end justify-center w-full min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-      <div
-        class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-        aria-hidden="true"
-      ></div>
-
-      {/* <!-- This element is to trick the browser into centering the modal contents. --> */}
-      <span
-        class="hidden sm:inline-block sm:align-middle sm:h-screen"
-        aria-hidden="true"
-      >
-        &#8203;
-      </span>
-      <div>Submission received!</div>
-      <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
-        <div class="mt-5 sm:mt-6">
-          <button
-            onClick={onClose}
-            type="button"
-            class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
+export default function SuccessModal({ message, closeSuccess }) {
+  // <!-- This example requires Tailwind CSS v2.0+ -->
+  return (
+    <div class="rounded-md bg-slate-200 p-4">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          {/* <!-- Heroicon name: solid/check-circle --> */}
+          {/* <svg
+            class="h-5 w-5 text-green-400"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
           >
-            Close
-          </button>
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+              clip-rule="evenodd"
+            />
+          </svg> */}
+        </div>
+        <div class="ml-3">
+          <p class="text-sm font-medium text-black">{message}</p>
+        </div>
+        <div class="ml-auto pl-3">
+          <div class="-mx-1.5 -my-1.5">
+            <button
+              type="button"
+              class="inline-flex bg-slate-100 rounded-md p-1.5 text-black-500 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-50 focus:ring-slate-600"
+              onClick={closeSuccess}
+            >
+              <span class="sr-only">Dismiss</span>
+              {/* <!-- Heroicon name: solid/x --> */}
+              <svg
+                class="h-5 w-5"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>;
-};
+  );
+}
