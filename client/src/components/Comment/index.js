@@ -34,23 +34,22 @@ export default function Comment({ comment, eventId, goodDeedId, me }) {
   };
 
   return (
-    <section className="overflow-hidden text-gray-600 body-font  shadow-md rounded mx-5 my-1">
+    <section className="overflow-hidden body-font  shadow-md rounded mx-5 my-1">
       <div className="container px-5 mx-auto m-0">
         <div className="divide-y-2 divide-gray-100">
           <div className="flex flex-wrap py-8 md:flex-nowrap">
             <div className="flex flex-col flex-shrink-0 mb-6 md:w-64 md:mb-0">
-              <span className="font-semibold text-gray-700 title-font">
+              <span className="font-semibold text-gray-700 title-font text-xl border-b-2 border-orange-300">
                 {comment.author.firstName} {comment.author.lastName}
-              </span>
-              {comment.createdAt && (
-                <span className="mt-1 text-sm text-gray-500">
-                  {comment.createdAt}
+                <span className="ml-2 text-sm text-gray-500">
+                  - {comment.createdAt} {comment.date}
                 </span>
-              )}
-              ;
+              </span>
+
+
             </div>
-            <div className="md:flex-grow">
-              <p className="leading-relaxed">{comment.commentText}</p>
+            <div className="md:flex-grow ml-3">
+              <p className="leading-relaxed py-2">{comment.commentText}</p>
             </div>
             {/* delete comment button  */}
             {comment.author._id === me._id && (
@@ -62,6 +61,7 @@ export default function Comment({ comment, eventId, goodDeedId, me }) {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
+                    title="Delete comment"
                   >
                     <path
                       strokeLinecap="round"
@@ -77,48 +77,7 @@ export default function Comment({ comment, eventId, goodDeedId, me }) {
               </div>
             )}
           </div>
-
-          <div>
-            {!viewReplies && comment.replies.length >= 1 && (
-              <button
-                onClick={() => {
-                  setViewReplies(true);
-                }}
-              >
-                View Replies
-              </button>
-            )}
-            ;
-            {viewReplies && comment.replies.length >= 1 && (
-              <button
-                onClick={() => {
-                  setViewReplies(false);
-                }}
-              >
-                Hide Replies
-              </button>
-            )}
-            ;
-          </div>
-
-          <div>
-            <button
-              onClick={() => {
-                setAddReply(true);
-              }}
-            >
-              Add Reply
-            </button>
-          </div>
         </div>
-      </div>
-
-      <div>{addReply && <ReplyForm commentId={comment._id} />}</div>
-      <div>
-        {comment.replies.length >= 1 && viewReplies && (
-          <ReplyList replies={comment.replies} />
-        )}
-        ;
       </div>
     </section>
   );
