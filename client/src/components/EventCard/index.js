@@ -12,14 +12,26 @@ import {
   ADD_VERIFICATION,
   INCREASE_KINDLY_SCORE,
 } from "../../utils/mutations";
-// import { QUERY_ME } from "../../utils/queries";
+import { QUERY_ME, QUERY_EVENTS } from "../../utils/queries";
 import { useMutation } from "@apollo/client";
 import { checkLikesCount } from "../../utils/likesCountFormatter";
 
-export default function EventCard({ event, me }) {
+export default function EventCard({ events,event, me }) {
   const [viewComments, setViewComments] = useState(false);
   const [addComment, setAddComment] = useState(false);
-  const [joinEvent] = useMutation(JOIN_EVENT);
+  const [joinEvent] = useMutation(JOIN_EVENT,{
+    update(cache, { data: { joinEvent } }) {
+      try {
+        const { me } = cache.readQuery({ query: QUERY_ME });
+        cache.writeQuery({
+          query: QUERY_ME,
+          data: { me: { ...me, events: [...me.events, joinEvent] } },
+        });
+      } catch (e) {
+        console.log(e);
+      }}
+  });
+
   const [leaveEvent] = useMutation(LEAVE_EVENT);
   const [cancelEvent] = useMutation(CANCEL_EVENT);
   const [isLiked, setLiked] = useState(false);
