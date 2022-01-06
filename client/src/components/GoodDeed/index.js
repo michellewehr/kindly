@@ -12,13 +12,13 @@ import {
   INCREASE_KINDLY_SCORE,
 } from "../../utils/mutations";
 import { checkLikesCount } from "../../utils/likesCountFormatter";
-import { QUERY_ME } from "../../utils/queries"
+import { QUERY_ME, QUERY_GOOD_DEEDS } from "../../utils/queries"
 
 export default function GoodDeed({ goodDeedData, me }) {
   const [viewComments, setViewComments] = useState(false);
   const [addComment, setAddComment] = useState(false);
   const [addLike] = useMutation(ADD_GOOD_DEED_LIKE);
-  const [cancelGoodDeed] = useMutation(CANCEL_GOOD_DEED);
+  // const [cancelGoodDeed] = useMutation(CANCEL_GOOD_DEED);
   const [joinGoodDeed] = useMutation(JOIN_GOOD_DEED, {
     update(cache, { data: { joinGoodDeed } }) {
       try {
@@ -44,6 +44,29 @@ export default function GoodDeed({ goodDeedData, me }) {
       } catch (e) {
         console.log(e);
       }}
+  });
+
+      const [cancelGoodDeed] = useMutation(CANCEL_GOOD_DEED, {
+    update(cache, { data: { cancelGoodDeed } }) {
+      try {
+        const { me } = cache.readQuery({ query: QUERY_ME });
+        cache.writeQuery({
+
+          query: QUERY_ME,
+          data: { me: { ...me, goodDeeds: me.goodDeeds.filter(goodDeed => goodDeed._id !== cancelGoodDeed._id) } },
+
+        });
+      } catch (e) {
+        console.log(e);
+      }
+       const { goodDeeds } = cache.readQuery({ query: QUERY_GOOD_DEEDS });
+       console.log(goodDeeds, 'good deeds query')
+      cache.writeQuery({
+        query: QUERY_GOOD_DEEDS,
+          data: { goodDeeds: { ...goodDeeds, goodDeeds: goodDeeds.filter((goodDeed) => goodDeed._id !== cancelGoodDeed._id) } },
+
+      });
+    },
   });
 
   const [isLiked, setLiked] = useState(false);

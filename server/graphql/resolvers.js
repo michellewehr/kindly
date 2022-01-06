@@ -364,10 +364,10 @@ const resolvers = {
         //delete entirely
         const removeGoodDeed = await GoodDeed.findByIdAndRemove(
           { _id: goodDeedId },
-          { new: true }
+          // { new: true }
         );
 
-        return await GoodDeed.find({}).populate("helper").populate("host");
+        return removeGoodDeed;
       }
       throw new AuthenticationError("You need to be logged in!");
     },
