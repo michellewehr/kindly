@@ -221,9 +221,9 @@ export default function EventCard({ event, me }) {
   // }
 
   return (
-    <div className="eventCard">
+    <div className="eventCard w-2/3 mx-auto">
       <div className="flex flex-row flex-wrap w-full p-3 mt-2 antialiased bg-white rounded-lg shadow-lg">
-        <div className="w-full md:w-1/3 mt-2">
+        <div className="w-full md:w-1/3 mt-2 mb-2">
           <img
             className="antialiased rounded-lg shadow-lg xl"
             src={event.image}
@@ -255,7 +255,7 @@ export default function EventCard({ event, me }) {
             )
           )}
           {Auth.loggedIn() && (
-            <span className="text-slate-700">
+            <span className="text-slate-600">
               {checkLikesCount(event.likes, "event")}
             </span>
           )}

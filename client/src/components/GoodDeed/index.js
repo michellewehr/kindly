@@ -76,7 +76,7 @@ export default function GoodDeed({ goodDeedData, me }) {
         <div>
           <button
             onClick={onCancel}
-            className="md:absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
+            className="md:absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-black rounded bg-sky-100 hover:bg-orange-300 text-sm"
           >
             Cancel Good Deed
           </button>
@@ -97,7 +97,7 @@ export default function GoodDeed({ goodDeedData, me }) {
             <button
               className="pr-3"
               onClick={onLeave}
-              className="md:absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
+              className="md:absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-black rounded bg-sky-100 hover:bg-orange-300 text-sm"
             >
               Leave Good Deed
             </button>
@@ -108,7 +108,7 @@ export default function GoodDeed({ goodDeedData, me }) {
         <div>
           <h4
             className="pr-3"
-            className="md:absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
+            className="md:absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-black rounded bg-sky-100 hover:bg-orange-300 text-sm"
           >
             {helperFirstName} {helperLastName} is already helping!
           </h4>
@@ -120,7 +120,7 @@ export default function GoodDeed({ goodDeedData, me }) {
       <button
         className="pr-3"
         onClick={onJoin}
-        className="md:absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300"
+        className="md:absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-black rounded bg-sky-100 hover:bg-orange-300 text-sm"
       >
         Be Kind & Help {goodDeed.host.firstName} {goodDeed.host.lastName}
       </button>
@@ -148,7 +148,7 @@ export default function GoodDeed({ goodDeedData, me }) {
   // }
 
   return (
-    <div className="w-full goodDeed">
+    <div className="w-2/3 goodDeed mx-auto">
       <div className="flex flex-row flex-wrap w-full p-3 mt-2 antialiased bg-white rounded-lg shadow-lg">
         <div className="relative flex flex-row flex-wrap w-full px-3">
           <div className="relative w-full pt-3 font-semibold text-gray-700 md:pt-0">
@@ -170,35 +170,28 @@ export default function GoodDeed({ goodDeedData, me }) {
             {/* </svg> */}
             {/* </div>  }  */}
             {/* end of wanting dynamic potential points */}
-            <div className="pb-4 cursor-pointer text-normal hover:text-cyan-700 text-cyan-900">
+            <div className="pb-4 cursor-pointer text-normal hover:text-cyan-700 text-black">
               <Link to={`/profile/${goodDeed.host._id}`}>
                 {goodDeed.host.firstName} {goodDeed.host.lastName}
               </Link>
             </div>
-            <div className="pb-1 text-normal text-cyan-900">
-              <span className="">
-                {/* //! get good deed description */}
-                <b>Description:</b> {goodDeed.deedText}
-              </span>
-            </div>
-            <div className="pb-1 text-normal text-cyan-900">
+            <div className="pb-1 text-normal text-black">
               <span className="">
                 {/* //! get good deed location */}
-                <b>Location:</b>
                 {goodDeed.location}
               </span>
             </div>
-            <div className="pb-1 text-normal text-cyan-900">
+            <div className="pb-1 text-normal text-black">
               <span className="">
-                {/* //! get good deed dateTime */}
-                <b>Date:</b> {goodDeed.date}
+                {/* //! get good deed description */}
+                {goodDeed.deedText}
               </span>
             </div>
 
             <div>
               {Auth.loggedIn() &&
-                !viewComments &&
-                goodDeed.comments.length >= 1 ? (
+              !viewComments &&
+              goodDeed.comments.length >= 1 ? (
                 <button
                   onClick={() => {
                     setViewComments(true);
@@ -233,7 +226,7 @@ export default function GoodDeed({ goodDeedData, me }) {
             </div>
             {/* likes start */}
             {Auth.loggedIn() && !isLiked ? (
-              <button className="inline-block text-sky-700 " onClick={onLike}>
+              <button className="inline-block text-slate-400 " onClick={onLike}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="inline w-8 h-8 text-yellow"
@@ -256,14 +249,14 @@ export default function GoodDeed({ goodDeedData, me }) {
               </span>
             )}
             {Auth.loggedIn() && (
-              <span className="text-cyan-800">
+              <span className="text-slate-600">
                 {checkLikesCount(goodDeed.likes, "good deed")}
               </span>
             )}
             {/* likes end */}
             {/* be kind button */}
             {/* <div className="bottom-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
-              <button className="px-4 py-2 mt-1 font-bold text-white rounded bg-cyan-700 hover:bg-orange-300">
+              <button className="px-4 py-2 mt-1 font-bold text-black rounded bg-sky-100 hover:bg-orange-300">
                 Be Kind
                 {/* //! need to add helper after signup */}
             {/* </button> */}
