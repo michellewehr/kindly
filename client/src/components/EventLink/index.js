@@ -108,24 +108,14 @@ export default function EventLink() {
                         </div>
                         <div className="pb-1 text-normal text-black">
                           <span className="">
-                            <b>Location:</b>
-                            {event.location}
-                          </span>
-                        </div>
-                        <div className="pb-1 text-normal text-black">
-                          <span className="">
-                            <b>Date:</b> {event.date}
+                            <b>
+                              On {event.date} from {event.startTime} to{" "}
+                              {event.endTime} in {event.location}
+                            </b>
                           </span>
                         </div>
                         <div className="pb-1 text-normal text-black">
                           <span className="">{event.description}</span>
-                        </div>
-
-                        <div className="pb-1 text-normal text-black">
-                          <span className="">
-                            <b>Time:</b>{" "}
-                            {event.startTime + " - " + event.endTime}
-                          </span>
                         </div>
                         <div className="pb-1 text-normal text-black hover:text-orange-300">
                           <a href={event.url}>
@@ -163,7 +153,7 @@ export default function EventLink() {
                 <button
                   onClick={reRoute}
                   type="button"
-                  class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
+                  class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-sky-100 text-base font-medium text-black hover:bg-orange-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-200 sm:text-sm"
                 >
                   <Link to="{/}">Close</Link>
                 </button>

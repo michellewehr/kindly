@@ -100,12 +100,12 @@ export default function Sidebar() {
           )}
         </div>
         {/* End of upcoming events */}
-        <div className="w-5/6 mx-auto mb-2 text-center  rounded-lg p-1 max-h-96">
+        <div className="w-5/6 mx-auto mb-2 text-center rounded-lg p-1 max-h-96">
           <h2 className="mb-1 underline py-2 rounded-lg text-xl font-bold">
             Your Upcoming Good Deeds
           </h2>
         </div>
-        <div className="w-5/6 mx-auto mb-2 text-center border-4 border-orange-300 rounded-lg p-1 max-h-96 overflow-auto">
+        <div className="w-5/6 mx-auto mb-2 text-center bg-white border-4 border-orange-300 rounded-lg p-1 max-h-96 overflow-auto">
           {/* <h2 className="mb-1 underline bg-orange-300 py-2 rounded-lg">Good Deads</h2> */}
           {/* div for good deeds */}
           {myGoodDeeds.length ? (

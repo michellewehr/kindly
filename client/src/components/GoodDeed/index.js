@@ -108,7 +108,7 @@ export default function GoodDeed({ goodDeedData, me }) {
         <div>
           <h4
             className="pr-3"
-            className="md:absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-black rounded bg-sky-100 hover:bg-orange-300 text-sm"
+            className="md:absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-black rounded bg-orange-100  text-sm"
           >
             {helperFirstName} {helperLastName} is already helping!
           </h4>
@@ -178,7 +178,7 @@ export default function GoodDeed({ goodDeedData, me }) {
             <div className="pb-1 text-normal text-black">
               <span className="">
                 {/* //! get good deed location */}
-                {goodDeed.location}
+                {goodDeed.date} in {goodDeed.location}
               </span>
             </div>
             <div className="pb-1 text-normal text-black">

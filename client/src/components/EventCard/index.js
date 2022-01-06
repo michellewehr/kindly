@@ -204,7 +204,7 @@ export default function EventCard({ event, me }) {
         <button
           className="pr-3"
           onClick={onJoin}
-          className="px-4 py-2 mx-3 mt-1 font-bold rounded bg-sky-100 hover:bg-orange-300"
+          className="px-4 py-2 mx-3 mt-1 text-black font-bold rounded bg-sky-100 hover:bg-orange-300"
         >
           Be Kind & Attend Event
         </button>
@@ -261,7 +261,7 @@ export default function EventCard({ event, me }) {
           )}
         </div>
         <div className="flex flex-row flex-wrap w-full px-3 md:w-2/3">
-          <div className="relative w-full pt-3 font-semibold text-left text-gray-700 md:pt-0">
+          <div className="xl:relative w-full pt-3 font-semibold text-left text-gray-700 md:pt-0">
             <div className="flex flex-row pb-1 text-2xl leading-tight text-amber-500">
               <Link to={`/event/${event._id}`}>{event.title}</Link>
               {/* verified check start */}
@@ -286,7 +286,7 @@ export default function EventCard({ event, me }) {
               )}
               {/* verified check end */}
             </div>
-            <div className="top-0 right-0 pt-3 text-sm text-amber-500 xl:absolute md:pt-0">
+            <div className="top-0 right-0 pt-3 text-sm text-amber-500 xl:absolute">
               Kindly Points: <b>+10</b>
             </div>
             <div className="pb-4 cursor-pointer text-normal hover:text-cyan-700 text-black">

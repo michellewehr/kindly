@@ -78,20 +78,14 @@ export default function GoodDeedLink() {
                           </Link>{" "}
                         </div>
                         <div className="pb-1 text-normal text-cyan-900">
-                          <span className="">
-                            <b>Description:</b> {goodDeed.deedText}
+                          <span className="bold">
+                            <b>
+                              {goodDeed.date} in {goodDeed.location}
+                            </b>
                           </span>
                         </div>
                         <div className="pb-1 text-normal text-cyan-900">
-                          <span className="">
-                            <b>Location:</b>
-                            {goodDeed.location}
-                          </span>
-                        </div>
-                        <div className="pb-1 text-normal text-cyan-900">
-                          <span className="">
-                            <b>Date:</b> {goodDeed.date}
-                          </span>
+                          <span className="">{goodDeed.deedText}</span>
                         </div>
                         {/* <div className="pb-1 text-normal text-cyan-900">
                           <span className="">
@@ -108,7 +102,7 @@ export default function GoodDeedLink() {
                 <button
                   onClick={routeChange}
                   type="button"
-                  class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
+                  class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-sky-100 text-base font-medium text-black hover:bg-orange-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-200 sm:text-sm"
                 >
                   <Link to="{/}">Close</Link>
                 </button>

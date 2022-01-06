@@ -41,21 +41,21 @@ export default function Profile(me) {
       {loading ? (
         <Loading />
       ) : (
-        <div className="w-full">
+        <div className="w-full bg-orange-100">
           <div className="mx-auto">
             <div className="flex flex-col bg-white shadow-xl"></div>
             {/* Main */}
             <div className="">
-              <div className="flex items-end mx-auto w-1/3	">
+              <div className="md:flex items-end mx-auto w-1/3 	">
                 <div className=" mx-auto w-1/2 m-3">
                   <img
                     className="antialiased rounded-lg shadow-lg"
                     src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                   />
                 </div>
-                <div className="flex mx-auto mb-3">
+                <div className="md:flex mx-auto mb-3">
                   <div className="mt-3 flex-col mx-auto text-center">
-                    <h3 className="font-bold text-4xl text-gray-900 text-4xl mb-3 md:text-lg">
+                    <h3 className="font-bold lg:text-4xl text-gray-900 sm:text-lg mb-3 md:text-lg">
                       {myData.firstName} {myData.lastName}
                     </h3>
                     <div className="">
@@ -80,12 +80,14 @@ export default function Profile(me) {
                 </div>
               </div>
             </div>
-            <div className="w-11/12 mx-auto mb-2 rounded bg-slate-100">
+            <div className="w-11/12 mx-auto mb-2 rounded">
               {/* beginining of event/good deed section*/}
               <div className="lg:flex">
                 {/* events */}
                 <div className="lg:w-1/2 m-2 md:w-full flex-col">
-                  <h2>Events (completed or upcoming)</h2>
+                  <h2 className="text-center lg:text-lg ">
+                    <b>All Events</b>
+                  </h2>
                   {/* for each event */}
                   {myData.events &&
                     myData.events.map((event) => (
@@ -159,7 +161,9 @@ export default function Profile(me) {
                 </div>
                 {/* good deeds */}
                 <div className="lg:w-1/2 m-2 md:w-full flex-col">
-                  <h2>Good Deeds (upcoming or completed)</h2>
+                  <h2 className="text-center lg:text-lg">
+                    <b>All Good Deeds</b>
+                  </h2>
                   {myGoodDeeds &&
                     myGoodDeeds.map((goodDeed) => (
                       <div className="flex-col p-3 mt-2 antialiased bg-white rounded-lg shadow-lg relative">
@@ -171,7 +175,7 @@ export default function Profile(me) {
                             Kindly Points: 10
                           </div>
                         </div>
-                        <div className="pb-4 cursor-pointer text-normal hover:text-cyan-700 text-black">
+                        <div className=" cursor-pointer text-normal hover:text-cyan-700 text-black">
                           <Link to={`/profile/${goodDeed.host._id}`}>
                             {goodDeed.host.firstName} {goodDeed.host.lastName}
                           </Link>
