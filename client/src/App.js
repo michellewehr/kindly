@@ -45,6 +45,7 @@ function App() {
           <Nav />
           <div className="min-h-full">
             <Routes>
+              <Route path="/landing" element={<Landing />} />
               <Route path="/" element={<Home />} />
               <Route exact path="/login" element={<Login />} />
               <Route exact path="/signup" element={<Signup />} />
