@@ -115,7 +115,7 @@ const typeDefs = gql`
     addReply(commentId: ID!, replyBody: String!): Comment
     joinEvent(eventId: ID!): Event
     leaveEvent(eventId: ID!): Event
-    cancelEvent(eventId: ID!): [Event]
+    cancelEvent(eventId: ID!): Event
     joinGoodDeed(goodDeedId: ID!): GoodDeed
     leaveGoodDeed(goodDeedId: ID!): GoodDeed
     cancelGoodDeed(goodDeedId: ID!): [GoodDeed]

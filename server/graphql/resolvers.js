@@ -343,10 +343,10 @@ const resolvers = {
         // delete the event fully
         const removeEvent = await Event.findByIdAndRemove(
           { _id: eventId },
-          { new: true }
+          // { new: true }
         );
         // return the new list of all events to verify the deleted event is no longer listed
-        return await Event.find({});
+        return removeEvent;
       }
       throw new AuthenticationError("You need to be logged in!");
     },

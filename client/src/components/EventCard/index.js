@@ -47,7 +47,33 @@ export default function EventCard({ events,event, me }) {
         console.log(e);
       }}
   });
-  const [cancelEvent] = useMutation(CANCEL_EVENT);
+
+    const [cancelEvent] = useMutation(CANCEL_EVENT, {
+    update(cache, { data: { cancelEvent } }) {
+      try {
+        const { me } = cache.readQuery({ query: QUERY_ME });
+        // console.log(events, cancelEvent, 'events, cancelEvent')
+        cache.writeQuery({
+
+          query: QUERY_ME,
+          data: { me: { ...me, events: me.events.filter((event) => event._id !== cancelEvent._id) } },
+
+        });
+      } catch (e) {
+        console.log(e);
+      }
+       const { events } = cache.readQuery({ query: QUERY_EVENTS });
+      cache.writeQuery({
+        query: QUERY_EVENTS,
+          data: { events: { ...events, events: events.filter((event) => event._id !== cancelEvent._id) } },
+
+      });
+    },
+  });
+
+
+
+  // const [cancelEvent] = useMutation(CANCEL_EVENT);
   const [isLiked, setLiked] = useState(false);
   // const [count, setCount] = useState(0);
   const [increaseScore] = useMutation(INCREASE_KINDLY_SCORE);
