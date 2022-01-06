@@ -1,102 +1,83 @@
-import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { ADD_COMMENT } from "../../utils/actions";
-import ReplyList from '../ReplyList';
 import { useState } from "react";
-import ReplyForm from '../ReplyForm';
+import { useMutation } from "@apollo/client";
+import { REMOVE_COMMENT } from "../../utils/mutations";
+import { QUERY_COMMENTS } from "../../utils/queries";
+import ReplyList from "../ReplyList";
+import ReplyForm from "../ReplyForm";
 
-
-export default function Comment({ comment }) {
+export default function Comment({ comment, eventId, goodDeedId, me }) {
   const [viewReplies, setViewReplies] = useState(false);
   const [addReply, setAddReply] = useState(false);
 
+  const [removeComment, { error }] = useMutation(REMOVE_COMMENT, {
+    update(cache, { data: { addComment } }) {
+      try {
+        const { comments } = cache.readQuery({ query: QUERY_COMMENTS });
+        cache.writeQuery({
+          query: QUERY_COMMENTS,
+          data: { comments: [removeComment, ...comments] },
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    },
+  });
 
-  // console.log(props.comments, 'Comments props line 4 in CommentsList');
-
-  // const state = useSelector((state) => {
-  //   return state;
-  // });
-
-  // const dispatch = useDispatch();
-
-  // const {
-  //   author,
-  //   commentText,
-  //   createdAt,
-  //   likes,
-  //   replies,
-  //   replyCount,
-  // } = comment;
-
-  // const {comment } = state;
-
-
+  const onDelete = async (e) => {
+    e.preventDefault();
+    const commentId = comment._id;
+    try {
+      await removeComment({ variables: { commentId, eventId, goodDeedId } });
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
-    <section className="overflow-hidden text-gray-600 body-font bg-sky-300">
-      <div className="container px-5 py-24 mx-auto">
+    <section className="overflow-hidden body-font  shadow-md rounded mx-5 my-1">
+      <div className="container px-5 mx-auto m-0">
         <div className="divide-y-2 divide-gray-100">
           <div className="flex flex-wrap py-8 md:flex-nowrap">
             <div className="flex flex-col flex-shrink-0 mb-6 md:w-64 md:mb-0">
-              <span className="font-semibold text-gray-700 title-font">
-                {/* get users name */}
-                {/* {comment.author} */}
+              <span className="font-semibold text-gray-700 title-font text-xl border-b-2 border-orange-300">
                 {comment.author.firstName} {comment.author.lastName}
-                {/* Author */}
-                {/* this is where we would call the imported user name concat function */}
+                <p className="text-sm text-gray-500 ">
+                  {comment.createdAt} {comment.date}
+                </p>
               </span>
-              <span className="mt-1 text-sm text-gray-500">
-                {/* get comment dateTime */}
-                {/* {comment.createdAt} */}
-              </span>
-            </div>
-            <div className="md:flex-grow">
-              <p className="leading-relaxed">
-                {/* get commentText */}
-                {comment.commentText}
-                {/* Glossier echo park pug, church-key sartorial biodiesel
-                vexillologist pop-up snackwave ramps cornhole. Marfa 3 wolf moon
-                party messenger bag selfies, poke vaporware kombucha
-                lumbersexual pork belly polaroid hoodie portland craft beer. */}
-              </p>
-              <a className="inline-flex items-center mt-4 text-indigo-500">
-                {/* get likeCount */}
-                Likes: {comment.likes}
-                <svg
-                  className="w-4 h-4 ml-2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M5 12h14"></path>
-                  <path d="M12 5l7 7-7 7"></path>
-                </svg>
-              </a>
-            </div>
-          </div>
-          <div>
-            {!viewReplies ? <button onClick={() => { setViewReplies(true) }}>View Replies</button> : <button onClick={() => { setViewReplies(false) }}>Hide Replies</button>}
-          </div>
-          <div>
-            <button onClick={() => { setAddReply(true) }}>Add Reply</button>
-          </div>
 
+            </div>
+            <div className="md:flex-grow ml-3">
+              <p className="leading-relaxed py-2">{comment.commentText}</p>
+            </div>
+            {/* delete comment button  */}
+            {comment.author._id === me._id && (
+              <div className="group">
+                <button onClick={onDelete}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-6 h-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    title="Delete comment"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+                <p className="invisible group-hover:block group-hover:visible">
+                  Delete Comment
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-      <div>
-        {addReply && <ReplyForm key={comment._id} commentId={comment._id} />}
-      </div>
-      {/* Replies */}
-      <div>
-        {comment.replies.length > 1 && viewReplies &&
-          <ReplyList
-            key={comment._id}
-            replies={comment.replies} />
-        }
-      </div>
     </section>
-  );
+  )
 }

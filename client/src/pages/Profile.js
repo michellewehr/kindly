@@ -1,183 +1,192 @@
-import FriendsList from "../components/FriendsList";
-import EventList from "../components/EventList";
-import GoodDeedList from "../components/GoodDeedList";
 import { useState } from "react";
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
-import { ADD_CONNECTION } from "../utils/mutations";
+import { Link } from "react-router-dom";
+import Loading from "../components/Loading";
 
-export default function Profile() {
+export default function Profile(me) {
   const { loading, data } = useQuery(QUERY_ME);
 
   const myData = data?.me || {};
-  console.log(myData, 'line 14 profile')
-  const events = myData?.events || [];
+  const myEvents = myData?.events || [];
   const myGoodDeeds = myData?.goodDeeds || [];
-  const myFriends = myData?.friends || [];
 
- const [renderEvents, toggleEvents] = useState(true);
+  const [renderEvents, toggleEvents] = useState(true);
 
- function toggleEventsDisplay() {
-   toggleEvents(!renderEvents);
- }
-  console.log(myData, "me");
-  console.log(myGoodDeeds, "good deeds");
-
-  const [addConnection, { error }] = useMutation(ADD_CONNECTION);
-
-  const handleAddConnection = async () => {
-    try {
-      await addConnection({
-        variables: {
-          id: myData.id,
-        },
-      });
-    } catch (e) {
-      console.error(e);
-    }
+  function toggleEventsDisplay() {
+    toggleEvents(!renderEvents);
   }
 
   return (
-    <div className="min-h-screen">
-      <div
-        className="overflow-hidden"
-        aria-labelledby="slide-over-title"
-        role="dialog"
-        aria-modal="true"
-      >
-        <div className="overflow-hidden">
-          {/* <!-- Background overlay, show/hide based on slide-over state. --> */}
-          <div className="" aria-hidden="true">
-            <div className=" right-0 h-full  max-w-full flex">
-              {/* <!--
-          Slide-over panel, show/hide based on slide-over state.
+    <div>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="w-full bg-orange-100">
+          <div className="mx-auto">
+            <div className="flex flex-col bg-white shadow-xl"></div>
 
-          Entering: "transform transition ease-in-out duration-500 sm:duration-700"
-            From: "translate-x-full"
-            To: "translate-x-0"
-          Leaving: "transform transition ease-in-out duration-500 sm:duration-700"
-            From: "translate-x-0"
-            To: "translate-x-full"
-        --> */}
-              <div className="w-screen max-w-2xl mx-auto">
-                <div className="flex flex-col bg-white shadow-xl">
-                  <div className="px-4 py-6 sm:px-6">
-                    <div className="flex items-start justify-between">
-                      <h2
-                        className="text-lg font-medium text-gray-900"
-                        id="slide-over-title"
+            <div className="">
+              <div className="items-end w-1/3 mx-auto md:flex ">
+                <div className="w-1/3 m-3 mx-auto ">
+                  <img
+                    className="antialiased rounded-lg shadow-lg"
+                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                    alt="User profile picture"
+                  />
+                </div>
+                <div className="mx-auto mb-3 md:flex">
+                  <div className="flex-col mx-auto mt-3 text-center">
+                    <h3 className="mb-3 font-bold text-gray-900 lg:text-4xl sm:text-lg md:text-lg">
+                      {myData.firstName} {myData.lastName}
+                    </h3>
+                    <div className="">
+                      <p className="px-6 mx-auto mb-2 bg-orange-300 rounded w-max">
+                        {myData.location}
+                      </p>
+                    </div>
+                    <div className="flex flex-row pt-1 mx-auto text-center space-around">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="items-end inline-block w-5 h-5 m-1"
+                        viewBox="0 0 20 20"
+                        fill="orange"
                       >
-                        Profile
-                      </h2>
-                      <button
-                        className="p-1 -ml-4 text-gray-400 focus:outline-none"
-                        aria-label="Connect with me" onClick={handleAddConnection}
-                      >Connect with me</button>
-                      <div className="ml-3 h-7 flex items-center">
-                        <button
-                          type="button"
-                          className="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-indigo-500"
-                        >
-                          <span className="sr-only">Close panel</span>
-                          {/* <!-- Heroicon name: outline/x --> */}
-                          <svg
-                            className="h-6 w-6"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            aria-hidden="true"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M6 18L18 6M6 6l12 12"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  {/* Main */}
-                  <div className="divide-y divide-gray-200">
-                    <div className="pb-6">
-                      <div className="bg-indigo-700 h-24 sm:h-20 lg:h-28"></div>
-                      <div className="-mt-12 flow-root px-4 sm:-mt-8 sm:flex sm:items-end sm:px-6 lg:-mt-15">
-                        <div>
-                          <div className="-m-1 flex">
-                            <div className="inline-flex rounded-lg overflow-hidden border-4 border-white">
-                              <img
-                                className="flex-shrink-0 h-24 w-24 sm:h-40 sm:w-40 lg:w-48 lg:h-48"
-                                src="https://images.unsplash.com/photo-1501031170107-cfd33f0cbdcc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=256&h=256&q=80"
-                                alt=""
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <div className="mt-6 sm:ml-6 sm:flex-1">
-                          <div>
-                            <div className="flex items-center">
-                              <h3 className="font-bold text-xl text-gray-900 sm:text-2xl">
-                                {myData.firstName} {myData.lastName}
-                              </h3>
-                              <span className="ml-2.5 bg-green-400 flex-shrink-0 inline-block h-2 w-2 rounded-full">
-                                <span className="sr-only">Online</span>
-                              </span>
-                            </div>
-
-                            <p className="text-sm text-gray-500">
-                              Location:{myData.location}
-                            </p>
-                            <p className="text-sm text-gray-500">
-                              Kindly Points:{myData.kindlyPoints}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="px-4 py-5 sm:px-0 sm:py-0">
-                      <dl className="space-y-8 sm:divide-y sm:divide-gray-200 sm:space-y-0">
-                        <div className="sm:flex sm:px-6 sm:py-5">
-                          <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0 lg:w-48">
-                            <div className="text-center">
-                              {renderEvents ? (
-                                <button onClick={toggleEventsDisplay}>
-                                  View Upcoming Good Deeds
-                                </button>
-                              ) : (
-                                <button onClick={toggleEventsDisplay}>
-                                  View Upcoming Events
-                                </button>
-                              )}
-                            </div>
-                            {renderEvents ? (
-                              <EventList events={events} host={data?.me} />
-                            ) : (
-                              <GoodDeedList />
-                            )}
-                          </dt>
-                          <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:ml-6 sm:col-span-2"></dd>
-                        </div>
-                        <div className="sm:flex sm:px-6 sm:py-5">
-                          <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0 lg:w-48">
-                            Connections
-                          </dt>
-                          <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:ml-6 sm:col-span-2">
-                            {myData.connections}
-                          </dd>
-                        </div>
-                        <div className="sm:flex sm:px-6 sm:py-5"></div>
-                      </dl>
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                      <p className="items-start ml-1 ext-gray-900">
+                        Kindly Score: {myData.kindlyScore}
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <div className="w-11/12 mx-auto mb-2 rounded">
+              {/* beginining of event/good deed section*/}
+              <div className="lg:flex">
+                {/* events */}
+                <div className="flex-col m-2 lg:w-1/2 md:w-full">
+                  <h2 className="text-center lg:text-lg ">
+                    <b>All Events</b>
+                  </h2>
+                  {/* for each event */}
+                  {myData.events &&
+                    myData.events.map((event) => (
+                      <div
+                        key={event._id}
+                        className="relative flex-col p-3 mt-2 antialiased bg-white rounded-lg shadow-lg"
+                      >
+                        <div className="flex-row">
+                          <div className="pb-1 text-2xl text-amber-500">
+                            <span>{event.title}</span>
+                            {event.verifyNumber >= event.attendees.length && (
+                              <div className="inline-block group">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  className="inline-block w-5 h-5 mx-4"
+                                  viewBox="0 0 20 20"
+                                  fill="currentColor"
+                                >
+                                  <path
+                                    fillRule="evenodd"
+                                    d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                    clipRule="evenodd"
+                                  />
+                                </svg>
+                                <p className="invisible inline-block text-sm group-hover:visible">
+                                  Event Verified!
+                                </p>
+                              </div>
+                            )}
+
+                          </div>
+                          <div className="absolute top-0 right-0 m-1 text-sm">
+                            Kindly Points: 10
+                          </div>
+                        </div>
+                        <div className="text-black cursor-pointer text-normal hover:text-cyan-700">
+                          <Link
+                            to={`/profile/${event.host._id}`}
+                            style={{ fontWeight: 700 }}
+                          >
+                            {event.host.firstName} {event.host.lastName}
+                          </Link>
+                        </div>
+
+                        <div className="flex">
+                          <p className="">
+                            {event.date} from {event.startTime} to{" "}
+                            {event.endTime} in {event.location}
+                          </p>
+                        </div>
+                        <div className="flex">
+                          <p className="">{event.description}</p>
+                        </div>
+                        <div className="flex">
+                          <div className="w-2/3 hover:text-orange-500">
+                            <a href={event.url}>
+                              <span className="w-1/2">
+                                <i>Event Website</i>
+                              </span>
+                            </a>
+                          </div>
+
+                          {/* hover to see attendees list */}
+                          <div className="relative flex flex-col group w-max">
+                            <span className="cursor-pointer">
+                              {event.attendees.length - 1} kind attendees
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+
+                </div>
+
+                {/* good deeds */}
+                <div className="flex-col m-2 lg:w-1/2 md:w-full">
+                  <h2 className="text-center lg:text-lg">
+                    <b>All Good Deeds</b>
+                  </h2>
+                  {myGoodDeeds &&
+                    myGoodDeeds.map((goodDeed) => (
+                      <div className="relative flex-col p-3 mt-2 antialiased bg-white rounded-lg shadow-lg">
+                        <div className="flex-row">
+                          <div className="pb-1 text-2xl text-amber-500">
+                            <span>{goodDeed.title}</span>
+                          </div>
+                          <div className="absolute top-0 right-0 m-1">
+                            Kindly Points: 10
+                          </div>
+                        </div>
+                        <div className="text-black cursor-pointer text-normal hover:text-cyan-700">
+                          <Link
+                            to={`/profile/${goodDeed.host._id}`}
+                            style={{ fontWeight: 700 }}
+                          >
+                            {goodDeed.host.firstName} {goodDeed.host.lastName}
+                          </Link>
+                        </div>
+                        <div className="flex">
+                          <p className="">{goodDeed.deedText}</p>
+                        </div>
+                        <div className="flex">
+                          <p className="">
+                            {goodDeed.date} in {goodDeed.location}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+
+              <div className="sm:flex sm:px-6 sm:py-5"></div>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

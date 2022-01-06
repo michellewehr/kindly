@@ -10,19 +10,14 @@ export default function ReplyList({ replies }) {
       </div>
       {/* //! get reply data */}
       <div className="card-body">
-        {
-          replies.map((reply) => (
-            <div key={reply._id} className="">
-              <p className="" >
-                {reply.replyBody} </p>
-                <Link
-                  to={`/profile/${reply.author}`}
-                  style={{ fontWeight: 700 }}
-                >Get Author on get created at{reply.createdAt}
-                </Link>
-              
-            </div>
-          ))}
+        {replies.map((reply) => (
+          <div key={reply._id} className="">
+            <p className="">{reply.replyBody} </p>
+            <Link to={`/profile/${reply.author}`} style={{ fontWeight: 700 }}>
+              {/* {reply.author.firstName} on get created at{reply.createdAt} */}
+            </Link>
+          </div>
+        ))}
       </div>
     </div>
   );

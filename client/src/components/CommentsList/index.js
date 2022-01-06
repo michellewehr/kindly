@@ -1,13 +1,15 @@
-import Comment from '../Comment';
+import Comment from "../Comment";
 
-export default function CommentsList({ comments }) {
+export default function CommentsList({ comments, eventId, goodDeedId, me }) {
   //  console.log(comments)
   return (
     <div>
       {comments.map((comment) => (
         <Comment
-          key={comment._id}
           comment={comment}
+          eventId={eventId}
+          goodDeedId={goodDeedId}
+          me={me}
         // _id={comment._id}
         // commentText={comment.commentText}
         // likes={comment.likes}
@@ -15,6 +17,7 @@ export default function CommentsList({ comments }) {
         // author={comment.author}
         />
       ))}
+
     </div>
-  )
+  );
 }

@@ -1,5 +1,4 @@
-const { gql } = require('apollo-server-express');
-
+const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
   type User {
@@ -16,7 +15,7 @@ const typeDefs = gql`
   }
 
   type Auth {
-    user: User,
+    user: User
     token: ID!
   }
 
@@ -34,6 +33,8 @@ const typeDefs = gql`
     image: String
     comments: [Comment]
     likes: Int
+    verify: [Verify]
+    isVerified: Boolean
   }
 
   type GoodDeed {
@@ -65,34 +66,66 @@ const typeDefs = gql`
     createdAt: String
   }
 
+  type Verify {
+    _id: ID
+    event: Event
+    verifyNumber: Int
+    user: User
+  }
+
   type Query {
     me: User
     users: [User]
     user(_id: ID!): User
     events: [Event]
-    event(_id: ID, hostId: ID, attendeeId: ID): Event
+    event(_id: ID): Event
     goodDeeds: [GoodDeed]
-    goodDeed(_id: ID, hostId: ID, attendeeId: ID): GoodDeed
+    goodDeed(_id: ID): GoodDeed
   }
 
   type Mutation {
-    createUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
+    createUser(
+      firstName: String!
+      lastName: String!
+      email: String!
+      password: String!
+      location: String!
+    ): Auth
     login(email: String!, password: String!): Auth
-    createEvent( title: String!, location: String!, description: String!, date: String!, startTime: String!, endTime: String!, url: String!, image: String!): Event
-    createGoodDeed(title: String!, deedText: String!, date: String!, location: String!): GoodDeed
+    createEvent(
+      title: String!
+      location: String!
+      description: String!
+      date: String!
+      startTime: String!
+      endTime: String!
+      url: String!
+      image: String!
+    ): Event
+    createGoodDeed(
+      title: String!
+      deedText: String!
+      date: String!
+      location: String!
+    ): GoodDeed
     addConnection(connectionId: ID!): User
     removeConnection(connectionId: ID!): User
-    addComment(eventId: ID, goodDeedId: ID, commentText: String!): Event
+    addEventComment(eventId: ID, commentText: String!): Event
+    addGoodDeedComment(goodDeedId: ID, commentText: String!): GoodDeed
     addReply(commentId: ID!, replyBody: String!): Comment
     joinEvent(eventId: ID!): Event
     leaveEvent(eventId: ID!): Event
-    cancelEvent(eventId: ID!): [Event]
+    cancelEvent(eventId: ID!): Event
     joinGoodDeed(goodDeedId: ID!): GoodDeed
     leaveGoodDeed(goodDeedId: ID!): GoodDeed
-    cancelGoodDeed(goodDeedId: ID!): [GoodDeed]
+    cancelGoodDeed(goodDeedId: ID!): GoodDeed
     addEventLike(eventId: ID!): Event
     addGoodDeedLike(goodDeedId: ID!): GoodDeed
-
+    removeComment(commentId: ID!, eventId: ID, goodDeedId: ID): Event
+    addToVerifyNumber(eventId: ID!): Event
+    increaseKindlyScore(arr: [ID]): [User]
+    setVerify(eventId: ID!): Event
   }
-`
-module.exports = typeDefs
+`;
+
+module.exports = typeDefs;

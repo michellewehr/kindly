@@ -1,66 +1,178 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const QUERY_ME = gql`
-query me {
-  me {
-    _id
-    firstName
-    lastName
-    email
-    location
-    profilePicture
-    connections {
+  query me {
+    me {
       _id
       firstName
       lastName
-    }
-    events {
-      _id
-      host {
+      email
+      location
+      profilePicture
+      connections {
         _id
         firstName
         lastName
       }
-      title
-      location
-      description
-      date
-      startTime
-      endTime
-      url
-      image
-    }
-    goodDeeds {
-      _id
-      host {
+      events {
         _id
-        firstName
-        lastName
+        host {
+          _id
+          firstName
+          lastName
+        }
+        title
+        location
+        description
+        date
+        startTime
+        endTime
+        url
+        image
+        attendees {
+          _id
+        }
       }
-      title
-      date
-      deedText
-      location
-      likes
+      goodDeeds {
+        _id
+        host {
+          _id
+          firstName
+          lastName
+        }
+        title
+        date
+        deedText
+        location
+        likes
+      }
+      kindlyScore
     }
-    kindlyScore
   }
-}`;
+`;
 
 export const QUERY_USERS = gql`
-query users {
-  users {
-    _id
-    firstName
-    lastName
-    email
-    location
-    profilePicture
-    connections {
+  query users {
+    users {
       _id
       firstName
       lastName
+      email
+      location
+      profilePicture
+      connections {
+        _id
+        firstName
+        lastName
+      }
+      events {
+        _id
+        host {
+          _id
+          firstName
+          lastName
+        }
+        title
+        location
+        description
+        date
+        startTime
+        endTime
+        url
+        image
+      }
+      goodDeeds {
+        _id
+        host {
+          _id
+          firstName
+          lastName
+        }
+        title
+        date
+        deedText
+        location
+        likes
+      }
+      kindlyScore
     }
+  }
+`;
+
+export const QUERY_USER = gql`
+  query Query($id: ID!) {
+    user(_id: $id) {
+      _id
+      firstName
+      lastName
+      email
+      location
+      profilePicture
+      connections {
+        _id
+        firstName
+        lastName
+      }
+      events {
+        _id
+        host {
+          lastName
+          firstName
+          _id
+        }
+        title
+        attendees {
+          _id
+        }
+        location
+        description
+        startTime
+        date
+        endTime
+        url
+        image
+        comments {
+          _id
+        }
+        likes
+        verify {
+          _id
+          user {
+            _id
+          }
+          event {
+            _id
+          }
+          verifyNumber
+        }
+      }
+      goodDeeds {
+        _id
+        host {
+          _id
+          firstName
+          lastName
+        }
+        title
+        helper {
+          _id
+          firstName
+          lastName
+        }
+        date
+        deedText
+        location
+        comments {
+          _id
+        }
+        likes
+      }
+    }
+  }
+`;
+
+export const QUERY_EVENTS = gql`
+  {
     events {
       _id
       host {
@@ -69,14 +181,110 @@ query users {
         lastName
       }
       title
+      attendees {
+        _id
+        firstName
+        lastName
+      }
       location
+      description
+      date
+      isVerified
+      startTime
+      verify {
+        _id
+        user {
+          _id
+        }
+        event {
+          _id
+        }
+        verifyNumber
+      }
+      endTime
+      url
+      image
+      comments {
+        _id
+        commentText
+        createdAt
+        replies {
+          _id
+          replyBody
+        }
+        author {
+          _id
+          firstName
+          lastName
+        }
+        likes
+      }
+      likes
+    }
+  }
+`;
+
+export const QUERY_EVENT = gql`
+  query Event($id: ID) {
+    event(_id: $id) {
+      _id
+      host {
+        _id
+        firstName
+        lastName
+      }
+      title
+      attendees {
+        _id
+        firstName
+        lastName
+      }
+      location
+      isVerified
       description
       date
       startTime
       endTime
       url
       image
+      comments {
+        _id
+        author {
+          lastName
+          firstName
+          _id
+        }
+        likes
+        replies {
+          _id
+          author {
+            firstName
+            _id
+            lastName
+          }
+          replyBody
+          createdAt
+        }
+        commentText
+        createdAt
+      }
+      likes
+      verify {
+        _id
+        user {
+          _id
+        }
+        event {
+          _id
+        }
+        verifyNumber
+      }
     }
+  }
+`;
+
+export const QUERY_GOOD_DEEDS = gql`
+  {
     goodDeeds {
       _id
       host {
@@ -85,87 +293,7 @@ query users {
         lastName
       }
       title
-      date
-      deedText
-      location
-      likes
-    }
-    kindlyScore
-  }
-}`;
-
-export const QUERY_USER = gql`
-{
-  user {
-    _id
-    firstName
-    lastName
-    email
-    location
-    profilePicture
-      connections {
-      _id
-      firstName
-      lastName
-      kindlyScore
-    }
-      events {
-      _id
-      title
-      location
-      description
-      date
-         host {
-        _id
-        firstName
-        lastName
-        email
-        kindlyScore
-      }
-         attendees {
-        _id
-        firstName
-        lastName
-        email
-        kindlyScore
-      }
-      startTime
-      endTime
-      url
-      image
-         comments {
-        _id
-            author {
-          _id
-          firstName
-          lastName
-        }
-        commentText
-        createdAt
-        likes
-            replies {
-          _id
-               author {
-            _id
-            firstName
-            lastName
-          }
-          replyBody
-          createdAt
-        }
-      }
-    }
-    kindlyScore
-      goodDeeds {
-      _id
-         host {
-        _id
-        firstName
-        lastName
-        kindlyScore
-      }
-      title
-         helper {
+      helper {
         _id
         firstName
         lastName
@@ -173,139 +301,69 @@ export const QUERY_USER = gql`
       date
       deedText
       location
-      createdAt
-      likes
-         comments {
-        _id
-        commentText
-        createdAt
-        likes
-            author {
-          _id
-          firstName
-          lastName
-        }
-            replies {
-          _id
-          replyBody
-          createdAt
-               author {
-            _id
-            firstName
-            lastName
-          }
-        }
-      }
-    }
-  }
-}`;
-
-export const QUERY_EVENTS = gql`
-{
-    events {
-    _id
-      host {
-      _id
-      firstName
-      lastName
-    }
-    title
-      attendees {
-      _id
-      firstName
-      lastName
-    }
-    location
-    description
-    date
-    startTime
-    endTime
-    url
-    image
       comments {
-      _id
-      commentText
-        replies {
         _id
-        replyBody
-      }
         author {
-        _id
-        firstName
-        lastName
-      }
-      likes
-    }
-    likes
-  }
-}`;
-
-export const QUERY_EVENT = gql`
-{
-  event {
-    _id
-      host {
-      _id
-      firstName
-      lastName
-      kindlyScore
-    }
-    title
-      attendees {
-      _id
-      firstName
-      lastName
-      kindlyScore
-    }
-    location
-    description
-    date
-    startTime
-    endTime
-    url
-    image
-       comments {
-      _id
-         author {
-        _id
-        firstName
-        lastName
-      }
-      commentText
-      createdAt
-      likes
-         replies {
-        _id
-        replyBody
-        createdAt
-            author {
           _id
           firstName
           lastName
         }
+        commentText
+        likes
+        replies {
+          _id
+          replyBody
+          author {
+            _id
+          }
+        }
       }
+      likes
     }
   }
-} `;
+`;
 
-export const QUERY_GOOD_DEEDS = gql`
-{
-  goodDeeds {
-    _id
-    host {
+export const QUERY_GOOD_DEED = gql`
+  query GoodDeed($id: ID) {
+    goodDeed(_id: $id) {
       _id
-      firstName
-      lastName
+      host {
+        _id
+        firstName
+        lastName
+      }
+      title
+      helper {
+        _id
+      }
+      date
+      deedText
+      location
+
+      comments {
+        _id
+        author {
+          _id
+          firstName
+          lastName
+        }
+        commentText
+        likes
+        replies {
+          _id
+          author {
+            _id
+          }
+          replyBody
+        }
+      }
+      likes
     }
-    title
-    helper {
-      _id
-      firstName
-      lastName
-    }
-    date
-    deedText
-    location
+  }
+`;
+
+export const QUERY_COMMENTS = gql`
+  {
     comments {
       _id
       author {
@@ -314,61 +372,18 @@ export const QUERY_GOOD_DEEDS = gql`
         lastName
       }
       commentText
+      createdAt
       likes
       replies {
         _id
         replyBody
+        createdAt
         author {
-          _id
-        }
-      }
-    }
-    likes
-  }
-}`;
-
-export const QUERY_GOOD_DEED = gql`
-{
-  goodDeeds {
-    _id
-       host {
-      _id
-      firstName
-      lastName
-      kindlyScore
-    }
-    title
-      helper {
-      _id
-      firstName
-      lastName
-      kindlyScore
-    }
-    date
-    deedText
-    location
-    createdAt
-    likes
-      comments {
-      _id
-      author {
-        _id
-        firstName
-        lastName
-      }
-      commentText
-      createdAt
-      likes
-         replies {
-        _id
-            author {
           _id
           firstName
           lastName
         }
-        replyBody
-        createdAt
       }
     }
   }
-} `;
+`;

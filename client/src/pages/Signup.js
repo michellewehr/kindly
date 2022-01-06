@@ -3,9 +3,7 @@ import logo from "../assets/images/logo.png";
 import { useMutation } from "@apollo/client";
 import { CREATE_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
-//todo implement redux for state management
 
-//
 export default function Signup() {
   const [formState, setFormState] = useState({
     firstName: "",
@@ -18,23 +16,19 @@ export default function Signup() {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
     setFormState({
       ...formState,
       [name]: value,
     });
   };
 
-  // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    // error handling
     try {
       const { data } = await createUser({
         variables: { ...formState },
       });
-      // authorization
       Auth.login(data.createUser.token);
     } catch (e) {
       console.error(e);
@@ -42,22 +36,30 @@ export default function Signup() {
   };
 
   return (
-    <div className="w-screen h-screen bg-cover bg-no-repeat bg-[url('https://www.charities.org/sites/default/files/styles/large/public/volunteers18-5b2fe1c9a474be0036f6a7b2.jpg?itok=HeETal1T')]">
-      <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-md p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700 mx-auto">
+    <div className="  w-screen h-screen bg-cover bg-no-repeat bg-[url('https://www.charities.org/sites/default/files/styles/large/public/volunteers18-5b2fe1c9a474be0036f6a7b2.jpg?itok=HeETal1T')] grid grid-cols-6  z-0">
+      <div
+        className="col-span-3 m-20 "
+      >
+        <p className="z-10 text-6xl text-white font-poppins drop-shadow-lg shadow-white">
+          Sign up today to find and post volunteering opportunities near you!
+        </p>
+        <p> </p>
+      </div>
+
+      <div className=""></div>
+      <div className="max-w-sm col-span-2 pb-2 m-20 mx-auto bg-white border border-gray-200 rounded-lg shadow-md h-3/4 before:p-4 bt-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700">
         <form className="space-y-6" action="#" onSubmit={handleFormSubmit}>
-          <div className="text-xl font-medium text-gray-900 dark:text-white flex flex-row">
+          <div className="flex flex-row text-xl font-medium text-gray-900 dark:text-white">
             <img
-              className='fill-current h-12 w-14 mr-2" width="54" height="54" viewBox="0 0 54 54'
+              className='h-12 mr-2 fill-current w-14" width="54" height="54" viewBox="0 0 54 54'
               src={logo}
+              alt="Sign up page image of volunteer workers"
             />
-            <h2 className="text-4xl pl-2">Kindly Sign Up</h2>
+            <h2 className="pl-2 text-4xl">Kindly Sign Up</h2>
           </div>
           <div>
-            <label
-              for="firstName"
-              className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
-            >
-              firstName
+            <label for="firstName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" >
+              First Name
             </label>
             <input
               type=""
@@ -70,10 +72,7 @@ export default function Signup() {
             />
           </div>
           <div>
-            <label
-              for="lasName"
-              className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
-            >
+            <label for="lasName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
               Last Name
             </label>
             <input
@@ -87,10 +86,7 @@ export default function Signup() {
             />
           </div>
           <div>
-            <label
-              for="email"
-              className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
-            >
+            <label for="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
               Email Address
             </label>
             <input
@@ -105,9 +101,7 @@ export default function Signup() {
           </div>
           <div>
             <label
-              for="password"
-              className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
-            >
+              for="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" >
               Password
             </label>
             <input
@@ -120,14 +114,35 @@ export default function Signup() {
               onChange={handleChange}
             />
           </div>
+          <div>
+            <label
+              for="location" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" >
+              Location
+            </label>
+            <input
+              type="text"
+              name="location"
+              id="location"
+              placeholder="Home Town, State"
+              className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+              required=""
+              onChange={handleChange}
+            />
+          </div>
           <button
             type="submit"
-            className="w-full text-black hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-sky-100 dark:hover:bg-sky-700"
+            className="w-full text-black hover:bg-blue-200 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-sky-100 dark:hover:bg-sky-700"
           >
             Sign Up
           </button>
+          <div className="pb-8 text-sm font-medium text-gray-500 dark:text-gray-300">
+            Already have an account?{" "}
+            <a href="/login" className="text-blue-700 hover:underline dark:text-sky-700">
+              Login
+            </a>
+          </div>
         </form>
       </div>
     </div>
   );
-}
+};
