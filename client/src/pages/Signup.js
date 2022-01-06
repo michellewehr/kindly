@@ -36,8 +36,19 @@ export default function Signup() {
   };
 
   return (
-    <div className="w-screen h-screen bg-cover bg-no-repeat bg-[url('https://www.charities.org/sites/default/files/styles/large/public/volunteers18-5b2fe1c9a474be0036f6a7b2.jpg?itok=HeETal1T')] grid place-content-center">
-      <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-md p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700 mx-auto">
+    <div className="  w-screen h-screen bg-cover bg-no-repeat bg-[url('https://www.charities.org/sites/default/files/styles/large/public/volunteers18-5b2fe1c9a474be0036f6a7b2.jpg?itok=HeETal1T')] grid grid-cols-6  z-0">
+      <div
+        className=" m-20
+       col-span-3"
+      >
+        <p className="font-poppins text-6xl text-white drop-shadow-lg shadow-white z-10">
+          Sign up today to find and post volunteering opportunities near you!
+        </p>
+        <p> </p>
+      </div>
+
+      <div className=""></div>
+      <div className="bg-white shadow-md border border-gray-200 col-span-2 pb-2 m-20 rounded-lg max-w-sm h-3/4 before:p-4 bt-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700 mx-auto">
         <form className="space-y-6" action="#" onSubmit={handleFormSubmit}>
           <div className="text-xl font-medium text-gray-900 dark:text-white flex flex-row">
             <img
@@ -125,7 +136,7 @@ export default function Signup() {
           >
             Sign Up
           </button>
-          <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
+          <div className="text-sm font-medium text-gray-500 dark:text-gray-300 pb-8">
             Already have an account?{" "}
             <a href="/login" className="text-blue-700 hover:underline dark:text-sky-700">
               Login

@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { QUERY_EVENTS, QUERY_ME } from '../utils/queries';
 import Loading from "../components/Loading";
+import Signup from "./Signup"
 
 export default function Home() {
   const { loading, data } = useQuery(QUERY_EVENTS);
@@ -22,6 +23,7 @@ export default function Home() {
   return (
     <div>
       <div className="text-center">
+      {!loggedIn && <Signup />}
         {renderEvents ? <button onClick={toggleEventsDisplay}>View Good Deeds</button> : <button onClick={toggleEventsDisplay}>View Events</button>}
       </div>
 
