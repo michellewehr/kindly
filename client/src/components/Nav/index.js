@@ -1,14 +1,13 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Auth from "../../utils/auth";
 import logo from "../../assets/images/logo.png";
 
 export default function Nav() {
-  // function showNavigation() {
-  //   if (Auth.loggedIn()) {
+
   const logout = event => {
     event.preventDefault();
     Auth.logout();
-  }
+  };
 
   return (
     <div>
@@ -95,4 +94,4 @@ export default function Nav() {
       </nav>
     </div>
   );
-}
+};

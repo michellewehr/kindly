@@ -92,7 +92,7 @@ export default function Comment({ comment, eventId, goodDeedId }) {
           </div>
 
           <div>
-            <button onClick={() => { setAddReply(true); }} >
+            <button onClick={() => { setAddReply(true); }}>
               Add Reply
             </button>
           </div>

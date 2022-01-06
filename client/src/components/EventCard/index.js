@@ -1,8 +1,8 @@
 // import { createSourceEventStream } from "graphql"
 import CommentForm from "../CommentForm";
-import { Link } from "react-router-dom";
 import CommentsList from "../CommentsList";
-import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 import Auth from "../../utils/auth";
 import {
   CANCEL_EVENT,
@@ -322,8 +322,8 @@ export default function EventCard({ event, me }) {
             {/* button div for viewing comments/ hiding comments */}
             <div>
               {Auth.loggedIn() &&
-              !viewComments &&
-              event.comments.length >= 1 ? (
+                !viewComments &&
+                event.comments.length >= 1 ? (
                 <button
                   onClick={() => {
                     setViewComments(true);
