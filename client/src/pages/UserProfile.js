@@ -27,7 +27,7 @@ export default function UserProfile(props) {
             {/* Main */}
             <div className="">
               <div className="md:flex items-end mx-auto w-1/3	">
-                <div className=" mx-auto w-1/2 m-3">
+                <div className=" mx-auto w-1/3 m-3">
                   <img
                     className="antialiased rounded-lg shadow-lg"
                     src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
@@ -165,7 +165,10 @@ export default function UserProfile(props) {
                           </div>
                         </div>
                         <div className=" cursor-pointer text-normal hover:text-cyan-700 text-black">
-                          <Link to={`/profile/${goodDeed.host._id}`}>
+                          <Link
+                            to={`/profile/${goodDeed.host._id}`}
+                            style={{ fontWeight: 700 }}
+                          >
                             {goodDeed.host.firstName} {goodDeed.host.lastName}
                           </Link>
                         </div>
