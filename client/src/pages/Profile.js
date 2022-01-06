@@ -28,17 +28,17 @@ export default function Profile(me) {
             <div className="flex flex-col bg-white shadow-xl"></div>
 
             <div className="">
-              <div className="md:flex items-end mx-auto w-1/3 	">
-                <div className=" mx-auto w-1/3 m-3">
+              <div className="items-end w-1/3 mx-auto md:flex ">
+                <div className="w-1/3 m-3 mx-auto ">
                   <img
                     className="antialiased rounded-lg shadow-lg"
                     src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                     alt="User profile picture"
                   />
                 </div>
-                <div className="md:flex mx-auto mb-3">
-                  <div className="mt-3 flex-col mx-auto text-center">
-                    <h3 className="font-bold lg:text-4xl text-gray-900 sm:text-lg mb-3 md:text-lg">
+                <div className="mx-auto mb-3 md:flex">
+                  <div className="flex-col mx-auto mt-3 text-center">
+                    <h3 className="mb-3 font-bold text-gray-900 lg:text-4xl sm:text-lg md:text-lg">
                       {myData.firstName} {myData.lastName}
                     </h3>
                     <div className="">
@@ -49,13 +49,13 @@ export default function Profile(me) {
                     <div className="flex flex-row pt-1 mx-auto text-center space-around">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5  inline-block m-1 items-end"
+                        className="items-end inline-block w-5 h-5 m-1"
                         viewBox="0 0 20 20"
                         fill="orange"
                       >
                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                       </svg>
-                      <p className=" ext-gray-900 ml-1 items-start">
+                      <p className="items-start ml-1  ext-gray-900">
                         Kindly Score: {myData.kindlyScore}
                       </p>
                     </div>
@@ -67,7 +67,7 @@ export default function Profile(me) {
               {/* beginining of event/good deed section*/}
               <div className="lg:flex">
                 {/* events */}
-                <div className="lg:w-1/2 m-2 md:w-full flex-col">
+                <div className="flex-col m-2 lg:w-1/2 md:w-full">
                   <h2 className="text-center lg:text-lg ">
                     <b>All Events</b>
                   </h2>
@@ -76,7 +76,7 @@ export default function Profile(me) {
                     myData.events.map((event) => (
                       <div
                         key={event._id}
-                        className="flex-col p-3 mt-2 antialiased bg-white rounded-lg shadow-lg  relative"
+                        className="relative flex-col p-3 mt-2 antialiased bg-white rounded-lg shadow-lg"
                       >
                         <div className="flex-row">
                           <div className="pb-1 text-2xl text-amber-500">
@@ -102,11 +102,11 @@ export default function Profile(me) {
                             )}
                             ;
                           </div>
-                          <div className="absolute right-0 top-0 m-1 text-sm">
+                          <div className="absolute top-0 right-0 m-1 text-sm">
                             Kindly Points: 10
                           </div>
                         </div>
-                        <div className=" cursor-pointer text-normal hover:text-cyan-700 text-black">
+                        <div className="text-black cursor-pointer  text-normal hover:text-cyan-700">
                           <Link
                             to={`/profile/${event.host._id}`}
                             style={{ fontWeight: 700 }}
@@ -125,7 +125,7 @@ export default function Profile(me) {
                           <p className="">{event.description}</p>
                         </div>
                         <div className="flex">
-                          <div className=" w-2/3 hover:text-orange-500">
+                          <div className="w-2/3  hover:text-orange-500">
                             <a href={event.url}>
                               <span className="w-1/2">
                                 <i>Event Website</i>
@@ -142,26 +142,26 @@ export default function Profile(me) {
                         </div>
                       </div>
                     ))}
-                  ;
+
                 </div>
 
                 {/* good deeds */}
-                <div className="lg:w-1/2 m-2 md:w-full flex-col">
+                <div className="flex-col m-2 lg:w-1/2 md:w-full">
                   <h2 className="text-center lg:text-lg">
                     <b>All Good Deeds</b>
                   </h2>
                   {myGoodDeeds &&
                     myGoodDeeds.map((goodDeed) => (
-                      <div className="flex-col p-3 mt-2 antialiased bg-white rounded-lg shadow-lg relative">
+                      <div className="relative flex-col p-3 mt-2 antialiased bg-white rounded-lg shadow-lg">
                         <div className="flex-row">
                           <div className="pb-1 text-2xl text-amber-500">
                             <span>{goodDeed.title}</span>
                           </div>
-                          <div className="absolute right-0 top-0 m-1">
+                          <div className="absolute top-0 right-0 m-1">
                             Kindly Points: 10
                           </div>
                         </div>
-                        <div className=" cursor-pointer text-normal hover:text-cyan-700 text-black">
+                        <div className="text-black cursor-pointer  text-normal hover:text-cyan-700">
                           <Link
                             to={`/profile/${goodDeed.host._id}`}
                             style={{ fontWeight: 700 }}
@@ -187,7 +187,6 @@ export default function Profile(me) {
           </div>
         </div>
       )}
-      ;
     </div>
   );
 }
