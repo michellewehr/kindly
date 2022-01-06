@@ -286,7 +286,7 @@ export default function EventCard({ event, me }) {
               )}
               {/* verified check end */}
             </div>
-            <div className="top-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
+            <div className="top-0 right-0 pt-3 text-sm text-amber-500 xl:absolute md:pt-0">
               Kindly Points: <b>+10</b>
             </div>
             <div className="pb-4 cursor-pointer text-normal hover:text-cyan-700 text-black">
@@ -368,7 +368,7 @@ export default function EventCard({ event, me }) {
               </ul>
             </div>
             {/* button depending on attendence to join/leave/cancel event*/}
-            <div className="bottom-0 right-0 pt-3 text-sm text-amber-500 md:absolute md:pt-0">
+            <div className="bottom-0 right-0 pt-3 text-sm text-amber-500 xl:absolute md:pt-0 mr-0">
               {Auth.loggedIn() && <div>{checkAttendance()}</div>}
             </div>
           </div>

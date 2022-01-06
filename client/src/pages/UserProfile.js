@@ -35,7 +35,7 @@ export default function UserProfile(props) {
                 </div>
                 <div className="flex mx-auto mb-3">
                   <div className="mt-3 flex-col mx-auto text-center">
-                    <h3 className="font-bold text-4xl text-gray-900 sm:text-4xl mb-3">
+                    <h3 className="font-bold text-4xl text-gray-900 text-4xl mb-3">
                       {user.firstName} {user.lastName}
                     </h3>
                     <div className="">
@@ -60,12 +60,14 @@ export default function UserProfile(props) {
                 </div>
               </div>
             </div>
-            <div className="w-11/12 mx-auto mb-2 rounded bg-sky-100">
+            <div className=" mx-auto mb-2 rounded bg-sky-100">
               {/* beginining of event/good deed section*/}
-              <div className="flex">
+              <div className="lg:flex">
                 {/* events */}
-                <div className="w-1/2 m-2 md-w-full flex-col">
-                  <h2>Events (completed or upcoming)</h2>
+                <div className="lg:w-1/2 m-2 md:w-full flex-col ">
+                  <h2 className="text-center">
+                    Events (completed or upcoming)
+                  </h2>
                   {/* for each event */}
                   {user.events &&
                     user.events.map((event) => (
@@ -147,7 +149,7 @@ export default function UserProfile(props) {
                   {/* end of for each event */}
                 </div>
                 {/* good deeds */}
-                <div className="w-1/2 m-2 flex-col md-w-full sm-w-full">
+                <div className="lg:w-1/2 m-2 md:w-full flex-col">
                   <h2>Good Deeds (upcoming or completed)</h2>
                   {userGoodDeeds &&
                     userGoodDeeds.map((goodDeed) => (

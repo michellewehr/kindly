@@ -5,10 +5,10 @@ import logo from "../../assets/images/logo.png";
 export default function Nav() {
   // function showNavigation() {
   //   if (Auth.loggedIn()) {
-  const logout = event => {
+  const logout = (event) => {
     event.preventDefault();
     Auth.logout();
-  }
+  };
 
   return (
     <div>
@@ -23,7 +23,7 @@ export default function Nav() {
               src={logo}
             />
           </NavLink>
-          <span className="font-semibold text-4xl tracking-tight text-cyan-900	">
+          <span className="font-semibold text-4xl tracking-tight text-black	">
             <NavLink to="/">
               <h1>Kindly</h1>
             </NavLink>
@@ -47,12 +47,12 @@ export default function Nav() {
               <div className="text-sm lg:flex-grow">
                 <NavLink
                   to="/myprofile"
-                  className="block mt-4 lg:inline-block lg:mt-0 hover:text-slate-400 mr-4 text-sky-900 text-xl"
+                  className="block mt-4 lg:inline-block lg:mt-0 hover:text-slate-400 mr-4 text-black text-xl"
                 >
                   My Profile
                 </NavLink>
                 <button
-                  className="block mt-4 lg:inline-block lg:mt-0 hover:text-slate-400 mr-4 text-sky-900 text-xl"
+                  className="block mt-4 lg:inline-block lg:mt-0 hover:text-slate-400 mr-4 text-black text-xl"
                   onClick={logout}
                 >
                   Log Out
@@ -77,14 +77,15 @@ export default function Nav() {
             </div>
             <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
               <div className="text-sm lg:flex-grow">
-                <NavLink to="/login"
-                  className="block mt-4 lg:inline-block lg:mt-0 hover:text-slate-400 mr-4 text-sky-900 text-xl"
+                <NavLink
+                  to="/login"
+                  className="block mt-4 lg:inline-block lg:mt-0 hover:text-slate-400 mr-4 text-black text-xl"
                 >
                   Log In
                 </NavLink>
                 <NavLink
                   to="/signup"
-                  className="block mt-4 lg:inline-block lg:mt-0 hover:text-slate-400 mr-4 text-sky-900 text-xl"
+                  className="block mt-4 lg:inline-block lg:mt-0 hover:text-slate-400 mr-4 text-black text-xl"
                 >
                   Sign Up
                 </NavLink>

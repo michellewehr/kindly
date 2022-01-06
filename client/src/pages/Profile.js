@@ -55,7 +55,7 @@ export default function Profile(me) {
                 </div>
                 <div className="flex mx-auto mb-3">
                   <div className="mt-3 flex-col mx-auto text-center">
-                    <h3 className="font-bold text-4xl text-gray-900 sm:text-4xl mb-3">
+                    <h3 className="font-bold text-4xl text-gray-900 text-4xl mb-3 md:text-lg">
                       {myData.firstName} {myData.lastName}
                     </h3>
                     <div className="">
@@ -80,11 +80,11 @@ export default function Profile(me) {
                 </div>
               </div>
             </div>
-            <div className="w-11/12 mx-auto mb-2 rounded bg-sky-100">
+            <div className="w-11/12 mx-auto mb-2 rounded bg-slate-100">
               {/* beginining of event/good deed section*/}
-              <div className="flex">
+              <div className="lg:flex">
                 {/* events */}
-                <div className="w-1/2 m-2 md-w-full flex-col">
+                <div className="lg:w-1/2 m-2 md:w-full flex-col">
                   <h2>Events (completed or upcoming)</h2>
                   {/* for each event */}
                   {myData.events &&
@@ -120,7 +120,7 @@ export default function Profile(me) {
                             Kindly Points: 10
                           </div>
                         </div>
-                        <div className=" cursor-pointer text-normal hover:text-cyan-700 text-cyan-900">
+                        <div className=" cursor-pointer text-normal hover:text-cyan-700 text-black">
                           <Link
                             to={`/profile/${event.host._id}`}
                             style={{ fontWeight: 700 }}
@@ -129,25 +129,16 @@ export default function Profile(me) {
                           </Link>
                         </div>
                         <div className="flex">
-                          <p className="w-2/3">
-                            <b>Description: </b> {myData.description}
-                          </p>
-                          <p className="w-1/3">
-                            <b>Location: </b> {myData.location}
+                          <p className="">
+                            {event.date} from {event.startTime} to{" "}
+                            {event.endTime} in {event.location}
                           </p>
                         </div>
                         <div className="flex">
-                          <p className="w-2/3">
-                            <b>Date: </b>
-                            {event.date}
-                          </p>
-                          <p className="w-1/3">
-                            <b>Time: </b>
-                            {event.startTime} - {event.endTime}
-                          </p>
+                          <p className="">{event.description}</p>
                         </div>
                         <div className="flex">
-                          <div className=" w-2/3 hover:text-orange-300">
+                          <div className=" w-2/3 hover:text-orange-500">
                             <a href={event.url}>
                               <span className="w-1/2">
                                 <i>Event Website</i>
@@ -167,7 +158,7 @@ export default function Profile(me) {
                   {/* end of for each event */}
                 </div>
                 {/* good deeds */}
-                <div className="w-1/2 m-2 flex-col md-w-full sm-w-full">
+                <div className="lg:w-1/2 m-2 md:w-full flex-col">
                   <h2>Good Deeds (upcoming or completed)</h2>
                   {myGoodDeeds &&
                     myGoodDeeds.map((goodDeed) => (
@@ -180,27 +171,17 @@ export default function Profile(me) {
                             Kindly Points: 10
                           </div>
                         </div>
-                        <div className="pb-4 cursor-pointer text-normal hover:text-cyan-700 text-cyan-900">
+                        <div className="pb-4 cursor-pointer text-normal hover:text-cyan-700 text-black">
                           <Link to={`/profile/${goodDeed.host._id}`}>
                             {goodDeed.host.firstName} {goodDeed.host.lastName}
                           </Link>
                         </div>
                         <div className="flex">
-                          <p className="w-2/3">
-                            <b>Description: </b> {goodDeed.deedText}
-                          </p>
-                          <p className="w-1/3">
-                            <b>Location: </b> {goodDeed.location}
-                          </p>
+                          <p className="">{goodDeed.deedText}</p>
                         </div>
                         <div className="flex">
-                          <p className="w-2/3">
-                            <b>Date: </b>
-                            {goodDeed.date}
-                          </p>
-                          <p className="w-1/3">
-                            <b>Time: </b>
-                            {goodDeed.time}
+                          <p className="">
+                            {goodDeed.date} in {goodDeed.location}
                           </p>
                         </div>
                         {/* button depending on attendence to join/leave/cancel event*/}

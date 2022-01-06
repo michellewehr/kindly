@@ -76,7 +76,7 @@ export default function GoodDeed({ goodDeedData, me }) {
         <div>
           <button
             onClick={onCancel}
-            className="md:absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-black rounded bg-sky-100 hover:bg-orange-300 text-sm"
+            className="lg:absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-black rounded bg-sky-100 hover:bg-orange-300 text-sm"
           >
             Cancel Good Deed
           </button>

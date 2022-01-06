@@ -26,9 +26,11 @@ export default function Home() {
   return (
     <div>
       {/* <Header /> */}
-      <div className="text-center bg-orange-300">
+      <div className="text-center bg-orange-300 bold">
         {renderEvents ? (
-          <button onClick={toggleEventsDisplay}>View Good Deeds</button>
+          <button className="text-green" onClick={toggleEventsDisplay}>
+            View Good Deeds
+          </button>
         ) : (
           <button onClick={toggleEventsDisplay}>View Events</button>
         )}
