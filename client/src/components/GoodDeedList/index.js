@@ -13,8 +13,6 @@ export default function GoodDeedList({ me }) {
   const [showSuccess, setShowSuccess] = useState(false);
   const goodDeedData = data?.goodDeeds || [];
   const userMeData = me || {};
-  console.log(goodDeedData, "list good deed data");
-  // console.log(goodDeedData)
   if (loading) return <Loading />;
 
   function onClose() {
@@ -45,7 +43,7 @@ export default function GoodDeedList({ me }) {
                 onClick={() => {
                   setGoodDeedModalOpen(true);
                 }}
-                className="absolute right-0 top-0 h-16 px-4 py-2 mt-1 mr-2 font-bold text-black rounded bg-sky-100 hover:bg-orange-300"
+                className="absolute top-0 right-0 h-16 px-4 py-2 mt-1 mr-2 font-bold text-black rounded bg-sky-100 hover:bg-orange-300"
               >
                 Create Good Deed
               </button>

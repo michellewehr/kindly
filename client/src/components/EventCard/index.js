@@ -16,68 +16,9 @@ import { QUERY_ME, QUERY_EVENTS } from "../../utils/queries";
 import { useMutation } from "@apollo/client";
 import { checkLikesCount } from "../../utils/likesCountFormatter";
 
-export default function EventCard({ events,event, me }) {
-  const [viewComments, setViewComments] = useState(false);
-  const [addComment, setAddComment] = useState(false);
-  const [joinEvent] = useMutation(JOIN_EVENT,{
-    update(cache, { data: { joinEvent } }) {
-      try {
-        const { me } = cache.readQuery({ query: QUERY_ME });
-        cache.writeQuery({
-          query: QUERY_ME,
-          data: { me: { ...me, events: [...me.events, joinEvent] } },
-        });
-      } catch (e) {
-        console.log(e);
-      }}
-  });
-
-  const [leaveEvent] = useMutation(LEAVE_EVENT, {
-    update(cache, { data: { leaveEvent } }) {
-      try {
-        const { me } = cache.readQuery({ query: QUERY_ME });
-        console.log(events, leaveEvent, 'events, leaveEvent')
-        cache.writeQuery({
-
-          query: QUERY_ME,
-          data: { me: { ...me, events: me.events.filter((event) => event._id !== leaveEvent._id) } },
-
-        });
-      } catch (e) {
-        console.log(e);
-      }}
-  });
-
-    const [cancelEvent] = useMutation(CANCEL_EVENT, {
-    update(cache, { data: { cancelEvent } }) {
-      try {
-        const { me } = cache.readQuery({ query: QUERY_ME });
-        // console.log(events, cancelEvent, 'events, cancelEvent')
-        cache.writeQuery({
-
-          query: QUERY_ME,
-          data: { me: { ...me, events: me.events.filter((event) => event._id !== cancelEvent._id) } },
-
-        });
-      } catch (e) {
-        console.log(e);
-      }
-       const { events } = cache.readQuery({ query: QUERY_EVENTS });
-      cache.writeQuery({
-        query: QUERY_EVENTS,
-          data: { events: { ...events, events: events.filter((event) => event._id !== cancelEvent._id) } },
-
-      });
-    },
-  });
-
-
-
-  // const [cancelEvent] = useMutation(CANCEL_EVENT);
+export default function EventCard({ events, event, me }) {
   const [isLiked, setLiked] = useState(false);
-  // const [count, setCount] = useState(0);
   const [increaseScore] = useMutation(INCREASE_KINDLY_SCORE);
-  // const [addVerification, { loading, error }] = useMutation(ADD_VERIFICATION);
   const [addLike] = useMutation(ADD_EVENT_LIKE);
   const [addVerification] = useMutation(ADD_VERIFICATION);
   const [showJoinSuccess, setShowJoinSuccess] = useState(false);
@@ -92,6 +33,63 @@ export default function EventCard({ events,event, me }) {
     day: "2-digit",
     year: "numeric",
   });
+
+  const [viewComments, setViewComments] = useState(false);
+  const [addComment, setAddComment] = useState(false);
+  const [joinEvent] = useMutation(JOIN_EVENT, {
+    update(cache, { data: { joinEvent } }) {
+      try {
+        const { me } = cache.readQuery({ query: QUERY_ME });
+        cache.writeQuery({
+          query: QUERY_ME,
+          data: { me: { ...me, events: [...me.events, joinEvent] } },
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  });
+
+  const [leaveEvent] = useMutation(LEAVE_EVENT, {
+    update(cache, { data: { leaveEvent } }) {
+      try {
+        const { me } = cache.readQuery({ query: QUERY_ME });
+        console.log(events, leaveEvent, 'events, leaveEvent')
+        cache.writeQuery({
+
+          query: QUERY_ME,
+          data: { me: { ...me, events: me.events.filter((event) => event._id !== leaveEvent._id) } },
+
+        });
+      } catch (e) {
+        throw new Error(e);
+      }
+    }
+  });
+
+  const [cancelEvent] = useMutation(CANCEL_EVENT, {
+    update(cache, { data: { cancelEvent } }) {
+      try {
+        const { me } = cache.readQuery({ query: QUERY_ME });
+        cache.writeQuery({
+
+          query: QUERY_ME,
+          data: { me: { ...me, events: me.events.filter((event) => event._id !== cancelEvent._id) } },
+
+        });
+      } catch (e) {
+        throw new Error(e)
+      }
+      const { events } = cache.readQuery({ query: QUERY_EVENTS });
+      cache.writeQuery({
+        query: QUERY_EVENTS,
+        data: { events: { ...events, events: events.filter((event) => event._id !== cancelEvent._id) } },
+
+      });
+    },
+  });
+
+
 
   for (let i = 0; i < attendees.length; i++) {
     kindlyAttendees.push(attendees[i]._id);
@@ -111,21 +109,17 @@ export default function EventCard({ events,event, me }) {
       arrUsersVerified.push(event.verify[i].user._id);
     }
     if (arrUsersVerified.includes(me._id)) {
-      console.log("i verified");
-      //try and add points
       return true;
     }
     return false;
   }
 
-  console.log(kindlyAttendees, "kind attendees");
-
   async function addKindlyPoints() {
     try {
       await increaseScore({ variables: { arr: kindlyAttendees } });
-      window.alert("adding kindly points");
+      window.alert("Woohoo! You got Kindly Points!");
     } catch (e) {
-      console.error(e);
+      throw new Error(e)
     }
   }
 
@@ -140,10 +134,8 @@ export default function EventCard({ events,event, me }) {
 
   function isVerified() {
     if (event.verify.length + 1 >= Math.ceil(attendees.length / 2)) {
-      console.log("after if statement");
       addKindlyPoints();
     }
-    console.log("after kindly points");
   }
 
   // check if date of event is behind the current date and return boolean
@@ -156,17 +148,14 @@ export default function EventCard({ events,event, me }) {
   };
 
   const onVerify = async (e) => {
-    console.log(event.verify.length, "before");
     e.preventDefault();
     const eventId = event._id;
     try {
       await addVerification({ variables: { eventId } });
     } catch (e) {
-      console.error(e);
+      throw new Error(e);
     }
-    console.log(event.verify.length, "after");
     isVerified();
-    console.log("running is verified");
   };
 
   const onLike = async (e) => {
@@ -175,7 +164,7 @@ export default function EventCard({ events,event, me }) {
     try {
       await addLike({ variables: { eventId } });
     } catch (e) {
-      console.error(e);
+      throw new Error(e);
     }
     setLiked(true);
   };
@@ -186,7 +175,7 @@ export default function EventCard({ events,event, me }) {
       const eventId = event._id;
       await joinEvent({ variables: { eventId } });
     } catch (e) {
-      console.error(e);
+      throw new Error(e)
     }
     setShowJoinSuccess(true);
   };
@@ -196,7 +185,7 @@ export default function EventCard({ events,event, me }) {
     try {
       await leaveEvent({ variables: { eventId } });
     } catch (e) {
-      console.error(e);
+      throw new Error(e);
     }
   };
 
@@ -205,9 +194,8 @@ export default function EventCard({ events,event, me }) {
     try {
       await cancelEvent({ variables: { eventId } });
     } catch (e) {
-      console.error(e);
+      throw new Error(e)
     }
-    // window.location.reload(false);
   };
 
   const checkAttendance = () => {
@@ -263,7 +251,7 @@ export default function EventCard({ events,event, me }) {
         <button
           className="pr-3"
           onClick={onJoin}
-          className="px-4 py-2 mx-3 mt-1 text-black font-bold rounded bg-sky-100 hover:bg-orange-300"
+          className="px-4 py-2 mx-3 mt-1 font-bold text-black rounded bg-sky-100 hover:bg-orange-300"
         >
           Be Kind & Attend Event
         </button>
@@ -275,18 +263,12 @@ export default function EventCard({ events,event, me }) {
     setViewComments(true);
     setAddComment(false);
   }
-  // if (!events.length) {
-  //   return (
-  //     <div>
-  //       <h3>No events yet!</h3>
-  //     </div>
-  //   )
-  // }
+
 
   return (
-    <div className="eventCard w-3/4 mx-auto">
+    <div className="w-3/4 mx-auto eventCard">
       <div className="flex flex-row flex-wrap w-full p-3 mt-2 antialiased bg-white rounded-lg shadow-lg">
-        <div className="w-full md:w-1/3 mt-2 mb-2">
+        <div className="w-full mt-2 mb-2 md:w-1/3">
           <img
             className="antialiased rounded-lg shadow-lg xl"
             src={event.image}
@@ -324,7 +306,7 @@ export default function EventCard({ events,event, me }) {
           )}
         </div>
         <div className="flex flex-row flex-wrap w-full px-3 md:w-2/3">
-          <div className="xl:relative w-full pt-3 font-semibold text-left text-gray-700 md:pt-0">
+          <div className="w-full pt-3 font-semibold text-left text-gray-700 xl:relative md:pt-0">
             <div className="flex flex-row pb-1 text-2xl leading-tight text-amber-500">
               <Link to={`/event/${event._id}`}>{event.title}</Link>
               {/* verified check start */}
@@ -352,23 +334,23 @@ export default function EventCard({ events,event, me }) {
             <div className="top-0 right-0 pt-3 text-sm text-amber-500 xl:absolute">
               Kindly Points: <b>+10</b>
             </div>
-            <div className="pb-4 cursor-pointer text-normal hover:text-cyan-700 text-black">
+            <div className="pb-4 text-black cursor-pointer text-normal hover:text-cyan-700">
               <Link to={`/profile/${event.host._id}`}>
                 {event.host.firstName} {event.host.lastName}
               </Link>{" "}
             </div>
-            <div className="pb-1 text-normal text-black">
+            <div className="pb-1 text-black text-normal">
               <span className="">
                 {event.date} from {event.startTime} to {event.endTime} in{" "}
                 {event.location}
               </span>
             </div>
 
-            <div className="pb-1 text-normal text-black">
+            <div className="pb-1 text-black text-normal">
               <span className="">{event.description}</span>
             </div>
 
-            <div className="pb-1 text-normal text-black hover:text-orange-400">
+            <div className="pb-1 text-black text-normal hover:text-orange-400">
               <Link to={event.url} target="_blank">
                 <span className="">
                   <i>Event Website</i>
@@ -431,7 +413,7 @@ export default function EventCard({ events,event, me }) {
               </ul>
             </div>
             {/* button depending on attendence to join/leave/cancel event*/}
-            <div className="bottom-0 right-0 pt-3 text-sm text-amber-500 xl:absolute md:pt-0 mr-0">
+            <div className="bottom-0 right-0 pt-3 mr-0 text-sm text-amber-500 xl:absolute md:pt-0">
               {Auth.loggedIn() && <div>{checkAttendance()}</div>}
             </div>
           </div>

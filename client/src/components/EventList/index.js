@@ -8,13 +8,8 @@ import SuccessModal from "../SuccessModal";
 export default function EventList({ events, me }) {
   const [eventModalOpen, setEventModalOpen] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  console.log(events, "line 11 ");
-  const userMeData = me || {};
-  console.log(userMeData, "logged in user id line 10");
 
-  // if (!events.length) {
-  //   return <div>No events found</div>;
-  // }
+  const userMeData = me || {};
 
   function onClose() {
     setEventModalOpen(false);

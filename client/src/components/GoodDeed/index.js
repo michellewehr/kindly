@@ -18,7 +18,6 @@ export default function GoodDeed({ goodDeedData, me }) {
   const [viewComments, setViewComments] = useState(false);
   const [addComment, setAddComment] = useState(false);
   const [addLike] = useMutation(ADD_GOOD_DEED_LIKE);
-  // const [cancelGoodDeed] = useMutation(CANCEL_GOOD_DEED);
   const [joinGoodDeed] = useMutation(JOIN_GOOD_DEED, {
     update(cache, { data: { joinGoodDeed } }) {
       try {
@@ -43,10 +42,11 @@ export default function GoodDeed({ goodDeedData, me }) {
         });
       } catch (e) {
         console.log(e);
-      }}
+      }
+    }
   });
 
-      const [cancelGoodDeed] = useMutation(CANCEL_GOOD_DEED, {
+  const [cancelGoodDeed] = useMutation(CANCEL_GOOD_DEED, {
     update(cache, { data: { cancelGoodDeed } }) {
       try {
         const { me } = cache.readQuery({ query: QUERY_ME });
@@ -59,11 +59,11 @@ export default function GoodDeed({ goodDeedData, me }) {
       } catch (e) {
         console.log(e);
       }
-       const { goodDeeds } = cache.readQuery({ query: QUERY_GOOD_DEEDS });
-       console.log(goodDeeds, 'good deeds query')
+      const { goodDeeds } = cache.readQuery({ query: QUERY_GOOD_DEEDS });
+      console.log(goodDeeds, 'good deeds query')
       cache.writeQuery({
         query: QUERY_GOOD_DEEDS,
-          data: { goodDeeds: { ...goodDeeds, goodDeeds: goodDeeds.filter((goodDeed) => goodDeed._id !== cancelGoodDeed._id) } },
+        data: { goodDeeds: { ...goodDeeds, goodDeeds: goodDeeds.filter((goodDeed) => goodDeed._id !== cancelGoodDeed._id) } },
 
       });
     },
@@ -71,7 +71,6 @@ export default function GoodDeed({ goodDeedData, me }) {
 
   const [isLiked, setLiked] = useState(false);
   const [increaseScore] = useMutation(INCREASE_KINDLY_SCORE);
-  // const [showPotentialPoints, setShowPotentialPoints] = useState(true);
 
   const goodDeed = goodDeedData || {};
 
@@ -125,7 +124,7 @@ export default function GoodDeed({ goodDeedData, me }) {
         <div>
           <button
             onClick={onCancel}
-            className="lg:absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-black rounded bg-sky-100 hover:bg-orange-300 text-sm"
+            className="bottom-0 right-0 px-4 py-2 mx-3 mt-1 text-sm font-bold text-black rounded lg:absolute bg-sky-100 hover:bg-orange-300"
           >
             Cancel Good Deed
           </button>
@@ -145,7 +144,7 @@ export default function GoodDeed({ goodDeedData, me }) {
             <button
               className="pr-3"
               onClick={onLeave}
-              className="md:absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-black rounded bg-sky-100 hover:bg-orange-300 text-sm"
+              className="bottom-0 right-0 px-4 py-2 mx-3 mt-1 text-sm font-bold text-black rounded md:absolute bg-sky-100 hover:bg-orange-300"
             >
               Leave Good Deed
             </button>
@@ -157,7 +156,7 @@ export default function GoodDeed({ goodDeedData, me }) {
         <div>
           <h4
             className="pr-3"
-            className="md:absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-black rounded bg-orange-100  text-sm"
+            className="bottom-0 right-0 px-4 py-2 mx-3 mt-1 text-sm font-bold text-black bg-orange-100 rounded md:absolute"
           >
             {helperFirstName} {helperLastName} is already helping!
           </h4>
@@ -169,7 +168,7 @@ export default function GoodDeed({ goodDeedData, me }) {
       <button
         className="pr-3"
         onClick={onJoin}
-        className="md:absolute bottom-0 right-0 px-4 py-2 mx-3 mt-1 font-bold text-black rounded bg-sky-100 hover:bg-orange-300 text-sm"
+        className="bottom-0 right-0 px-4 py-2 mx-3 mt-1 text-sm font-bold text-black rounded md:absolute bg-sky-100 hover:bg-orange-300"
       >
         Be Kind & Help {goodDeed.host.firstName} {goodDeed.host.lastName}
       </button>
@@ -197,7 +196,7 @@ export default function GoodDeed({ goodDeedData, me }) {
   // }
 
   return (
-    <div className="w-2/3 goodDeed mx-auto">
+    <div className="w-2/3 mx-auto goodDeed">
       <div className="flex flex-row flex-wrap w-full p-3 mt-2 antialiased bg-white rounded-lg shadow-lg">
         <div className="relative flex flex-row flex-wrap w-full px-3">
           <div className="relative w-full pt-3 font-semibold text-gray-700 md:pt-0">
@@ -219,18 +218,18 @@ export default function GoodDeed({ goodDeedData, me }) {
             {/* </svg> */}
             {/* </div>  }  */}
             {/* end of wanting dynamic potential points */}
-            <div className="pb-4 cursor-pointer text-normal hover:text-cyan-700 text-black">
+            <div className="pb-4 text-black cursor-pointer text-normal hover:text-cyan-700">
               <Link to={`/profile/${goodDeed.host._id}`}>
                 {goodDeed.host.firstName} {goodDeed.host.lastName}
               </Link>
             </div>
-            <div className="pb-1 text-normal text-black">
+            <div className="pb-1 text-black text-normal">
               <span className="">
                 {/* //! get good deed location */}
                 {goodDeed.date} in {goodDeed.location}
               </span>
             </div>
-            <div className="pb-1 text-normal text-black">
+            <div className="pb-1 text-black text-normal">
               <span className="">
                 {/* //! get good deed description */}
                 {goodDeed.deedText}
