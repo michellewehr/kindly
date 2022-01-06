@@ -1,21 +1,14 @@
-import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import ReplyList from "../ReplyList";
 import { useState } from "react";
-import ReplyForm from "../ReplyForm";
 import { useMutation } from "@apollo/client";
 import { REMOVE_COMMENT } from "../../utils/mutations";
 import { QUERY_COMMENTS } from "../../utils/queries";
-import { mergeDeep } from "@apollo/client/utilities";
+import ReplyList from "../ReplyList";
+import ReplyForm from "../ReplyForm";
 
 export default function Comment({ comment, eventId, goodDeedId, me }) {
   const [viewReplies, setViewReplies] = useState(false);
   const [addReply, setAddReply] = useState(false);
-  // const [removeComment] = useMutation(REMOVE_COMMENT);
-  // const commentAuthor = `${comment.author.firstName} ${comment.author.lastName}`;
-  console.log(comment.author.firstName, "first name");
 
-  //cache for delete comment
   const [removeComment, { error }] = useMutation(REMOVE_COMMENT, {
     update(cache, { data: { addComment } }) {
       try {
@@ -40,24 +33,6 @@ export default function Comment({ comment, eventId, goodDeedId, me }) {
     }
   };
 
-  // console.log(props.comments, 'Comments props line 4 in CommentsList');
-
-  // const state = useSelector((state) => {
-  //   return state;
-  // });
-
-  // const dispatch = useDispatch();
-
-  // const {
-  //   author,
-  //   commentText,
-  //   createdAt,
-  //   likes,
-  //   replies,
-  //   replyCount,
-  // } = comment;
-
-  // const {comment } = state;
   return (
     <section className="overflow-hidden text-gray-600 body-font  shadow-md rounded mx-5 my-1">
       <div className="container px-5 mx-auto m-0">
@@ -72,25 +47,10 @@ export default function Comment({ comment, eventId, goodDeedId, me }) {
                   {comment.createdAt}
                 </span>
               )}
+              ;
             </div>
             <div className="md:flex-grow">
               <p className="leading-relaxed">{comment.commentText}</p>
-              {/* <a className="inline-flex items-center mt-4 text-indigo-500"> */}
-              {/* get likeCount */}
-              {/* Likes: {comment.likes}
-                <svg
-                  className="w-4 h-4 ml-2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M5 12h14"></path>
-                  <path d="M12 5l7 7-7 7"></path>
-                </svg> */}
-              {/* </a> */}
             </div>
             {/* delete comment button  */}
             {comment.author._id === me._id && (
@@ -117,6 +77,7 @@ export default function Comment({ comment, eventId, goodDeedId, me }) {
               </div>
             )}
           </div>
+
           <div>
             {!viewReplies && comment.replies.length >= 1 && (
               <button
@@ -127,6 +88,7 @@ export default function Comment({ comment, eventId, goodDeedId, me }) {
                 View Replies
               </button>
             )}
+            ;
             {viewReplies && comment.replies.length >= 1 && (
               <button
                 onClick={() => {
@@ -136,7 +98,9 @@ export default function Comment({ comment, eventId, goodDeedId, me }) {
                 Hide Replies
               </button>
             )}
+            ;
           </div>
+
           <div>
             <button
               onClick={() => {
@@ -148,12 +112,13 @@ export default function Comment({ comment, eventId, goodDeedId, me }) {
           </div>
         </div>
       </div>
+
       <div>{addReply && <ReplyForm commentId={comment._id} />}</div>
-      {/* Replies */}
       <div>
         {comment.replies.length >= 1 && viewReplies && (
           <ReplyList replies={comment.replies} />
         )}
+        ;
       </div>
     </section>
   );

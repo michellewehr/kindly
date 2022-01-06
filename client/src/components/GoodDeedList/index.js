@@ -1,5 +1,5 @@
 import GoodDeed from "../GoodDeed";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { QUERY_GOOD_DEEDS } from "../../utils/queries";
 import { useQuery } from "@apollo/client";
 import Auth from "../../utils/auth";
@@ -35,7 +35,6 @@ export default function GoodDeedList({ me }) {
       {goodDeedModalOpen && (
         <GoodDeedModal onClose={onClose} onSubmitMod={onSubmitMod} />
       )}
-
       {loading ? (
         <div>Loading...</div>
       ) : (
@@ -65,8 +64,10 @@ export default function GoodDeedList({ me }) {
               // helper={goodDeed.helper}
             />
           ))}
+          ;
         </div>
       )}
+      ;
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import CommentForm from "../CommentForm";
 import CommentsList from "../CommentsList";
@@ -83,14 +83,13 @@ export default function GoodDeed({ goodDeedData, me }) {
         </div>
       );
     }
-    //check to see if there is helper
+
     if (helper) {
       const helperId = helper._id;
       const helperFirstName = helper.firstName;
       const helperLastName = helper.lastName;
-      console.log(helperId);
-      // setShowPotentialPoints(false);
-      //check to see if i am the helper and if so i can leave good deed
+
+      // if user is helper
       if (helperId === myId) {
         return (
           <div>
@@ -104,6 +103,7 @@ export default function GoodDeed({ goodDeedData, me }) {
           </div>
         );
       }
+
       return (
         <div>
           <h4
@@ -126,7 +126,6 @@ export default function GoodDeed({ goodDeedData, me }) {
       </button>
     );
   };
-  // end
 
   const onLike = async (e) => {
     e.preventDefault();
@@ -138,6 +137,7 @@ export default function GoodDeed({ goodDeedData, me }) {
     }
     setLiked(true);
   };
+
   // only in profile
   // if (!goodDeeds.length) {
   //   return (
@@ -211,6 +211,7 @@ export default function GoodDeed({ goodDeedData, me }) {
                   </button>
                 )
               )}
+              ;
             </div>
 
             <div>
@@ -223,7 +224,9 @@ export default function GoodDeed({ goodDeedData, me }) {
                   Add Comment
                 </button>
               )}
+              ;
             </div>
+
             {/* likes start */}
             {Auth.loggedIn() && !isLiked ? (
               <button className="inline-block text-slate-400 " onClick={onLike}>
@@ -237,7 +240,7 @@ export default function GoodDeed({ goodDeedData, me }) {
                 </svg>
               </button>
             ) : (
-              <span className="inline-block text-orange-500">
+              <span className="inline-block text-orange-400">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="inline-block w-8 h-8 text-yellow"

@@ -13,11 +13,9 @@ export default function GoodDeedLink() {
 
   function routeChange() {
     window.location.replace("/");
-  }
+  };
 
   const goodDeed = data?.goodDeed || {};
-  console.log(goodDeed, "from data");
-  console.log(goodDeed.title, "title good deed");
 
   return (
     <div>
@@ -113,4 +111,4 @@ export default function GoodDeedLink() {
       )}
     </div>
   );
-}
+};

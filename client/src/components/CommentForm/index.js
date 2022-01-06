@@ -4,9 +4,7 @@ import {
   ADD_EVENT_COMMENT,
   ADD_GOOD_DEED_COMMENT,
 } from "../../utils/mutations";
-import { QUERY_COMMENTS, QUERY_ME } from "../../utils/queries";
-
-// import { QUERY_COMMENTS, QUERY_ME } from "../../utils/queries";
+import { QUERY_COMMENTS } from "../../utils/queries";
 
 export default function CommentForm({ eventId, goodDeedId, onSubmit }) {
   const [commentText, setCommentText] = useState("");
@@ -39,36 +37,20 @@ export default function CommentForm({ eventId, goodDeedId, onSubmit }) {
     },
   });
 
-  //* code for users comments if we want/need it ( need to add comments/replies to me query)
-  //     const { me } = cache.readQuery({ query: QUERY_ME });
-  //     cache.writeQuery({
-  //       query: QUERY_ME,
-  //       data: { me: { ...me, comments: [addComment, ...me.comments, addComment] } },
-  //     });
-  //   },
-  // });
-
-  // update state based on form input changes
   const handleChange = (event) => {
     if (event.target.value.length <= 280) {
       setCommentText(event.target.value);
-      // setCharacterCount(event.target.value.length);
     }
   };
 
-  // submit form
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // console.log(commentText, 'comment text');
     if (eventId) {
       try {
         await addEventComment({
           variables: { commentText, eventId },
         });
-
-        // clear form value
         setCommentText("");
-        // setCharacterCount(0);
       } catch (e) {
         console.error(e);
       }
@@ -78,9 +60,7 @@ export default function CommentForm({ eventId, goodDeedId, onSubmit }) {
         await addGoodDeedComment({
           variables: { commentText, goodDeedId },
         });
-        // clear form value
         setCommentText("");
-        // setCharacterCount(0);
       } catch (e) {
         console.error(e);
       }

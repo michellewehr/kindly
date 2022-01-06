@@ -35,7 +35,7 @@ export default function NewGoodDeed({ onDeedSubmit, onSubmitMod }) {
       });
     },
   });
-  // update state based on form input changes
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };

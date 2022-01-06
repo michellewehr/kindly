@@ -46,7 +46,6 @@ export default function NewEvent({ onEventSubmit, showSuccessMod }) {
       await addEvent({
         variables: { ...formData },
       });
-      // console.log(data);
       setFormData({
         title: "",
         description: "",
@@ -226,4 +225,4 @@ export default function NewEvent({ onEventSubmit, showSuccessMod }) {
       </form>
     </div>
   );
-}
+};

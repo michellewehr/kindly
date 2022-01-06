@@ -1,13 +1,9 @@
-// import FriendsList from "../components/FriendsList";
-import EventList from "../components/EventList";
-import GoodDeedList from "../components/GoodDeedList";
 import { useState } from "react";
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 import { Link } from "react-router-dom";
 import Loading from "../components/Loading";
-// import { ADD_CONNECTION } from "../utils/mutations";
 
 export default function Profile(me) {
   const { loading, data } = useQuery(QUERY_ME);
@@ -22,20 +18,6 @@ export default function Profile(me) {
     toggleEvents(!renderEvents);
   }
 
-  // const [addConnection, { error }] = useMutation(ADD_CONNECTION);
-
-  // const handleAddConnection = async () => {
-  //   try {
-  //     await addConnection({
-  //       variables: {
-  //         id: myData.id,
-  //       },
-  //     });
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // };
-
   return (
     <div>
       {loading ? (
@@ -44,13 +26,14 @@ export default function Profile(me) {
         <div className="w-full bg-orange-100">
           <div className="mx-auto">
             <div className="flex flex-col bg-white shadow-xl"></div>
-            {/* Main */}
+
             <div className="">
               <div className="md:flex items-end mx-auto w-1/3 	">
                 <div className=" mx-auto w-1/3 m-3">
                   <img
                     className="antialiased rounded-lg shadow-lg"
                     src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                    alt="User profile picture"
                   />
                 </div>
                 <div className="md:flex mx-auto mb-3">
@@ -117,6 +100,7 @@ export default function Profile(me) {
                                 </p>
                               </div>
                             )}
+                            ;
                           </div>
                           <div className="absolute right-0 top-0 m-1 text-sm">
                             Kindly Points: 10
@@ -130,6 +114,7 @@ export default function Profile(me) {
                             {event.host.firstName} {event.host.lastName}
                           </Link>
                         </div>
+
                         <div className="flex">
                           <p className="">
                             {event.date} from {event.startTime} to{" "}
@@ -147,6 +132,7 @@ export default function Profile(me) {
                               </span>
                             </a>
                           </div>
+
                           {/* hover to see attendees list */}
                           <div className="relative flex flex-col group w-max">
                             <span className="cursor-pointer">
@@ -154,11 +140,11 @@ export default function Profile(me) {
                             </span>
                           </div>
                         </div>
-                        {/* button depending on attendence to join/leave/cancel event*/}
                       </div>
                     ))}
-                  {/* end of for each event */}
+                  ;
                 </div>
+
                 {/* good deeds */}
                 <div className="lg:w-1/2 m-2 md:w-full flex-col">
                   <h2 className="text-center lg:text-lg">
@@ -191,18 +177,17 @@ export default function Profile(me) {
                             {goodDeed.date} in {goodDeed.location}
                           </p>
                         </div>
-                        {/* button depending on attendence to join/leave/cancel event*/}
                       </div>
                     ))}
                 </div>
-                {/* good deed end */}
               </div>
+
               <div className="sm:flex sm:px-6 sm:py-5"></div>
-              {/* </dl> */}
             </div>
           </div>
         </div>
       )}
+      ;
     </div>
   );
 }

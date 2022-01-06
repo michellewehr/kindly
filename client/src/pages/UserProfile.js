@@ -5,17 +5,13 @@ import Loading from "../components/Loading";
 
 export default function UserProfile(props) {
   const { id } = useParams();
-  console.log(id);
   const { loading, data, error } = useQuery(QUERY_USER, {
     variables: { id: id },
   });
-  // console.log(data, 'user data')
+
   const user = data?.user || {};
-  //   console.log(userEvents, "user events");
   const userGoodDeeds = user.goodDeeds;
 
-  // console.log(userGoodDeeds, 'good deeds user')
-  // console.log(user, 'user data')
   return (
     <div>
       {loading ? (
@@ -31,6 +27,7 @@ export default function UserProfile(props) {
                   <img
                     className="antialiased rounded-lg shadow-lg"
                     src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                    alt="User profile picture"
                   />
                 </div>
                 <div className="md:flex mx-auto mb-3">
@@ -71,10 +68,7 @@ export default function UserProfile(props) {
                   {/* for each event */}
                   {user.events &&
                     user.events.map((event) => (
-                      <div
-                        key={event._id}
-                        className="flex-col p-3 mt-2 antialiased bg-white rounded-lg shadow-lg  relative"
-                      >
+                      <div key={event._id} className="flex-col p-3 mt-2 antialiased bg-white rounded-lg shadow-lg  relative" >
                         <div className="flex-row">
                           <div className="pb-1 text-2xl text-amber-500">
                             <span>{event.title}</span>
@@ -204,4 +198,4 @@ export default function UserProfile(props) {
       )}
     </div>
   );
-}
+};

@@ -1,9 +1,8 @@
 // import { createSourceEventStream } from "graphql"
 import CommentForm from "../CommentForm";
-import { Link } from "react-router-dom";
 import CommentsList from "../CommentsList";
-import JoinSuccessModal from "../JoinEventModal";
-import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 import Auth from "../../utils/auth";
 import {
   CANCEL_EVENT,
@@ -12,7 +11,6 @@ import {
   ADD_EVENT_LIKE,
   ADD_VERIFICATION,
   INCREASE_KINDLY_SCORE,
-  SET_VERIFY,
 } from "../../utils/mutations";
 // import { QUERY_ME } from "../../utils/queries";
 import { useMutation } from "@apollo/client";
@@ -35,12 +33,21 @@ export default function EventCard({ event, me }) {
   const hostId = event.host._id;
   const attendees = event.attendees;
   const kindlyAttendees = [hostId];
+
+  // format current date to match event date for comparison
+  const today = new Date().toLocaleString("en-us", {
+    month: "long",
+    day: "2-digit",
+    year: "numeric",
+  });
+
   for (let i = 0; i < attendees.length; i++) {
     kindlyAttendees.push(attendees[i]._id);
   }
 
   //declare array to get all attendees and host ids
   const userArr = [hostId, me._id];
+
   //push all attendee ids to that array with host id already in it
   for (let i = 0; i < event.verify.length; i++) {
     userArr.push(event.verify[i]._id);
@@ -89,7 +96,7 @@ export default function EventCard({ event, me }) {
 
   // check if date of event is behind the current date and return boolean
   const eventPassed = () => {
-    return Date.now() > event.date;
+    return today > event.date;
   };
   // check if more than half of attendees have verified event
   const isHalfOfAttendees = () => {
