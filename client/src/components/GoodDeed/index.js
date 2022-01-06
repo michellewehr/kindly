@@ -12,13 +12,26 @@ import {
   INCREASE_KINDLY_SCORE,
 } from "../../utils/mutations";
 import { checkLikesCount } from "../../utils/likesCountFormatter";
+import { QUERY_ME } from "../../utils/queries"
 
 export default function GoodDeed({ goodDeedData, me }) {
   const [viewComments, setViewComments] = useState(false);
   const [addComment, setAddComment] = useState(false);
   const [addLike] = useMutation(ADD_GOOD_DEED_LIKE);
   const [cancelGoodDeed] = useMutation(CANCEL_GOOD_DEED);
-  const [joinGoodDeed] = useMutation(JOIN_GOOD_DEED);
+  const [joinGoodDeed] = useMutation(JOIN_GOOD_DEED, {
+    update(cache, { data: { joinGoodDeed } }) {
+      try {
+        const { me } = cache.readQuery({ query: QUERY_ME });
+        cache.writeQuery({
+          query: QUERY_ME,
+          data: { me: { ...me, goodDeeds: [...me.goodDeeds, joinGoodDeed] } },
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    },
+  });
   const [leaveGoodDeed] = useMutation(LEAVE_GOOD_DEED);
   const [isLiked, setLiked] = useState(false);
   const [increaseScore] = useMutation(INCREASE_KINDLY_SCORE);
