@@ -33,16 +33,21 @@ export default function EventCard({ event, me }) {
   const hostId = event.host._id;
   const attendees = event.attendees;
   const kindlyAttendees = [hostId];
+
+  // format current date to match event date for comparison
+  const today = new Date().toLocaleString('en-us', { month: 'long', day: '2-digit', year: 'numeric' });
+
   for (let i = 0; i < attendees.length; i++) {
     kindlyAttendees.push(attendees[i]._id);
-  }
+  };
 
   //declare array to get all attendees and host ids
   const userArr = [hostId, me._id];
+
   //push all attendee ids to that array with host id already in it
   for (let i = 0; i < event.verify.length; i++) {
     userArr.push(event.verify[i]._id);
-  }
+  };
 
   function checkUserVerify() {
     const arrUsersVerified = [];
@@ -55,7 +60,7 @@ export default function EventCard({ event, me }) {
       return true;
     }
     return false;
-  }
+  };
 
   console.log(kindlyAttendees, "kind attendees");
 
@@ -66,7 +71,7 @@ export default function EventCard({ event, me }) {
     } catch (e) {
       console.error(e);
     }
-  }
+  };
 
   function checkVerify() {
     if (attendees.length === 0) {
@@ -75,7 +80,7 @@ export default function EventCard({ event, me }) {
       return true;
     }
     return false;
-  }
+  };
 
   function isVerified() {
     if (event.verify.length + 1 >= Math.ceil(attendees.length / 2)) {
@@ -86,9 +91,7 @@ export default function EventCard({ event, me }) {
   }
 
   // check if date of event is behind the current date and return boolean
-  const eventPassed = () => {
-    return Date.now() > event.date;
-  };
+  const eventPassed = () => { return today > event.date };
   // check if more than half of attendees have verified event
   const isHalfOfAttendees = () => {
     return event.verify.length < attendees.length / 2;
@@ -322,8 +325,8 @@ export default function EventCard({ event, me }) {
             {/* button div for viewing comments/ hiding comments */}
             <div>
               {Auth.loggedIn() &&
-              !viewComments &&
-              event.comments.length >= 1 ? (
+                !viewComments &&
+                event.comments.length >= 1 ? (
                 <button
                   onClick={() => {
                     setViewComments(true);
