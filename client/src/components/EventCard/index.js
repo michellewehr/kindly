@@ -32,7 +32,21 @@ export default function EventCard({ events,event, me }) {
       }}
   });
 
-  const [leaveEvent] = useMutation(LEAVE_EVENT);
+  const [leaveEvent] = useMutation(LEAVE_EVENT, {
+    update(cache, { data: { leaveEvent } }) {
+      try {
+        const { me } = cache.readQuery({ query: QUERY_ME });
+        console.log(events, leaveEvent, 'events, leaveEvent')
+        cache.writeQuery({
+
+          query: QUERY_ME,
+          data: { me: { ...me, events: me.events.filter((event) => event._id !== leaveEvent._id) } },
+
+        });
+      } catch (e) {
+        console.log(e);
+      }}
+  });
   const [cancelEvent] = useMutation(CANCEL_EVENT);
   const [isLiked, setLiked] = useState(false);
   // const [count, setCount] = useState(0);

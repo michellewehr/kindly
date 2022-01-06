@@ -32,7 +32,20 @@ export default function GoodDeed({ goodDeedData, me }) {
       }
     },
   });
-  const [leaveGoodDeed] = useMutation(LEAVE_GOOD_DEED);
+  const [leaveGoodDeed] = useMutation(LEAVE_GOOD_DEED, {
+    update(cache, { data: { leaveGoodDeed } }) {
+      try {
+        const { me } = cache.readQuery({ query: QUERY_ME });
+        cache.writeQuery({
+          query: QUERY_ME,
+          //remove good deed from user
+          data: { me: { ...me, goodDeeds: me.goodDeeds.filter(goodDeed => goodDeed._id !== leaveGoodDeed._id) } },
+        });
+      } catch (e) {
+        console.log(e);
+      }}
+  });
+
   const [isLiked, setLiked] = useState(false);
   const [increaseScore] = useMutation(INCREASE_KINDLY_SCORE);
   // const [showPotentialPoints, setShowPotentialPoints] = useState(true);
