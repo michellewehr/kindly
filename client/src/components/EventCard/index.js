@@ -225,7 +225,7 @@ export default function EventCard({ event, me }) {
   // }
 
   return (
-    <div className="eventCard w-2/3 mx-auto">
+    <div className="eventCard w-3/4 mx-auto">
       <div className="flex flex-row flex-wrap w-full p-3 mt-2 antialiased bg-white rounded-lg shadow-lg">
         <div className="w-full md:w-1/3 mt-2 mb-2">
           <img
