@@ -34,4 +34,4 @@ export function SuccessModal({ onClose }) {
       </div>
     </div>
   </div>;
-}
+};

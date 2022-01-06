@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import CommentForm from "../CommentForm";
 import CommentsList from "../CommentsList";
@@ -36,7 +36,7 @@ export default function GoodDeed({ goodDeedData, me }) {
     } catch (e) {
       console.error(e);
     }
-  }
+  };
 
   const onJoin = async (e) => {
     e.preventDefault();
@@ -82,15 +82,14 @@ export default function GoodDeed({ goodDeedData, me }) {
           </button>
         </div>
       );
-    }
-    //check to see if there is helper
+    };
+
     if (helper) {
       const helperId = helper._id;
       const helperFirstName = helper.firstName;
       const helperLastName = helper.lastName;
-      console.log(helperId);
-      // setShowPotentialPoints(false);
-      //check to see if i am the helper and if so i can leave good deed
+
+      // if user is helper
       if (helperId === myId) {
         return (
           <div>
@@ -103,7 +102,8 @@ export default function GoodDeed({ goodDeedData, me }) {
             </button>
           </div>
         );
-      }
+      };
+
       return (
         <div>
           <h4
@@ -126,7 +126,6 @@ export default function GoodDeed({ goodDeedData, me }) {
       </button>
     );
   };
-  // end
 
   const onLike = async (e) => {
     e.preventDefault();
@@ -138,6 +137,7 @@ export default function GoodDeed({ goodDeedData, me }) {
     }
     setLiked(true);
   };
+
   // only in profile
   // if (!goodDeeds.length) {
   //   return (
@@ -199,38 +199,27 @@ export default function GoodDeed({ goodDeedData, me }) {
               {Auth.loggedIn() &&
                 !viewComments &&
                 goodDeed.comments.length >= 1 ? (
-                <button
-                  onClick={() => {
-                    setViewComments(true);
-                  }}
-                >
+                <button onClick={() => { setViewComments(true); }}>
                   View Comments
                 </button>
               ) : (
                 Auth.loggedIn() &&
                 goodDeed.comments.length >= 1 && (
-                  <button
-                    onClick={() => {
-                      setViewComments(false);
-                    }}
-                  >
+                  <button onClick={() => { setViewComments(false); }}>
                     Hide Comments
                   </button>
                 )
-              )}
+              )};
             </div>
 
             <div>
               {Auth.loggedIn() && (
-                <button
-                  onClick={() => {
-                    setAddComment(true);
-                  }}
-                >
+                <button onClick={() => { setAddComment(true); }}>
                   Add Comment
                 </button>
-              )}
+              )};
             </div>
+
             {/* likes start */}
             {Auth.loggedIn() && !isLiked ? (
               <button className="inline-block text-sky-700 " onClick={onLike}>
@@ -284,4 +273,4 @@ export default function GoodDeed({ goodDeedData, me }) {
       )}
     </div>
   );
-}
+};

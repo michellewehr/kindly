@@ -3,9 +3,7 @@ import logo from "../assets/images/logo.png";
 import { useMutation } from "@apollo/client";
 import { CREATE_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
-//todo implement redux for state management
 
-//
 export default function Signup() {
   const [formState, setFormState] = useState({
     firstName: "",
@@ -18,23 +16,19 @@ export default function Signup() {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
     setFormState({
       ...formState,
       [name]: value,
     });
   };
 
-  // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    // error handling
     try {
       const { data } = await createUser({
         variables: { ...formState },
       });
-      // authorization
       Auth.login(data.createUser.token);
     } catch (e) {
       console.error(e);
@@ -49,14 +43,12 @@ export default function Signup() {
             <img
               className='fill-current h-12 w-14 mr-2" width="54" height="54" viewBox="0 0 54 54'
               src={logo}
+              alt="Sign up page image of volunteer workers"
             />
             <h2 className="text-4xl pl-2">Kindly Sign Up</h2>
           </div>
           <div>
-            <label
-              for="firstName"
-              className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
-            >
+            <label for="firstName" className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300" >
               firstName
             </label>
             <input
@@ -70,10 +62,7 @@ export default function Signup() {
             />
           </div>
           <div>
-            <label
-              for="lasName"
-              className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
-            >
+            <label for="lasName" className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">
               Last Name
             </label>
             <input
@@ -87,10 +76,7 @@ export default function Signup() {
             />
           </div>
           <div>
-            <label
-              for="email"
-              className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
-            >
+            <label for="email" className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300">
               Email Address
             </label>
             <input
@@ -105,9 +91,7 @@ export default function Signup() {
           </div>
           <div>
             <label
-              for="password"
-              className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
-            >
+              for="password" className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300" >
               Password
             </label>
             <input
@@ -122,9 +106,7 @@ export default function Signup() {
           </div>
           <div>
             <label
-              for="location"
-              className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
-            >
+              for="location" className="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300" >
               Location
             </label>
             <input
@@ -145,10 +127,7 @@ export default function Signup() {
           </button>
           <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
             Already have an account?{" "}
-            <a
-              href="/login"
-              className="text-blue-700 hover:underline dark:text-sky-700"
-            >
+            <a href="/login" className="text-blue-700 hover:underline dark:text-sky-700">
               Login
             </a>
           </div>
@@ -156,4 +135,4 @@ export default function Signup() {
       </div>
     </div>
   );
-}
+};
