@@ -358,7 +358,7 @@ export default function EventCard({ event, me }) {
               <span className="cursor-pointer">
                 View {attendees.length} Attendees
               </span>
-              <ul className="top-0 z-10 flex-col justify-center hidden text-sm text-black bg-orange-300 rounded attendee-list group-hover:block w-max">
+              <ul className="top-0 z-10 flex-col justify-center hidden text-sm text-black bg-orange-100 rounded attendee-list group-hover:block w-max">
                 {attendees.map((attendee, index) => (
                   <li key={attendee._id} className="py-1 pl-4 pr-1">
                     <Link
