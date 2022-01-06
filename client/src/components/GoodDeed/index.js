@@ -190,8 +190,8 @@ export default function GoodDeed({ goodDeedData, me }) {
 
             <div>
               {Auth.loggedIn() &&
-              !viewComments &&
-              goodDeed.comments.length >= 1 ? (
+                !viewComments &&
+                goodDeed.comments.length >= 1 ? (
                 <button
                   onClick={() => {
                     setViewComments(true);
@@ -211,7 +211,7 @@ export default function GoodDeed({ goodDeedData, me }) {
                   </button>
                 )
               )}
-              ;
+
             </div>
 
             <div>
@@ -224,7 +224,7 @@ export default function GoodDeed({ goodDeedData, me }) {
                   Add Comment
                 </button>
               )}
-              ;
+
             </div>
 
             {/* likes start */}

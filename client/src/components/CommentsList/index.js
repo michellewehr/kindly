@@ -10,14 +10,14 @@ export default function CommentsList({ comments, eventId, goodDeedId, me }) {
           eventId={eventId}
           goodDeedId={goodDeedId}
           me={me}
-          // _id={comment._id}
-          // commentText={comment.commentText}
-          // likes={comment.likes}
-          // replies={comment.replies}
-          // author={comment.author}
+        // _id={comment._id}
+        // commentText={comment.commentText}
+        // likes={comment.likes}
+        // replies={comment.replies}
+        // author={comment.author}
         />
       ))}
-      ;
+
     </div>
   );
 }
