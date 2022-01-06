@@ -19,6 +19,8 @@ export default function GoodDeedList({ me }) {
 
   function onClose() {
     setGoodDeedModalOpen(false);
+  }
+  function onSubmitMod() {
     setShowSuccess(true);
   }
 
@@ -30,7 +32,9 @@ export default function GoodDeedList({ me }) {
           closeSuccess={() => setShowSuccess(false)}
         />
       )}
-      {goodDeedModalOpen && <GoodDeedModal onClose={onClose} />}
+      {goodDeedModalOpen && (
+        <GoodDeedModal onClose={onClose} onSubmitMod={onSubmitMod} />
+      )}
 
       {loading ? (
         <div>Loading...</div>

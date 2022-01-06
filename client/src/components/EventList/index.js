@@ -18,12 +18,16 @@ export default function EventList({ events, me }) {
 
   function onClose() {
     setEventModalOpen(false);
+  }
+  function showSuccessMod() {
     setShowSuccess(true);
   }
   return (
     <div>
       <div className="flex flex-wrap justify-center">
-        {eventModalOpen && <EventModal onClose={onClose} />}
+        {eventModalOpen && (
+          <EventModal onClose={onClose} showSuccessMod={showSuccessMod} />
+        )}
 
         <div>
           <div>

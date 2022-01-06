@@ -3,7 +3,7 @@ import { useState } from "react";
 import { CREATE_GOOD_DEED } from "../../utils/mutations";
 import { QUERY_GOOD_DEEDS, QUERY_ME } from "../../utils/queries";
 
-export default function NewGoodDeed({ onDeedSubmit }) {
+export default function NewGoodDeed({ onDeedSubmit, onSubmitMod }) {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -59,6 +59,7 @@ export default function NewGoodDeed({ onDeedSubmit }) {
       console.error(e);
     }
     onDeedSubmit();
+    onSubmitMod();
   };
 
   return (
@@ -111,7 +112,7 @@ export default function NewGoodDeed({ onDeedSubmit }) {
                 onChange={handleChange}
               />
               <button
-                className="w-full p-3 rounded-lg shadow-lg"
+                className="w-full p-3 rounded-lg shadow-lg text-black"
                 type="submit"
                 value="Submit"
               >

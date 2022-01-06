@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 // import { SuccessModal } from "../SuccessModal";
 
-export default function NewEvent({ onEventSubmit }) {
+export default function NewEvent({ onEventSubmit, showSuccessMod }) {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -61,6 +61,7 @@ export default function NewEvent({ onEventSubmit }) {
       console.error(e);
     }
     onEventSubmit();
+    showSuccessMod();
   };
 
   return (
