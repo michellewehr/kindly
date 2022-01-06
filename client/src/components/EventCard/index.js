@@ -194,7 +194,7 @@ export default function EventCard({ event, me }) {
             >
               Leave Event
             </button>
-            {isHalfOfAttendees && eventPassed && !checkUserVerify() && (
+            {isHalfOfAttendees() && eventPassed() && !checkUserVerify() && (
               <button
                 onClick={onVerify}
                 className="px-4 py-2 mt-1 font-bold text-black rounded bg-sky-100 hover:bg-orange-300"
@@ -326,8 +326,8 @@ export default function EventCard({ event, me }) {
             {/* button div for viewing comments/ hiding comments */}
             <div>
               {Auth.loggedIn() &&
-              !viewComments &&
-              event.comments.length >= 1 ? (
+                !viewComments &&
+                event.comments.length >= 1 ? (
                 <button
                   onClick={() => {
                     setViewComments(true);

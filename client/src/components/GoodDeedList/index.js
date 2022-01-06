@@ -56,18 +56,18 @@ export default function GoodDeedList({ me }) {
               key={goodDeed.title}
               goodDeedData={goodDeed}
               me={userMeData}
-              // host={goodDeed.host}
-              // title={goodDeed.title}
-              // location={goodDeed.location}
-              // comments={goodDeed.comments}
-              // deedText={goodDeed.deedText}
-              // helper={goodDeed.helper}
+            // host={goodDeed.host}
+            // title={goodDeed.title}
+            // location={goodDeed.location}
+            // comments={goodDeed.comments}
+            // deedText={goodDeed.deedText}
+            // helper={goodDeed.helper}
             />
           ))}
-          ;
+
         </div>
       )}
-      ;
+
     </div>
   );
 }

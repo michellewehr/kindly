@@ -94,7 +94,7 @@ export default function Sidebar() {
           ) : (
             <div className="p-2">You have no upcoming events</div>
           )}
-          ;
+
         </div>
         {/* End of upcoming events */}
         <div className="w-5/6 mx-auto mb-2 text-center rounded-lg p-1 max-h-96">

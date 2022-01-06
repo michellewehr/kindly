@@ -41,11 +41,10 @@ export default function Comment({ comment, eventId, goodDeedId, me }) {
             <div className="flex flex-col flex-shrink-0 mb-6 md:w-64 md:mb-0">
               <span className="font-semibold text-gray-700 title-font text-xl border-b-2 border-orange-300">
                 {comment.author.firstName} {comment.author.lastName}
-                <span className="ml-2 text-sm text-gray-500">
+                <span className="ml-2 text-sm text-gray-500 ">
                   - {comment.createdAt} {comment.date}
                 </span>
               </span>
-
 
             </div>
             <div className="md:flex-grow ml-3">
@@ -80,5 +79,5 @@ export default function Comment({ comment, eventId, goodDeedId, me }) {
         </div>
       </div>
     </section>
-  );
+  )
 }
