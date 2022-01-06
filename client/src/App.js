@@ -19,7 +19,7 @@ import GoodDeedLink from "./components/GoodDeedLink";
 import Landing from "./pages/Landing";
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:3001/graphql",
+  uri: "https://kindly-volunteer.herokuapp.com/",
 });
 
 const authLink = setContext((__, { headers }) => {
