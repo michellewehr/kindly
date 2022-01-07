@@ -42,7 +42,7 @@ export default function Signup() {
         <form className="space-y-6" action="#" onSubmit={handleFormSubmit}>
           <div className="flex flex-row text-xl font-medium text-gray-900 dark:text-white">
             <img
-              className='h-12 mr-2 fill-current w-14" width="54" height="54" viewBox="0 0 54 54'
+              className='h-12 mr-2 fill-current w-14" '
               src={logo}
               alt="Sign up page image of volunteer workers"
             />

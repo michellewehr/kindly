@@ -4,6 +4,7 @@ import { REMOVE_COMMENT } from "../../utils/mutations";
 import { QUERY_COMMENTS } from "../../utils/queries";
 import ReplyList from "../ReplyList";
 import ReplyForm from "../ReplyForm";
+import { isConstValueNode } from "graphql";
 
 export default function Comment({ comment, eventId, goodDeedId, me }) {
   const [viewReplies, setViewReplies] = useState(false);
@@ -32,6 +33,8 @@ export default function Comment({ comment, eventId, goodDeedId, me }) {
       console.error(e);
     }
   };
+
+  console.log(me._id, 'comment')
 
   return (
     <section className="mx-5 my-1 overflow-hidden rounded shadow-md body-font">

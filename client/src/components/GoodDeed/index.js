@@ -60,7 +60,6 @@ export default function GoodDeed({ goodDeedData, me }) {
         console.log(e);
       }
       const { goodDeeds } = cache.readQuery({ query: QUERY_GOOD_DEEDS });
-      console.log(goodDeeds, 'good deeds query')
       cache.writeQuery({
         query: QUERY_GOOD_DEEDS,
         data: { goodDeeds: { ...goodDeeds, goodDeeds: goodDeeds.filter((goodDeed) => goodDeed._id !== cancelGoodDeed._id) } },
@@ -75,7 +74,6 @@ export default function GoodDeed({ goodDeedData, me }) {
   const goodDeed = goodDeedData || {};
 
   const hostId = goodDeed.host._id;
-  const myId = me._id;
   const helper = goodDeed.helper;
 
   async function addKindlyPoints() {
@@ -117,9 +115,14 @@ export default function GoodDeed({ goodDeedData, me }) {
     checkAttendance();
   };
 
+  function onSubmit() {
+    setViewComments(true);
+    setAddComment(false);
+  }
+
   const checkAttendance = () => {
     // check if current user is host
-    if (hostId === myId) {
+    if (hostId === me._id) {
       return (
         <div>
           <button
@@ -138,7 +141,7 @@ export default function GoodDeed({ goodDeedData, me }) {
       const helperLastName = helper.lastName;
 
       // if user is helper
-      if (helperId === myId) {
+      if (helperId === me._id) {
         return (
           <div>
             <button
@@ -317,14 +320,9 @@ export default function GoodDeed({ goodDeedData, me }) {
           {Auth.loggedIn() && <div>{checkAttendance()}</div>}
         </div>
       </div>
-      {addComment && (
-        <CommentForm
-          goodDeedId={goodDeed._id}
-          onSubmit={() => setViewComments(true)}
-        />
-      )}
+      {addComment && <CommentForm goodDeedId={goodDeed._id} onSubmit={onSubmit} />}
       {viewComments && (
-        <CommentsList comments={goodDeed.comments} goodDeedId={goodDeed._id} />
+        <CommentsList comments={goodDeed.comments} eventId={goodDeed._id} me={me} />
       )}
     </div>
   );

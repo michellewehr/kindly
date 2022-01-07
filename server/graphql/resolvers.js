@@ -216,19 +216,13 @@ const resolvers = {
 
     // add comment to event or a good deed
     addEventComment: async (parent, args, context) => {
-      console.log(args.eventId);
-      console.log(args.commentText);
-      console.log(context.user);
+
       if (context.user) {
         const comment = await Comment.create({
           ...args,
           author: context.user._id,
         });
-        console.log(comment);
-        // check and set params for either event or good deed
-        // const params = args.eventId ? { args.eventId, args.commentText } : { args.goodDeedId, args.commentText };
 
-        // if params are event-oriented, update the event, otherwise update the good deed
         const updatedEvent = await Event.findByIdAndUpdate(
           { _id: args.eventId },
           { $push: { comments: comment } },
@@ -245,19 +239,12 @@ const resolvers = {
     },
 
     addGoodDeedComment: async (parent, args, context) => {
-      console.log(args.eventId);
-      console.log(args.commentText);
-      console.log(context.user);
       if (context.user) {
         const comment = await Comment.create({
           ...args,
           author: context.user._id,
         });
-        console.log(comment);
-        // check and set params for either event or good deed
-        // const params = args.eventId ? { args.eventId, args.commentText } : { args.goodDeedId, args.commentText };
 
-        // if params are event-oriented, update the event, otherwise update the good deed
         const updatedGoodDeed = await GoodDeed.findByIdAndUpdate(
           { _id: args.goodDeedId },
           { $push: { comments: comment } },
@@ -330,22 +317,9 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
-    // TODO: look into this one
     cancelEvent: async (parent, { eventId }, context) => {
       if (context.user) {
-        // remove all associated users from event before deleting it
-        // const updatedEvent = await Event.findOneAndUpdate(
-        //    { _id: eventId },
-        //    { $unset: { attendees: [] } },
-        //    { $unset: { host: "" } },
-        //    { new: true }
-        // )
-        // delete the event fully
-        const removeEvent = await Event.findByIdAndRemove(
-          { _id: eventId },
-          // { new: true }
-        );
-        // return the new list of all events to verify the deleted event is no longer listed
+        const removeEvent = await Event.findByIdAndRemove({ _id: eventId });
         return removeEvent;
       }
       throw new AuthenticationError("You need to be logged in!");
@@ -354,19 +328,8 @@ const resolvers = {
     // cancel good deed
     cancelGoodDeed: async (parent, { goodDeedId }, context) => {
       if (context.user) {
-        // const updatedGoodDeed = await GoodDeed.findOneAndUpdate(
-        //    { _id: goodDeedId },
-        //    { $unset: { helper: "" } },
-        //    { $unset: { host: "" } },
-        //    { new: true }
-        // )
-
         //delete entirely
-        const removeGoodDeed = await GoodDeed.findByIdAndRemove(
-          { _id: goodDeedId },
-          // { new: true }
-        );
-
+        const removeGoodDeed = await GoodDeed.findByIdAndRemove({ _id: goodDeedId });
         return removeGoodDeed;
       }
       throw new AuthenticationError("You need to be logged in!");
@@ -447,8 +410,6 @@ const resolvers = {
           { _id: args.commentId },
           { new: true }
         );
-        // check and set params for either event or good deed
-        // const params = args.eventId ? { args.eventId, args.commentText } : { args.goodDeedId, args.commentText };
 
         // if params are event-oriented, update the event, otherwise update the good deed
         if (args.eventId) {
@@ -460,6 +421,7 @@ const resolvers = {
             .populate("comments")
             .populate({ path: "comments", populate: "author" });
           return updatedEvent;
+
         } else if (args.goodDeedId) {
           const updatedGoodDeed = await GoodDeed.findByIdAndUpdate(
             { _id: args.goodDeedId },
