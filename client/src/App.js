@@ -19,7 +19,7 @@ import GoodDeedLink from "./components/GoodDeedLink";
 import Landing from "./pages/Landing";
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:3001/graphql",
+  uri: "/graphql",
 });
 
 const authLink = setContext((__, { headers }) => {
