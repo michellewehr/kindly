@@ -34,21 +34,21 @@ export default function Comment({ comment, eventId, goodDeedId, me }) {
   };
 
   return (
-    <section className="overflow-hidden body-font  shadow-md rounded mx-5 my-1">
-      <div className="container px-5 mx-auto m-0">
+    <section className="mx-5 my-1 overflow-hidden rounded shadow-md body-font">
+      <div className="container px-5 m-0 mx-auto">
         <div className="divide-y-2 divide-gray-100">
-          <div className="flex flex-wrap py-8 md:flex-nowrap">
+          <div className="flex-col flex-wrap py-8 md:flex-nowrap">
             <div className="flex flex-col flex-shrink-0 mb-6 md:w-64 md:mb-0">
-              <span className="font-semibold text-gray-700 title-font text-xl border-b-2 border-orange-300">
+              <span className="text-xl font-semibold text-gray-700 border-b-2 border-orange-300 title-font">
                 {comment.author.firstName} {comment.author.lastName}
-                <p className="text-sm text-gray-500 ">
-                  {comment.createdAt} {comment.date}
-                </p>
+                <span className="ml-2 text-sm text-gray-500">
+                  - {comment.createdAt} {comment.date}
+                </span>
               </span>
 
             </div>
-            <div className="md:flex-grow ml-3">
-              <p className="leading-relaxed py-2">{comment.commentText}</p>
+            <div className="flex-col ml-3 md:flex-grow">
+              <p className="py-2 leading-relaxed">{comment.commentText}</p>
             </div>
             {/* delete comment button  */}
             {comment.author._id === me._id && (

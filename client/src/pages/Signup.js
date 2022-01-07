@@ -38,6 +38,7 @@ export default function Signup() {
   return (
     <div className="  w-screen h-screen bg-cover bg-no-repeat bg-[url('https://www.charities.org/sites/default/files/styles/large/public/volunteers18-5b2fe1c9a474be0036f6a7b2.jpg?itok=HeETal1T')] grid  z-0">
       <div className="max-w-sm pb-2 m-20 mx-auto bg-white border border-gray-200 rounded-lg shadow-md h-3/4 before:p-4 bt-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700">
+
         <form className="space-y-6" action="#" onSubmit={handleFormSubmit}>
           <div className="flex flex-row text-xl font-medium text-gray-900 dark:text-white">
             <img
