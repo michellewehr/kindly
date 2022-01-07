@@ -180,6 +180,14 @@ I'm Maki (pronounced Mekki) from CT USA, and I am a Full-Stack Web Developer. I 
 
 # *Dave Toth:*
 
+<img src="https://media-exp1.licdn.com/dms/image/C5616AQH9iKKGLTosZw/profile-displaybackgroundimage-shrink_350_1400/0/1640429335918?e=1646870400&v=beta&t=JL446y-L6HJ-rJfzsupjdMFkH0c9AcllofMkfmg68I8">
+
+Full Stack Web Developer combined with a long history of Project Managment experience.
+Reach out me at <a href="https://linkedin.com/in/davidtoth77" target="blank"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
+</p>
+
+
+
 ### [GITHUB PROFILE](https://github.com/DaveToth77)
 ### [PORTFOLIO](https://portfolio-davetoth77.vercel.app/)
 
