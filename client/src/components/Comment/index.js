@@ -45,13 +45,12 @@ export default function Comment({ comment, eventId, goodDeedId, me }) {
                   - {comment.createdAt} {comment.date}
                 </span>
               </span>
-
             </div>
             <div className="flex-col ml-3 md:flex-grow">
               <p className="py-2 leading-relaxed">{comment.commentText}</p>
             </div>
             {/* delete comment button  */}
-            {comment.author._id === me._id && (
+            {/* {comment.author._id === me._id && (
               <div className="group">
                 <button onClick={onDelete}>
                   <svg
@@ -74,10 +73,10 @@ export default function Comment({ comment, eventId, goodDeedId, me }) {
                   Delete Comment
                 </p>
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 }
