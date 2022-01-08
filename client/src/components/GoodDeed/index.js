@@ -12,7 +12,7 @@ import {
   INCREASE_KINDLY_SCORE,
 } from "../../utils/mutations";
 import { checkLikesCount } from "../../utils/likesCountFormatter";
-import { QUERY_ME, QUERY_GOOD_DEEDS } from "../../utils/queries"
+import { QUERY_ME, QUERY_GOOD_DEEDS } from "../../utils/queries";
 
 export default function GoodDeed({ goodDeedData, me }) {
   const [viewComments, setViewComments] = useState(false);
@@ -38,12 +38,19 @@ export default function GoodDeed({ goodDeedData, me }) {
         cache.writeQuery({
           query: QUERY_ME,
           //remove good deed from user
-          data: { me: { ...me, goodDeeds: me.goodDeeds.filter(goodDeed => goodDeed._id !== leaveGoodDeed._id) } },
+          data: {
+            me: {
+              ...me,
+              goodDeeds: me.goodDeeds.filter(
+                (goodDeed) => goodDeed._id !== leaveGoodDeed._id
+              ),
+            },
+          },
         });
       } catch (e) {
         console.log(e);
       }
-    }
+    },
   });
 
   const [cancelGoodDeed] = useMutation(CANCEL_GOOD_DEED, {
@@ -51,20 +58,31 @@ export default function GoodDeed({ goodDeedData, me }) {
       try {
         const { me } = cache.readQuery({ query: QUERY_ME });
         cache.writeQuery({
-
           query: QUERY_ME,
-          data: { me: { ...me, goodDeeds: me.goodDeeds.filter(goodDeed => goodDeed._id !== cancelGoodDeed._id) } },
-
+          data: {
+            me: {
+              ...me,
+              goodDeeds: me.goodDeeds.filter(
+                (goodDeed) => goodDeed._id !== cancelGoodDeed._id
+              ),
+            },
+          },
         });
       } catch (e) {
         console.log(e);
       }
       const { goodDeeds } = cache.readQuery({ query: QUERY_GOOD_DEEDS });
-      console.log(goodDeeds, 'good deeds query')
+      console.log(goodDeeds, "good deeds query");
       cache.writeQuery({
         query: QUERY_GOOD_DEEDS,
-        data: { goodDeeds: { ...goodDeeds, goodDeeds: goodDeeds.filter((goodDeed) => goodDeed._id !== cancelGoodDeed._id) } },
-
+        data: {
+          goodDeeds: {
+            ...goodDeeds,
+            goodDeeds: goodDeeds.filter(
+              (goodDeed) => goodDeed._id !== cancelGoodDeed._id
+            ),
+          },
+        },
       });
     },
   });
@@ -238,8 +256,8 @@ export default function GoodDeed({ goodDeedData, me }) {
 
             <div>
               {Auth.loggedIn() &&
-                !viewComments &&
-                goodDeed.comments.length >= 1 ? (
+              !viewComments &&
+              goodDeed.comments.length >= 1 ? (
                 <button
                   onClick={() => {
                     setViewComments(true);
@@ -259,7 +277,6 @@ export default function GoodDeed({ goodDeedData, me }) {
                   </button>
                 )
               )}
-
             </div>
 
             <div>
@@ -272,7 +289,6 @@ export default function GoodDeed({ goodDeedData, me }) {
                   Add Comment
                 </button>
               )}
-
             </div>
 
             {/* likes start */}
@@ -324,7 +340,11 @@ export default function GoodDeed({ goodDeedData, me }) {
         />
       )}
       {viewComments && (
-        <CommentsList comments={goodDeed.comments} goodDeedId={goodDeed._id} />
+        <CommentsList
+          comments={goodDeed.comments}
+          goodDeedId={goodDeed._id}
+          me={me}
+        />
       )}
     </div>
   );
