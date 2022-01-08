@@ -68,7 +68,10 @@ export default function UserProfile(props) {
                   {/* for each event */}
                   {user.events &&
                     user.events.map((event) => (
-                      <div key={event._id} className="flex-col p-3 mt-2 antialiased bg-white rounded-lg shadow-lg  relative" >
+                      <div
+                        key={event._id}
+                        className="flex-col p-3 mt-2 antialiased bg-white rounded-lg shadow-lg  relative"
+                      >
                         <div className="flex-row">
                           <div className="pb-1 text-2xl text-amber-500">
                             <span>{event.title}</span>
@@ -133,7 +136,7 @@ export default function UserProfile(props) {
                           {/* hover to see attendees list */}
                           <div className="relative flex flex-col group w-max">
                             <span className="cursor-pointer">
-                              {event.attendees.length - 1} kind attendees
+                              {event.attendees.length} kind attendees
                             </span>
                           </div>
                         </div>
@@ -198,4 +201,4 @@ export default function UserProfile(props) {
       )}
     </div>
   );
-};
+}
