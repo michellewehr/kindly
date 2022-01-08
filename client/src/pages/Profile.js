@@ -100,7 +100,6 @@ export default function Profile(me) {
                                 </p>
                               </div>
                             )}
-
                           </div>
                           <div className="absolute top-0 right-0 m-1 text-sm">
                             Kindly Points: 10
@@ -136,13 +135,12 @@ export default function Profile(me) {
                           {/* hover to see attendees list */}
                           <div className="relative flex flex-col group w-max">
                             <span className="cursor-pointer">
-                              {event.attendees.length - 1} kind attendees
+                              {event.attendees.length} kind attendees
                             </span>
                           </div>
                         </div>
                       </div>
                     ))}
-
                 </div>
 
                 {/* good deeds */}
